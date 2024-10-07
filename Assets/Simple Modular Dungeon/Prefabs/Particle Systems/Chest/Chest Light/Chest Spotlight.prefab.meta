@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a2bc782d9ab517649887f45d6bb913bd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Prefabs/Particle Systems/Chest/Chest Light/Chest
+    Spotlight.prefab
+  uploadId: 621041

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d66c8145c195b5c419b69a069e972049
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Wall 007/Secondary
+    Stone.mat
+  uploadId: 621041

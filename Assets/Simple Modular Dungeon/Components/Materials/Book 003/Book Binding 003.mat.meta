@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9984f814f4839054b837869d5db8f5a3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Book 003/Book Binding
+    003.mat
+  uploadId: 621041

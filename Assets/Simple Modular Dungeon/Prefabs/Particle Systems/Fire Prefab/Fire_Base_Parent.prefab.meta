@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f62b31a3464faf14f934e38f9ee55eba
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Prefabs/Particle Systems/Fire Prefab/Fire_Base_Parent.prefab
+  uploadId: 621041

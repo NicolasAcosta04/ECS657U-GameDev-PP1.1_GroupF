@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1d382ec8f6faa7f4b82a000b5f0fd66c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Prefabs/Walls/Doorways/Doorway Parent
+    004.prefab
+  uploadId: 621041

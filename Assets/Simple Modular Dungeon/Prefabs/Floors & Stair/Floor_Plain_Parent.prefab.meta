@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3964c23ae9838e84889ea6d65b5861aa
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Prefabs/Floors & Stair/Floor_Plain_Parent.prefab
+  uploadId: 621041

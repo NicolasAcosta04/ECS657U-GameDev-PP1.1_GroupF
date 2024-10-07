@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d63e83355ac0fc04db46a436f4af6eb5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Doorway Gated 002/Stone.mat
+  uploadId: 621041

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e848c8dbd0d81da408d0f1c77afc0d92
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Floor Variation 001/Stone.mat
+  uploadId: 621041

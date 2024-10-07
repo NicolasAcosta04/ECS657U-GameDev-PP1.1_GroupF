@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: efd0e3d6d7a2d9642b0fbaa307cca3a8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Bookshelf 001/Binding
+    001.mat
+  uploadId: 621041

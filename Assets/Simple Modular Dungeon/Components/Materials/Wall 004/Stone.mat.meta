@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4ed124cb1b8b430488f12fd5cbfb2b23
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Wall 004/Stone.mat
+  uploadId: 621041

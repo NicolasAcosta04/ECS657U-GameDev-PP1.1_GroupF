@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: be0b84b298f2c3c4b994b0920a8fb300
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Prefabs/Walls/Doorways/Gated Doorway Parent
+    003.prefab
+  uploadId: 621041

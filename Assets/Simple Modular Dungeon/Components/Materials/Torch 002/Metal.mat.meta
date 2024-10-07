@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0c206a8d00e263146a362f8612da28c1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 259641
+  packageName: Simple Modular Dungeon
+  packageVersion: 1.01
+  assetPath: Assets/Simple Modular Dungeon/Components/Materials/Torch 002/Metal.mat
+  uploadId: 621041
