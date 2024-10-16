@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float groundDrag;
 
-    public TextMeshProUGUI speed;
+    //public TextMeshProUGUI speed;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
         var currentPos = transform.position;
         var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
-        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
+        //speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
 
         lastPos = currentPos;
     }
