@@ -58,10 +58,23 @@ public class Generator : MonoBehaviour
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
         rooms = new List<Room>();
 
+        PlaceStarterRoom();
         PlaceRooms();
         Triangulate();
         CreateHallways();
         PathfindHallways();
+    }
+
+    void PlaceStarterRoom(){
+        Vector2Int location = new Vector2Int(size.x / 2 - roomMaxSize.x / 2, size.y / 2 - roomMaxSize.y / 2);
+        Vector2Int roomSize = new Vector2Int(roomMaxSize.x, roomMaxSize.y);
+        Room startingRoom = new Room(location, roomSize);
+        rooms.Add(startingRoom);
+        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size);
+
+        foreach (var pos in startingRoom.bounds.allPositionsWithin) {
+            grid[pos] = CellType.Room;
+        }
     }
 
     void PlaceRooms() {
