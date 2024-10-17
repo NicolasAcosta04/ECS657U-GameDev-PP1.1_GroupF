@@ -191,7 +191,7 @@ public class Generator : MonoBehaviour
                     }
                 }
 
-                //Fixed walls appearing where they should not be
+                //Fixed walls appearing at hallway crossroads and hallway/room intersections here
                 foreach (var pos in path) {
                     if (grid[pos] == CellType.Hallway && !structureInstances.ContainsKey(pos)) {
                         PlaceHallway(pos);
@@ -201,7 +201,7 @@ public class Generator : MonoBehaviour
         }
     }
 
-// Gib those walls
+// Removes walls of structures that are adjacent to each other 
     void RemoveAdjacentWalls(){
         Vector2Int[] directions = {
             new Vector2Int(1, 0),
@@ -217,7 +217,7 @@ public class Generator : MonoBehaviour
             foreach (var direction in directions) {
                 Vector2Int neighborPos = location + direction;
                 
-                //This is the part that removes the walls, and the walls of any neighboring cells
+                //This is the part that removes the walls, and the walls of any neighboring cells, if you have issues, check RemoveWall()
                 if (structureInstances.ContainsKey(neighborPos)) {
                     GameObject neighborStructure = structureInstances[neighborPos];
                     RemoveWall(structureInstance, direction);
@@ -229,7 +229,6 @@ public class Generator : MonoBehaviour
         }
     }
 
-//Gib that specific wall
     void RemoveWall(GameObject structureInstance, Vector2Int direction) {
         // XWall refers to the Positive X direction, NWall is the Negative X direction, same logic applies to Z di - use this naming convention plz
         string wallName = direction == new Vector2Int(1, 0) ? "XWall" :
