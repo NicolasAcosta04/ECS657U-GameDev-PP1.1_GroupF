@@ -7,11 +7,18 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed;
+    private float moveSpeed;
+    public float walkSpeed;
+    public float jogSpeed;
+    public float sprintSpeed;
 
     public float groundDrag;
 
     //public TextMeshProUGUI speed;
+
+    [Header("Keybinds")]
+    public KeyCode jogkey = KeyCode.LeftControl;
+    public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -29,6 +36,15 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public MovementState state;
+
+    public enum MovementState
+    {
+        Walking,
+        Jogging,
+        Sprinting
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         MyInput();
         SpeedControl();
+        StateHandler();
 
         // handle drag
 
@@ -68,6 +85,28 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+    }
+
+    private void StateHandler()
+    {
+        // Mode - jogging
+        if (Input.GetKey(jogkey))
+        {
+            state = MovementState.Jogging;
+            moveSpeed = jogSpeed;
+        }
+        // Mode - sprinting
+        else if (Input.GetKey(sprintKey))
+        {
+            state = MovementState.Sprinting;
+            moveSpeed = sprintSpeed;
+        }
+        // Mode - walking
+        else
+        {
+            state = MovementState.Walking;
+            moveSpeed = walkSpeed;
+        }
     }
 
     private void MovePlayer()
