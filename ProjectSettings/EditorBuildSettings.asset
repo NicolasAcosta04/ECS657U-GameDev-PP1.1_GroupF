@@ -5,8 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/Main.unity
+  - enabled: 0
+    path: Assets/Scenes/Nicolas' Changes.unity
     guid: b4374279c5a6b6c44957b64cac024cef
+  - enabled: 1
+    path: Assets/Scenes/Procedural2D.unity
+    guid: 609358786acd93740a0b29e4c03288c2
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
