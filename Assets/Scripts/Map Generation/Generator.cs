@@ -21,9 +21,16 @@ public class Generator : MonoBehaviour
         }
     }
     private Dictionary<Vector2Int, GameObject> structureInstances = new Dictionary<Vector2Int, GameObject>();
-
+    private bool IsWinRoomPlaced = false;
+    
     [SerializeField]
     int seed;
+    [SerializeField]
+    GameObject ItemRoomPrefab;
+    [SerializeField]
+    GameObject EnemySpawnRoomPrefab;
+    [SerializeField]
+    GameObject WinRoomPrefab;
     [SerializeField]
     GameObject RoomPrefab;
     [SerializeField]
@@ -32,6 +39,10 @@ public class Generator : MonoBehaviour
     Vector2Int size;
     [SerializeField]
     int roomCount;
+    [SerializeField]
+    int EnemyRoomCount;
+    [SerializeField]
+    int ItemRoomCount;
     [SerializeField]
     Vector2Int roomMaxSize;
     [SerializeField]
@@ -51,7 +62,7 @@ public class Generator : MonoBehaviour
     }
 
     void Generate(){
-            if (seed == 0) {
+        if (seed == 0) {
         seed = System.DateTime.Now.Millisecond;
         }
         random = new Random(seed);
@@ -59,6 +70,9 @@ public class Generator : MonoBehaviour
         rooms = new List<Room>();
 
         PlaceStarterRoom();
+        PlaceWinRoom();
+        PlaceEnemyRoom();
+        PlaceItemRoom();
         PlaceRooms();
         Triangulate();
         CreateHallways();
@@ -70,7 +84,7 @@ public class Generator : MonoBehaviour
         Vector2Int roomSize = new Vector2Int(roomMaxSize.x, roomMaxSize.y);
         Room startingRoom = new Room(location, roomSize);
         rooms.Add(startingRoom);
-        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size);
+        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, RoomPrefab);
 
         foreach (var pos in startingRoom.bounds.allPositionsWithin) {
             grid[pos] = CellType.Room;
@@ -107,7 +121,7 @@ public class Generator : MonoBehaviour
 
             if (add) {
                 rooms.Add(newRoom);
-                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size);
+                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, RoomPrefab);
 
                 foreach (var pos in newRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
@@ -115,6 +129,122 @@ public class Generator : MonoBehaviour
             }
         }
     }
+
+    void PlaceWinRoom(){
+        while (IsWinRoomPlaced == false) {
+            Vector2Int location = new Vector2Int(
+                random.Next(0, size.x),
+                random.Next(0, size.y)
+            );
+
+            Vector2Int roomSize = new Vector2Int(
+                roomMaxSize.x, 
+                roomMaxSize.y
+            );
+
+            bool add = true;
+            Room WinRoom = new Room(location, roomSize);
+            Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
+
+            foreach (var room in rooms) {
+                if (Room.Intersect(room, buffer)) {
+                    add = false;
+                    break;
+                }
+            }
+
+            if (WinRoom.bounds.xMin < 0 || WinRoom.bounds.xMax >= size.x
+                || WinRoom.bounds.yMin < 0 || WinRoom.bounds.yMax >= size.y) {
+                add = false;
+            }
+
+            if (add) {
+                rooms.Add(WinRoom);
+                PlaceRoom(WinRoom.bounds.position, WinRoom.bounds.size, WinRoomPrefab);
+
+                foreach (var pos in WinRoom.bounds.allPositionsWithin) {
+                    grid[pos] = CellType.Room;
+                }
+                IsWinRoomPlaced = true;
+            }
+        }
+    }
+
+    void PlaceEnemyRoom(){
+        int LoopCounter = 0;
+        while (LoopCounter < ItemRoomCount) {
+            Vector2Int location = new Vector2Int(
+                random.Next(0, size.x),
+                random.Next(0, size.y)
+            );
+
+            Vector2Int roomSize = new Vector2Int(4,4);
+
+            bool add = true;
+            Room ItemRoom = new Room(location, roomSize);
+            Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
+
+            foreach (var room in rooms) {
+                if (Room.Intersect(room, buffer)) {
+                    add = false;
+                    break;
+                }
+            }
+
+            if (ItemRoom.bounds.xMin < 0 || ItemRoom.bounds.xMax >= size.x
+                || ItemRoom.bounds.yMin < 0 || ItemRoom.bounds.yMax >= size.y) {
+                add = false;
+            }
+
+            if (add) {
+                rooms.Add(ItemRoom);
+                PlaceRoom(ItemRoom.bounds.position, ItemRoom.bounds.size, ItemRoomPrefab);
+
+                foreach (var pos in ItemRoom.bounds.allPositionsWithin) {
+                    grid[pos] = CellType.Room;
+                }
+                LoopCounter ++;
+            }
+        }
+    }
+
+     void PlaceItemRoom(){
+        int LoopCounter = 0;
+        while (LoopCounter < EnemyRoomCount) {
+            Vector2Int location = new Vector2Int(
+                random.Next(0, size.x),
+                random.Next(0, size.y)
+            );
+
+            Vector2Int roomSize = new Vector2Int(1,1);
+
+            bool add = true;
+            Room EnemySpawnRoom = new Room(location, roomSize);
+            Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
+
+            foreach (var room in rooms) {
+                if (Room.Intersect(room, buffer)) {
+                    add = false;
+                    break;
+                }
+            }
+
+            if (EnemySpawnRoom.bounds.xMin < 0 || EnemySpawnRoom.bounds.xMax >= size.x
+                || EnemySpawnRoom.bounds.yMin < 0 || EnemySpawnRoom.bounds.yMax >= size.y) {
+                add = false;
+            }
+
+            if (add) {
+                rooms.Add(EnemySpawnRoom);
+                PlaceRoom(EnemySpawnRoom.bounds.position, EnemySpawnRoom.bounds.size, EnemySpawnRoomPrefab);
+
+                foreach (var pos in EnemySpawnRoom.bounds.allPositionsWithin) {
+                    grid[pos] = CellType.Room;
+                }
+                LoopCounter ++;
+            }
+        }
+    }   
 
     void Triangulate() {
         List<Vertex> vertices = new List<Vertex>();
@@ -257,7 +387,7 @@ public class Generator : MonoBehaviour
 
 // This is what makes the rooms modular, if not for this, the rooms would be stretched and distorted prefabs, this makes it so that one prefab is used over and over to populate the space of the room based on the original user input
 // If rooms are not working correctly, 50/50 chance this here is the culprit, the other 50% is somewhere in PlaceRooms()
-    void PlaceRoom(Vector2Int location, Vector2Int size) {
+    void PlaceRoom(Vector2Int location, Vector2Int size, GameObject RoomPrefab) {
         for (int i = 0; i < size.x; i++) {
             for (int j = 0; j < size.y; j++) {
                 Vector2Int offset = new Vector2Int(i, j);
