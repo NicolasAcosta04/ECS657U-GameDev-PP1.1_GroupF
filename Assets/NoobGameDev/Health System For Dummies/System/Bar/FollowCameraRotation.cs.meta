@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 50b1459e5e65bf2419e5dd67c82611b9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/System/Bar/FollowCameraRotation.cs
+  uploadId: 486432

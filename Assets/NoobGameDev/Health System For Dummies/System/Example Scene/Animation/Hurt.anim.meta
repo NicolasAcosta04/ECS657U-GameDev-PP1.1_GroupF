@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5d29f1728e2186744925a8a9fcc279c5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/System/Example Scene/Animation/Hurt.anim
+  uploadId: 486432

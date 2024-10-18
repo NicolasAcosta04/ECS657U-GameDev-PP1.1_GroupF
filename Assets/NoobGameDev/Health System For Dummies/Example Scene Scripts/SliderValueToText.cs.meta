@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a38b0bd93217b4e45b7c3fec85c004fc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/Example Scene Scripts/SliderValueToText.cs
+  uploadId: 486432

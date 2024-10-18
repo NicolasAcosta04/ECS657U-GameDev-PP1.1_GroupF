@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8ab1c6351dc029747bf1a799c91a4ebc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/Example Scene Scripts/HideUIObjectWhenToggleOff.cs
+  uploadId: 486432

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 50aa1676abe9a4a49ac5879ddc853a6d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/System/Editor/HealthSystemEditor.cs
+  uploadId: 486432

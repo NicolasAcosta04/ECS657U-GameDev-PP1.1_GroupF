@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8d33425d7a2a5394ba6dc22e7de6306c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 215755
+  packageName: Health System For Dummies
+  packageVersion: 1.0.0
+  assetPath: Assets/NoobGameDev/Health System For Dummies/System/Bar/Prefabs/HealthBarCanvas.prefab
+  uploadId: 486432
