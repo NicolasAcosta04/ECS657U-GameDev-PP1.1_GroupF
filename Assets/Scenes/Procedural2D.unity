@@ -149,11 +149,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f76d1cdad3ebc468de389953731c0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seed: 1
+  seed: 0
+  ItemRoomPrefab: {fileID: 8337678869357500087, guid: 23b597031a57fb847baab04a00a2fb52, type: 3}
+  EnemySpawnRoomPrefab: {fileID: 1798954966950097994, guid: 163c76bedd3a18c449fd6817bb8e7f52, type: 3}
+  WinRoomPrefab: {fileID: 6456120626507403798, guid: 9637df1a9cd906145bf81e31a35acab2, type: 3}
   RoomPrefab: {fileID: 4907469481428772007, guid: b825f2c1cf4eefb4a893d41ddd58c429, type: 3}
   HallwayPrefab: {fileID: 4844219089626658800, guid: 2a6cef81b6f9d8f44af8430ef73d3908, type: 3}
-  size: {x: 70, y: 70}
-  roomCount: 300
+  size: {x: 140, y: 140}
+  roomCount: 600
+  EnemyRoomCount: 20
+  ItemRoomCount: 20
   roomMaxSize: {x: 6, y: 6}
 --- !u!4 &147926790
 Transform:
@@ -164,7 +169,7 @@ Transform:
   m_GameObject: {fileID: 147926788}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.1563807, y: 3.1795259, z: 0.523427}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
