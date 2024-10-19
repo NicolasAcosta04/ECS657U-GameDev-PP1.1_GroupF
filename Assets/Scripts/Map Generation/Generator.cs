@@ -26,6 +26,8 @@ public class Generator : MonoBehaviour
     [SerializeField]
     int seed;
     [SerializeField]
+    GameObject StarterRoomPrefab;
+    [SerializeField]
     GameObject ItemRoomPrefab;
     [SerializeField]
     GameObject EnemySpawnRoomPrefab;
@@ -80,11 +82,16 @@ public class Generator : MonoBehaviour
     }
 
     void PlaceStarterRoom(){
-        Vector2Int location = new Vector2Int(size.x / 2 - roomMaxSize.x / 2, size.y / 2 - roomMaxSize.y / 2);
-        Vector2Int roomSize = new Vector2Int(roomMaxSize.x, roomMaxSize.y);
+        Vector2Int location = new Vector2Int(
+        size.x / 2 - roomMaxSize.x / 2, 
+        size.y / 2 - roomMaxSize.y / 2
+        );
+
+        Vector2Int roomSize = new Vector2Int(6,6);
+
         Room startingRoom = new Room(location, roomSize);
         rooms.Add(startingRoom);
-        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, RoomPrefab);
+        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab);
 
         foreach (var pos in startingRoom.bounds.allPositionsWithin) {
             grid[pos] = CellType.Room;
@@ -137,10 +144,7 @@ public class Generator : MonoBehaviour
                 random.Next(0, size.y)
             );
 
-            Vector2Int roomSize = new Vector2Int(
-                roomMaxSize.x, 
-                roomMaxSize.y
-            );
+            Vector2Int roomSize = new Vector2Int(6,6);
 
             bool add = true;
             Room WinRoom = new Room(location, roomSize);
