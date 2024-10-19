@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,7 +158,7 @@ MonoBehaviour:
   RoomPrefab: {fileID: 4907469481428772007, guid: b825f2c1cf4eefb4a893d41ddd58c429, type: 3}
   HallwayPrefab: {fileID: 4844219089626658800, guid: 2a6cef81b6f9d8f44af8430ef73d3908, type: 3}
   size: {x: 140, y: 140}
-  roomCount: 600
+  roomCount: 100
   EnemyRoomCount: 20
   ItemRoomCount: 20
   roomMaxSize: {x: 6, y: 6}
