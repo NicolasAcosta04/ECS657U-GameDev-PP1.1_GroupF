@@ -28,6 +28,8 @@ public class Generator : MonoBehaviour
     [SerializeField]
     GameObject PlayerPrefab;
     [SerializeField]
+    GameObject EnemyPrefab;
+    [SerializeField]
     GameObject StarterRoomPrefab;
     [SerializeField]
     GameObject ItemRoomPrefab;
@@ -140,7 +142,8 @@ public class Generator : MonoBehaviour
             }
         }
     }
-
+// The Win Room should only be placed once in a generation
+// Same Logic to PlaceRooms except for IsWinRoomPlaced Bool
     void PlaceWinRoom(){
         while (IsWinRoomPlaced == false) {
             Vector2Int location = new Vector2Int(
@@ -177,8 +180,8 @@ public class Generator : MonoBehaviour
             }
         }
     }
-
-    void PlaceEnemyRoom(){
+//Uses user input to determine how many rooms
+    void PlaceItemRoom(){
         int LoopCounter = 0;
         while (LoopCounter < ItemRoomCount) {
             Vector2Int location = new Vector2Int(
@@ -215,8 +218,7 @@ public class Generator : MonoBehaviour
             }
         }
     }
-
-     void PlaceItemRoom(){
+     void PlaceEnemyRoom(){
         int LoopCounter = 0;
         while (LoopCounter < EnemyRoomCount) {
             Vector2Int location = new Vector2Int(
@@ -245,6 +247,8 @@ public class Generator : MonoBehaviour
             if (add) {
                 rooms.Add(EnemySpawnRoom);
                 PlaceRoom(EnemySpawnRoom.bounds.position, EnemySpawnRoom.bounds.size, EnemySpawnRoomPrefab);
+                // Spawns enemies in the enemy spawn room
+                Instantiate(EnemyPrefab, new Vector3(location.x + roomSize.x / 2 + 0.5f, 0.5f, location.y + roomSize.y / 2 + 0.5f), Quaternion.identity);
 
                 foreach (var pos in EnemySpawnRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
