@@ -26,6 +26,8 @@ public class Generator : MonoBehaviour
     [SerializeField]
     int seed;
     [SerializeField]
+    GameObject PlayerPrefab;
+    [SerializeField]
     GameObject StarterRoomPrefab;
     [SerializeField]
     GameObject ItemRoomPrefab;
@@ -92,6 +94,8 @@ public class Generator : MonoBehaviour
         Room startingRoom = new Room(location, roomSize);
         rooms.Add(startingRoom);
         PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab);
+
+        Instantiate(PlayerPrefab, new Vector3(location.x + roomSize.x / 2, 0.5f, location.y + roomSize.y / 2), Quaternion.identity);
 
         foreach (var pos in startingRoom.bounds.allPositionsWithin) {
             grid[pos] = CellType.Room;
