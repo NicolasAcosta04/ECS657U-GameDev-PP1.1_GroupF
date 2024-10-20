@@ -6,10 +6,13 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
+
     private float moveSpeed;
-    public float walkSpeed;
-    public float jogSpeed;
+
+    [Header("Movement")]
+    public float depletedSpeed;
+    public float crouchingSpeed;
+    public float walkingSpeed;
     public float sprintSpeed;
 
     public float groundDrag;
@@ -17,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI speed;
 
     [Header("Keybinds")]
-    public KeyCode jogkey = KeyCode.LeftControl;
+    public KeyCode crouchingKey = KeyCode.LeftControl;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
@@ -38,10 +41,25 @@ public class PlayerMovement : MonoBehaviour
 
     public MovementState state;
 
+    [Header("Sprinting Cost")]
+    public UnityEngine.UI.Slider staminaBar;
+    private float sprintTimer = 0;
+    private int sprintConsumptionTime = 1;
+    private int staminaPoint = 1;
+
+    // The Depleted State
+    private float depletedTimer = 0;
+    private int depletedTimeframe = 8;
+
+    // Stamina Regeneration
+    private float staminaTimer = 0;
+    private int staminaDelay = 4;
+
     public enum MovementState
     {
+        Depleted,
+        Crouching,
         Walking,
-        Jogging,
         Sprinting
     }
 
@@ -51,6 +69,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         lastPos = transform.position;
+        staminaBar.value = 10;
     }
 
     // Update is called once per frame
@@ -81,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         lastPos = currentPos;
     }
 
-    private void MyInput() 
+    private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -89,28 +108,79 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        // Mode - jogging
-        if (Input.GetKey(jogkey))
+        // Mode - Crouching
+        if (Input.GetKey(crouchingKey) && staminaBar.value != 0)
         {
-            state = MovementState.Jogging;
-            moveSpeed = jogSpeed;
+            state = MovementState.Crouching;
+            moveSpeed = crouchingSpeed;
         }
-        // Mode - sprinting
-        else if (Input.GetKey(sprintKey))
+
+        // Mode - Sprinting
+        else if (Input.GetKey(sprintKey) && staminaBar.value != 0)
         {
             state = MovementState.Sprinting;
             moveSpeed = sprintSpeed;
+            sprintTimer += Time.deltaTime;
+
+            if (sprintTimer >= sprintConsumptionTime)
+            {
+                DecreaseStaminaValue();
+                sprintTimer = 0;
+            }
         }
-        // Mode - walking
+
+        // Mode - Depleted
+        else if (staminaBar.value == 0)
+        {
+            state = MovementState.Depleted;
+            moveSpeed = depletedSpeed;
+            depletedTimer += Time.deltaTime;
+            print(depletedTimer);
+            if (depletedTimer >= depletedTimeframe)
+            {
+                IncreaseStaminaValue();
+                depletedTimer = 0;
+            }
+        }
+
+        // Mode - Walking
         else
         {
             state = MovementState.Walking;
-            moveSpeed = walkSpeed;
+            moveSpeed = walkingSpeed;
+        }
+
+        // Stamina Regeneration
+        if (state != MovementState.Sprinting && state != MovementState.Depleted)
+        {
+            StaminaRegeneration();
         }
     }
 
+    private void StaminaRegeneration()
+    {
+        staminaTimer += Time.deltaTime;
+
+        // Stamina Regeneration Delay
+        if (staminaTimer >= staminaDelay)
+        {
+            IncreaseStaminaValue();
+            staminaTimer = 0;
+        }
+    }
+
+    private void IncreaseStaminaValue()
+    {
+        staminaBar.value += staminaPoint;
+    }
+
+    private void DecreaseStaminaValue()
+    {
+        staminaBar.value -= staminaPoint;
+    }
+
     private void MovePlayer()
-    { 
+    {
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -123,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
 
         // limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
-        { 
+        {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
