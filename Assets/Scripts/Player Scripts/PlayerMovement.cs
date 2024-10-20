@@ -28,33 +28,30 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    public Transform orientation;
-
-    float horizontalInput;
-    float verticalInput;
-
-    Vector3 moveDirection;
-
-    private Vector3 lastPos;
-
-    Rigidbody rb;
-
-    public MovementState state;
-
     [Header("Sprinting Cost")]
     public UnityEngine.UI.Slider staminaBar;
+    public int sprintConsumptionTime = 1;
     private float sprintTimer = 0;
-    private int sprintConsumptionTime = 1;
     private int staminaPoint = 1;
 
-    // The Depleted State
+    [Header("The Depleted State")]
+    public int depletedTimeframe = 8;
     private float depletedTimer = 0;
-    private int depletedTimeframe = 8;
 
-    // Stamina Regeneration
+    [Header("Stamina Regeneration")]
+    public int staminaDelay = 4;
     private float staminaTimer = 0;
-    private int staminaDelay = 4;
 
+    [Header("Transform Orientation")]
+    public Transform orientation;
+    float horizontalInput;
+    float verticalInput;
+    Vector3 moveDirection;
+    private Vector3 lastPos;
+    Rigidbody rb;
+
+    [Header("Movement States")]
+    public MovementState state;
     public enum MovementState
     {
         Depleted,

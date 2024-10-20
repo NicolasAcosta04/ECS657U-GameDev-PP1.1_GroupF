@@ -12,9 +12,9 @@ public class PlayerHealth : MonoBehaviour
     public UnityEngine.UI.Slider healthBar;
     private int incrementAmount = 1;
 
-    [Header("Consumption")]
-    public ActionState state;
-    public enum ActionState
+    [Header("Health States")]
+    public HealthState state;
+    public enum HealthState
     {
         Resting,
         Eating,
@@ -23,20 +23,20 @@ public class PlayerHealth : MonoBehaviour
     public KeyCode eatKey = KeyCode.Alpha2;
     public KeyCode drinkKey = KeyCode.Alpha3;
 
-    // Hunger Restore
-    bool firstInstanceHunger = true;
+    [Header("Hunger Restore")]
+    public int hungerDelay = 3;
+    private bool firstInstanceHunger = true;
     private float hungerTimer = 0;
-    private int hungerDelay = 3;
 
-    // Thirst Restore
-    bool firstInstanceThirst = true;
+    [Header("Thirst Restore")]
+    public int thirstDelay = 2;
+    private bool firstInstanceThirst = true;
     private float thirstTimer = 0;
-    private int thirstDelay = 2;
 
-    // Health Regeneration
-    bool firstInstanceHealth = true;
+    [Header("Health Regeneration")]
+    public int healthDelay = 6;
+    private bool firstInstanceHealth = true;
     private float healthTimer = 0;
-    private int healthDelay = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -61,23 +61,23 @@ public class PlayerHealth : MonoBehaviour
         thirstTimer += Time.deltaTime;
 
         // Mode - Eating
-        if (Input.GetKey(eatKey) && state != ActionState.Drinking)
+        if (Input.GetKey(eatKey) && state != HealthState.Drinking)
         {
-            state = ActionState.Eating;
+            state = HealthState.Eating;
             HungerRestore();
         }
 
         // Mode - Drinking
-        else if (Input.GetKey(drinkKey) && state != ActionState.Eating)
+        else if (Input.GetKey(drinkKey) && state != HealthState.Eating)
         {
-            state = ActionState.Drinking;
+            state = HealthState.Drinking;
             ThirstRestore();
         }
 
         // Mode - Resting
         else
         {
-            state = ActionState.Resting;
+            state = HealthState.Resting;
         }
     }
 
