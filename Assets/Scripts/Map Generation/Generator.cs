@@ -26,6 +26,10 @@ public class Generator : MonoBehaviour
     [SerializeField]
     int seed;
     [SerializeField]
+    GameObject FoodPrefab;
+    [SerializeField]
+    GameObject WaterPrefab;
+    [SerializeField]
     GameObject PlayerPrefab;
     [SerializeField]
     GameObject EnemyPrefab;
@@ -210,6 +214,11 @@ public class Generator : MonoBehaviour
             if (add) {
                 rooms.Add(ItemRoom);
                 PlaceRoom(ItemRoom.bounds.position, ItemRoom.bounds.size, ItemRoomPrefab);
+
+                GameObject[] prefabs = { FoodPrefab, WaterPrefab };
+                GameObject randomPrefab = prefabs[UnityEngine.Random.Range(0, prefabs.Length)];
+                Instantiate(randomPrefab, new Vector3(location.x + roomSize.x / 2 + 0.5f, 0.5f, location.y + roomSize.y / 2 + 0.5f), Quaternion.identity);
+
 
                 foreach (var pos in ItemRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
