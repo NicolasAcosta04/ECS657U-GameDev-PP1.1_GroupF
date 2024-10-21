@@ -28,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
     [Header("Hunger Restore")]
     public TextMeshProUGUI eatingCD;
     public TextMeshProUGUI foodItem;
+    public int foodItemValue = 3;
     public int foodQuantity = 3;
     public float hungerDelay = 0.5f;
     private bool firstInstanceHunger = true;
@@ -36,22 +37,23 @@ public class PlayerHealth : MonoBehaviour
     [Header("Thirst Restore")]
     public TextMeshProUGUI drinkingCD;
     public TextMeshProUGUI waterItem;
+    public int waterItemValue = 5;
     public int waterQuantity = 3;
     public float thirstDelay = 0.5f;
     private bool firstInstanceThirst = true;
     private float thirstTimer = 0;
 
     [Header("Health Regeneration")]
-    public int healthDelay = 2;
+    public int healthDelay = 3;
     private bool firstInstanceHealth = true;
     private float healthTimer = 0;
 
     [Header("Starving")]
-    public int starvingConsumptionTime = 15;
+    public int starvingConsumptionTime = 18;
     private float starvingTimer = 0;
 
     [Header("Thirsting")]
-    public int thirstingConsumptionTime = 12;
+    public int thirstingConsumptionTime = 15;
     private float thirstingTimer = 0;
 
     [Header("The Hungry State")]
@@ -61,9 +63,9 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        thirstBar.value = 3;
-        hungerBar.value = 2;
-        healthBar.value = 5;
+        thirstBar.value = 8;
+        hungerBar.value = 6;
+        healthBar.value = 10;
     }
 
     // Update is called once per frame
@@ -209,18 +211,19 @@ public class PlayerHealth : MonoBehaviour
         if (colissionInfo.collider.name == "FoodObj(Clone)")
         {
             Destroy(colissionInfo.collider);
-            IncreaseFoodValue();
-            IncreaseFoodValue();
-            IncreaseFoodValue();
+            for (int i = 0; i < foodItemValue; i++)
+            {
+                IncreaseFoodValue();
+            }
         }
 
         if (colissionInfo.collider.name == "WaterObj(Clone)")
         {
             Destroy(colissionInfo.collider);
-            IncreaseWaterValue();
-            IncreaseWaterValue();
-            IncreaseWaterValue();
-            IncreaseWaterValue();
+            for (int i = 0; i < waterItemValue; i++)
+            {
+                IncreaseWaterValue();
+            }
         }
 
         if (colissionInfo.collider.name == "EnemyObj(Clone)")
@@ -228,6 +231,13 @@ public class PlayerHealth : MonoBehaviour
             DecreaseHealthValue();
             DecreaseStaminaValue();
             DecreaseStaminaValue();
+        }
+
+        Debug.Log(colissionInfo.collider.name);
+
+        if (colissionInfo.collider.name == "Room(Clone)")
+        {
+            DecreaseHealthValue();
         }
     }
 
