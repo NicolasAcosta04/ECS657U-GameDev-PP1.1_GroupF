@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 using Graphs;
+using Unity.AI.Navigation;
 
 public class Generator : MonoBehaviour
 {
@@ -65,6 +66,29 @@ public class Generator : MonoBehaviour
     void Start()
     {
         Generate();
+        // Bake NavMeshSurface after level is generated
+        GenerateMesh();
+
+    }
+
+    void GenerateMesh() {
+        GetComponent<NavMeshSurface>().BuildNavMesh();
+        GameObject[] objWalls = GameObject.FindGameObjectsWithTag("Wall");
+        GameObject[] objCeiling = GameObject.FindGameObjectsWithTag("Ceiling");
+        foreach (GameObject objWall in objWalls) {
+            NavMeshSurface[] wallMeshList = objWall.GetComponents<NavMeshSurface>();
+            foreach (NavMeshSurface mesh in wallMeshList) {
+                mesh.RemoveData();
+            }
+        }
+        foreach (GameObject ceiling in objCeiling) {
+            NavMeshSurface[] ceilingMeshList = ceiling.GetComponents<NavMeshSurface>();
+            print(ceilingMeshList[0]);
+            foreach (NavMeshSurface mesh in ceilingMeshList) {
+                print(mesh);
+                mesh.RemoveData();
+            }
+        }
     }
 
     void Generate(){
