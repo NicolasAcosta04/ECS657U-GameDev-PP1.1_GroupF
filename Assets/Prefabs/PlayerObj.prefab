@@ -2186,7 +2186,7 @@ MonoBehaviour:
   depletedTimeframe: 8
   thirstBar: {fileID: 7758619362132307304}
   stopStaminaRegeneration: 0
-  staminaDelay: 2
+  staminaDelay: 1
   orientation: {fileID: 3781493042604646924}
   state: 0
 --- !u!114 &2101791391945483497
