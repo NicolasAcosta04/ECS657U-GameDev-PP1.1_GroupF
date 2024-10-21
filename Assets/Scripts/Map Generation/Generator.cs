@@ -75,16 +75,22 @@ public class Generator : MonoBehaviour
         GetComponent<NavMeshSurface>().BuildNavMesh();
         GameObject[] objWalls = GameObject.FindGameObjectsWithTag("Wall");
         GameObject[] objCeiling = GameObject.FindGameObjectsWithTag("Ceiling");
-        foreach (GameObject objWall in objWalls) {
-            NavMeshSurface[] wallMeshList = objWall.GetComponents<NavMeshSurface>();
-            foreach (NavMeshSurface mesh in wallMeshList) {
-                mesh.RemoveData();
-            }
-        }
-        foreach (GameObject ceiling in objCeiling) {
+        //print(objCeiling[0].GetComponents<NavMeshSurface>().ToString());
+        //foreach (GameObject objWall in objWalls) {
+        //    NavMeshSurface[] wallMeshList = objWall.GetComponents<NavMeshSurface>();
+        //    foreach (NavMeshSurface mesh in wallMeshList) {
+        //        mesh.RemoveData();
+        //    }
+        //}
+        foreach (GameObject ceiling in objCeiling)
+        {
+            //Transform ceilingTransform = ceiling.transform;
+            //ceilingTransform.gameObject.SetActive(false);
+            print(ceiling.ToString());
             NavMeshSurface[] ceilingMeshList = ceiling.GetComponents<NavMeshSurface>();
             print(ceilingMeshList[0]);
-            foreach (NavMeshSurface mesh in ceilingMeshList) {
+            foreach (NavMeshSurface mesh in ceilingMeshList)
+            {
                 print(mesh);
                 mesh.RemoveData();
             }
