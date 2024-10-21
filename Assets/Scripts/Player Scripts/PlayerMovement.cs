@@ -6,18 +6,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    private float moveSpeed;
-
-    [Header("Movement")]
+    [Header("Speed")]
+    public TextMeshProUGUI speed;
     public float depletedSpeed;
     public float crouchingSpeed;
     public float walkingSpeed;
     public float sprintSpeed;
-
     public float groundDrag;
 
-    public TextMeshProUGUI speed;
+    private float moveSpeed;
 
     [Header("Keybinds")]
     public KeyCode crouchingKey = KeyCode.LeftControl;
@@ -28,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    [Header("Sprinting Cost")]
+    [Header("The Sprinting State")]
     public UnityEngine.UI.Slider staminaBar;
     public int sprintConsumptionTime = 1;
     private float sprintTimer = 0;
@@ -38,8 +35,12 @@ public class PlayerMovement : MonoBehaviour
     public int depletedTimeframe = 8;
     private float depletedTimer = 0;
 
+    [Header("The Dehydrated State")]
+    public UnityEngine.UI.Slider thirstBar;
+    public bool stopStaminaRegeneration = false;
+
     [Header("Stamina Regeneration")]
-    public int staminaDelay = 4;
+    public int staminaDelay = 2;
     private float staminaTimer = 0;
 
     [Header("Transform Orientation")]
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -78,23 +79,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-
-        // handle drag
-
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
-    }
-
-    private void FixedUpdate()
-    {
         MovePlayer();
-        var currentPos = transform.position;
-        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
-        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
-
-        lastPos = currentPos;
     }
 
     private void MyInput()
@@ -132,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.Depleted;
             moveSpeed = depletedSpeed;
             depletedTimer += Time.deltaTime;
-            print(depletedTimer);
+
             if (depletedTimer >= depletedTimeframe)
             {
                 IncreaseStaminaValue();
@@ -147,8 +132,20 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = walkingSpeed;
         }
 
+        // Dehydrated
+        if (thirstBar.value == 0)
+        {
+            stopStaminaRegeneration = true;
+        }
+
+        // Out of Dehydration
+        if (thirstBar.value > 0)
+        {
+            stopStaminaRegeneration = false;
+        }
+
         // Stamina Regeneration
-        if (state != MovementState.Sprinting && state != MovementState.Depleted)
+        if (state != MovementState.Sprinting && state != MovementState.Depleted && stopStaminaRegeneration == false)
         {
             StaminaRegeneration();
         }
@@ -164,16 +161,6 @@ public class PlayerMovement : MonoBehaviour
             IncreaseStaminaValue();
             staminaTimer = 0;
         }
-    }
-
-    private void IncreaseStaminaValue()
-    {
-        staminaBar.value += staminaPoint;
-    }
-
-    private void DecreaseStaminaValue()
-    {
-        staminaBar.value -= staminaPoint;
     }
 
     private void MovePlayer()
@@ -194,5 +181,26 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+
+        // Handle Drag
+        if (grounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+
+        // Speed Variable User Interface
+        var currentPos = transform.position;
+        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
+        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
+        lastPos = currentPos;
+    }
+    private void IncreaseStaminaValue()
+    {
+        staminaBar.value += staminaPoint;
+    }
+
+    private void DecreaseStaminaValue()
+    {
+        staminaBar.value -= staminaPoint;
     }
 }
