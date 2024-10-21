@@ -602,7 +602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2425767904421369920}
   - component: {fileID: 4634174250853180250}
-  - component: {fileID: 3773525641689859549}
+  - component: {fileID: 7047742838306584305}
   m_Layer: 0
   m_Name: WinRoom
   m_TagString: Untagged
@@ -649,7 +649,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0.5, y: 0.5, z: 0.5}
---- !u!114 &3773525641689859549
+--- !u!114 &7047742838306584305
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -658,7 +658,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6456120626507403798}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3124c9c0c0688a04fae22c968c823359, type: 3}
+  m_Script: {fileID: 11500000, guid: 60929f5912796454eb161b2bae535858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6898758776726410255

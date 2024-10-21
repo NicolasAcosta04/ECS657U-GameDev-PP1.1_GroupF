@@ -272,7 +272,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1301987774}
-        m_TargetAssemblyTypeName: VictoryScript, Assembly-CSharp
+        m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: MainMenu
         m_Mode: 1
         m_Arguments:
@@ -765,7 +765,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1301987774}
-        m_TargetAssemblyTypeName: VictoryScript, Assembly-CSharp
+        m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: Restart
         m_Mode: 1
         m_Arguments:
@@ -926,7 +926,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1301987769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75a55a46a47caf64594f43ecb97ddf46, type: 3}
+  m_Script: {fileID: 11500000, guid: 60929f5912796454eb161b2bae535858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1713784709
