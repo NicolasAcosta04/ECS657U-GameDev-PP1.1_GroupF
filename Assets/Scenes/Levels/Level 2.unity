@@ -256,7 +256,7 @@ MonoBehaviour:
   HallwayPrefab: {fileID: 4844219089626658800, guid: a57f01341dbcb46488c61deafe200ab7, type: 3}
   size: {x: 70, y: 70}
   roomCount: 400
-  EnemyRoomCount: 30
+  EnemyRoomCount: 35
   ItemRoomCount: 40
   roomMaxSize: {x: 6, y: 6}
 --- !u!4 &2105552404

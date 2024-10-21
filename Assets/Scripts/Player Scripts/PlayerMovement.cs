@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public int depletedTimeframe = 8;
     private float depletedTimer = 0;
 
-    [Header("The Dehydrated State")]
+    [Header("Dehydrated")]
     public UnityEngine.UI.Slider thirstBar;
     public bool stopStaminaRegeneration = false;
 

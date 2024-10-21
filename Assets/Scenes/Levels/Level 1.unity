@@ -257,7 +257,7 @@ MonoBehaviour:
   size: {x: 70, y: 70}
   roomCount: 300
   EnemyRoomCount: 15
-  ItemRoomCount: 20
+  ItemRoomCount: 25
   roomMaxSize: {x: 6, y: 6}
 --- !u!4 &1576173929
 Transform:
