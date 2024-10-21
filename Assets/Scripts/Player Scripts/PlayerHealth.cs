@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -12,9 +13,9 @@ public class PlayerHealth : MonoBehaviour
     public UnityEngine.UI.Slider healthBar;
     private int incrementAmount = 1;
 
-    [Header("Health States")]
-    public HealthState state;
-    public enum HealthState
+    [Header("Action States")]
+    public ActionState stateA;
+    public enum ActionState
     {
         Resting,
         Eating,
@@ -38,46 +39,130 @@ public class PlayerHealth : MonoBehaviour
     private bool firstInstanceHealth = true;
     private float healthTimer = 0;
 
+    [Header("Health States")]
+    public HealthState stateB;
+    public enum HealthState
+    {
+        Healthy,
+        Thirsty,
+        Hungry,
+        Dead
+    }
+
+    [Header("Starving")]
+    public int starvingConsumptionTime = 10;
+    private float starvingTimer = 0;
+
+    [Header("Hungry State")]
+    public int hungryConsumptionTime = 4;
+    private float hungryTimer = 0;
+
+    // [Header("Thirsty State")]
+    // public int thirstyConsumptionTime = 4;
+    // private float thirstyTimer = 0;
+    // public bool stopStaminaRegeneration = false;
+
     // Start is called before the first frame update
     void Start()
     {
         thirstBar.value = 8;
-        hungerBar.value = 8;
-        healthBar.value = 1;
+        hungerBar.value = 0;
+        healthBar.value = 4;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        HealthRegeneration();
-        ActionHandler();
+        ActionStateHandler();
+        HealthStateHandler();
     }
 
-    private void ActionHandler()
+    private void ActionStateHandler()
     {
         // Survival Timers
         hungerTimer += Time.deltaTime;
         thirstTimer += Time.deltaTime;
 
         // Mode - Eating
-        if (Input.GetKey(eatKey) && state != HealthState.Drinking)
+        if (Input.GetKey(eatKey) && stateA != ActionState.Drinking)
         {
-            state = HealthState.Eating;
+            stateA = ActionState.Eating;
             HungerRestore();
         }
 
         // Mode - Drinking
-        else if (Input.GetKey(drinkKey) && state != HealthState.Eating)
+        else if (Input.GetKey(drinkKey) && stateA != ActionState.Eating)
         {
-            state = HealthState.Drinking;
+            stateA = ActionState.Drinking;
             ThirstRestore();
         }
 
         // Mode - Resting
         else
         {
-            state = HealthState.Resting;
+            stateA = ActionState.Resting;
+        }
+
+        if (thirstBar.value == thirstBar.maxValue && hungerBar.value == thirstBar.maxValue)
+        {
+            HealthRegeneration();
+        }
+    }
+
+    private void HealthStateHandler()
+    {
+        // Mode - Hungry
+        if (hungerBar.value == 0)
+        {
+            stateB = HealthState.Hungry;
+            hungryTimer += Time.deltaTime;
+            if (hungryTimer >= hungryConsumptionTime)
+            {
+                DecreaseHealthValue();
+                hungryTimer = 0;
+            }
+        }
+
+        // Mode - Thirsty
+        // else if (thirstBar.value == 0)
+        // {
+        //     stateB = HealthState.Thirsty;
+        //     thirstyTimer += Time.deltaTime;
+        //     if (thirstyTimer >= thirstyConsumptionTime)
+        //     {
+        //         stopStaminaRegeneration = true;
+        //         thirstyTimer = 0;
+        //     }
+        // }
+
+        // Mode - Hungry
+        if (healthBar.value == 0)
+        {
+            stateB = HealthState.Dead;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SceneManager.LoadScene("Game Over");
+        }
+
+        // // Mode - Healthy
+        // else
+        // {
+        //     state = HealthState.Healthy;
+        // }
+
+        // Health Regeneration
+        if (thirstBar.value == thirstBar.maxValue && hungerBar.value == thirstBar.maxValue)
+        {
+            HealthRegeneration();
+        }
+
+        starvingTimer += Time.deltaTime;
+        // Starving 
+        if (starvingTimer >= starvingConsumptionTime)
+        {
+            DecreaseHungerValue();
+            starvingTimer = 0;
         }
     }
 
@@ -121,29 +206,30 @@ public class PlayerHealth : MonoBehaviour
 
     private void HealthRegeneration()
     {
-        if (thirstBar.value == thirstBar.maxValue && hungerBar.value == thirstBar.maxValue)
+        // Initial Health Restore
+        if (firstInstanceHealth == true)
         {
-            // Initial Health Restore
-            if (firstInstanceHealth == true)
-            {
-                IncreaseHealthValue();
-                firstInstanceHealth = false;
-            }
+            IncreaseHealthValue();
+            firstInstanceHealth = false;
+        }
 
-            healthTimer += Time.deltaTime;
+        healthTimer += Time.deltaTime;
 
-            // Health Regeneration Delay
-            if (healthTimer >= healthDelay)
-            {
-                IncreaseHealthValue();
-                healthTimer = 0;
-            }
+        // Health Regeneration Delay
+        if (healthTimer >= healthDelay)
+        {
+            IncreaseHealthValue();
+            healthTimer = 0;
         }
     }
 
     private void IncreaseHungerValue()
     {
         hungerBar.value += incrementAmount;
+    }
+    private void DecreaseHungerValue()
+    {
+        hungerBar.value -= incrementAmount;
     }
     private void IncreaseThirstValue()
     {
@@ -152,5 +238,9 @@ public class PlayerHealth : MonoBehaviour
     private void IncreaseHealthValue()
     {
         healthBar.value += incrementAmount;
+    }
+    private void DecreaseHealthValue()
+    {
+        healthBar.value -= incrementAmount;
     }
 }

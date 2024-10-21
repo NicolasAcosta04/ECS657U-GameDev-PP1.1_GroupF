@@ -1057,7 +1057,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 12
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1667,12 +1667,15 @@ MonoBehaviour:
   thirstBar: {fileID: 7758619362132307304}
   hungerBar: {fileID: 7424018660400521413}
   healthBar: {fileID: 4101974474686239561}
-  state: 0
+  stateA: 0
   eatKey: 50
   drinkKey: 51
   hungerDelay: 3
   thirstDelay: 2
   healthDelay: 6
+  stateB: 0
+  starvingConsumptionTime: 10
+  hungryConsumptionTime: 4
 --- !u!54 &5213864076814690762
 Rigidbody:
   m_ObjectHideFlags: 0
