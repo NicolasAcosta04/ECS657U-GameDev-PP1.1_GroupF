@@ -61,7 +61,9 @@ public class MainMenuScript : MonoBehaviour
 
     public void EasyButton(){
         if (GeneralSettings.Instance != null){
-
+            
+            GeneralSettings.Instance.sensX = 5;
+            GeneralSettings.Instance.sensY = 5;
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 75;
             GeneralSettings.Instance.EnemyRoomCount = 1;
@@ -72,6 +74,8 @@ public class MainMenuScript : MonoBehaviour
     public void MediumButton(){
         if (GeneralSettings.Instance != null){
 
+            GeneralSettings.Instance.sensX = 5;
+            GeneralSettings.Instance.sensY = 5;
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 150;
             GeneralSettings.Instance.EnemyRoomCount = 5;
@@ -82,6 +86,8 @@ public class MainMenuScript : MonoBehaviour
     public void HardButton(){
         if (GeneralSettings.Instance != null){
 
+            GeneralSettings.Instance.sensX = 5;
+            GeneralSettings.Instance.sensY = 5;
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 300;
             GeneralSettings.Instance.EnemyRoomCount = 20;
