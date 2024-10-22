@@ -5,7 +5,7 @@ using Random = System.Random;
 using Graphs;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
-using static UnityEditor.FilePathAttribute;
+//using static UnityEditor.FilePathAttribute;
 
 public class Generator : MonoBehaviour
 {
