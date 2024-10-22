@@ -4,6 +4,8 @@ using UnityEngine;
 using Random = System.Random;
 using Graphs;
 using Unity.AI.Navigation;
+using UnityEngine.AI;
+using static UnityEditor.FilePathAttribute;
 
 public class Generator : MonoBehaviour
 {
@@ -53,7 +55,8 @@ public class Generator : MonoBehaviour
     [SerializeField]
     Vector2Int roomMaxSize;
     [SerializeField]
-    
+    NavMeshSurface surface;
+
 
     Random random;
     Grid2D<CellType> grid;
@@ -65,39 +68,19 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Generate();
+        var spawnInfo = Generate();
         // Bake NavMeshSurface after level is generated
         GenerateMesh();
+        InstantiateCharacters(spawnInfo.Item1, spawnInfo.Item2);
 
     }
 
     void GenerateMesh() {
-        GetComponent<NavMeshSurface>().BuildNavMesh();
-        GameObject[] objWalls = GameObject.FindGameObjectsWithTag("Wall");
-        GameObject[] objCeiling = GameObject.FindGameObjectsWithTag("Ceiling");
-        //print(objCeiling[0].GetComponents<NavMeshSurface>().ToString());
-        //foreach (GameObject objWall in objWalls) {
-        //    NavMeshSurface[] wallMeshList = objWall.GetComponents<NavMeshSurface>();
-        //    foreach (NavMeshSurface mesh in wallMeshList) {
-        //        mesh.RemoveData();
-        //    }
-        //}
-        foreach (GameObject ceiling in objCeiling)
-        {
-            //Transform ceilingTransform = ceiling.transform;
-            //ceilingTransform.gameObject.SetActive(false);
-            print(ceiling.ToString());
-            NavMeshSurface[] ceilingMeshList = ceiling.GetComponents<NavMeshSurface>();
-            print(ceilingMeshList[0]);
-            foreach (NavMeshSurface mesh in ceilingMeshList)
-            {
-                print(mesh);
-                mesh.RemoveData();
-            }
-        }
+        surface = GetComponent<NavMeshSurface>();
+        surface.BuildNavMesh();
     }
 
-    void Generate(){
+    ((Vector2Int, Vector2Int), (Vector2Int, Vector2Int)[]) Generate(){
         if (seed == 0) {
         seed = System.DateTime.Now.Millisecond;
         }
@@ -105,17 +88,34 @@ public class Generator : MonoBehaviour
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
         rooms = new List<Room>();
 
-        PlaceStarterRoom();
+        var pSpawnInfo = PlaceStarterRoom();
         PlaceWinRoom();
-        PlaceEnemyRoom();
+        var eSpawnInfo = PlaceEnemyRoom();
         PlaceItemRoom();
         PlaceRooms();
         Triangulate();
         CreateHallways();
         PathfindHallways();
+
+        return (pSpawnInfo, eSpawnInfo);
     }
 
-    void PlaceStarterRoom(){
+    //Spawns all characters after the NavMesh is generated
+    void InstantiateCharacters((Vector2Int, Vector2Int) pSpawnInfo, (Vector2Int, Vector2Int)[] eSpawnInfo)
+    {
+        //Spawns the player
+        Instantiate(PlayerPrefab, new Vector3(pSpawnInfo.Item1.x + pSpawnInfo.Item2.x / 2, 0.5f, pSpawnInfo.Item1.y + pSpawnInfo.Item2.y / 2), Quaternion.identity);
+        foreach (var item in eSpawnInfo)
+        {
+            // Spawns enemies in the enemy spawn room
+            Vector3 spawnPosition = new Vector3(item.Item1.x + item.Item2.x / 2 + 0.5f, 0.1f, item.Item1.y + item.Item2.y / 2 + 0.5f);
+            NavMesh.SamplePosition(spawnPosition, out NavMeshHit hit, 10f, 1);
+            Instantiate(EnemyPrefab, hit.position, Quaternion.identity);
+        }
+    }
+
+    //returns location and roomSize info to spawn the player after the NavMesh is generated
+    (Vector2Int, Vector2Int) PlaceStarterRoom(){
         Vector2Int location = new Vector2Int(
         size.x / 2 - roomMaxSize.x / 2, 
         size.y / 2 - roomMaxSize.y / 2
@@ -127,11 +127,11 @@ public class Generator : MonoBehaviour
         rooms.Add(startingRoom);
         PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab);
 
-        Instantiate(PlayerPrefab, new Vector3(location.x + roomSize.x / 2, 0.5f, location.y + roomSize.y / 2), Quaternion.identity);
-
         foreach (var pos in startingRoom.bounds.allPositionsWithin) {
             grid[pos] = CellType.Room;
         }
+
+        return (location, roomSize);
     }
 
     void PlaceRooms() {
@@ -248,8 +248,11 @@ public class Generator : MonoBehaviour
             }
         }
     }
-     void PlaceEnemyRoom(){
+
+    //returns location and roomSize info to spawn the enemies after the NavMesh is generated
+    (Vector2Int, Vector2Int)[] PlaceEnemyRoom(){
         int LoopCounter = 0;
+        (Vector2Int, Vector2Int)[] spawnInfo = new (Vector2Int, Vector2Int)[EnemyRoomCount];
         while (LoopCounter < EnemyRoomCount) {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
@@ -277,15 +280,14 @@ public class Generator : MonoBehaviour
             if (add) {
                 rooms.Add(EnemySpawnRoom);
                 PlaceRoom(EnemySpawnRoom.bounds.position, EnemySpawnRoom.bounds.size, EnemySpawnRoomPrefab);
-                // Spawns enemies in the enemy spawn room
-                Instantiate(EnemyPrefab, new Vector3(location.x + roomSize.x / 2 + 0.5f, 0.5f, location.y + roomSize.y / 2 + 0.5f), Quaternion.identity);
-
                 foreach (var pos in EnemySpawnRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
                 }
+                spawnInfo[LoopCounter] = (location, roomSize);
                 LoopCounter ++;
             }
         }
+        return spawnInfo;
     }   
 
     void Triangulate() {
