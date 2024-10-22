@@ -7,6 +7,7 @@ TagManager:
   - PlayerObj
   - Wall
   - Ceiling
+  - Room
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,8 @@ TagManager:
   - Water
   - UI
   - whatIsGround
+  - Floor
+  - whatIsPlayer
   - Ceiling
   - 
   - 
