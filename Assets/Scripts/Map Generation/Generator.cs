@@ -68,6 +68,19 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GeneralSettings.Instance != null){
+
+            Debug.Log($"Seed: {GeneralSettings.Instance.Seed}");
+            Debug.Log($"Room Count: {GeneralSettings.Instance.RoomCount}");
+            Debug.Log($"Enemy Room Count: {GeneralSettings.Instance.EnemyRoomCount}");
+            Debug.Log($"Item Room Count: {GeneralSettings.Instance.ItemRoomCount}");
+
+            seed = GeneralSettings.Instance.Seed;
+            roomCount = GeneralSettings.Instance.RoomCount;
+            EnemyRoomCount = GeneralSettings.Instance.EnemyRoomCount;
+            ItemRoomCount = GeneralSettings.Instance.ItemRoomCount;
+        }
+
         Generate();
     }
 

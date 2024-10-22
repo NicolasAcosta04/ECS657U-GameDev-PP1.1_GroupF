@@ -2212,15 +2212,15 @@ MonoBehaviour:
   foodItem: {fileID: 3076802976609467316}
   foodItemValue: 2
   foodQuantity: 3
-  hungerDelay: 0.5
+  hungerDelay: 0.1
   drinkingCD: {fileID: 7794648622302328520}
   waterItem: {fileID: 3828716955668276217}
   waterItemValue: 5
   waterQuantity: 5
-  thirstDelay: 0.5
+  thirstDelay: 0.1
   healthDelay: 3
   starvingConsumptionTime: 15
-  thirstingConsumptionTime: 12
+  thirstingConsumptionTime: 13
   hungryConsumptionTime: 4
 --- !u!54 &5213864076814690762
 Rigidbody:
