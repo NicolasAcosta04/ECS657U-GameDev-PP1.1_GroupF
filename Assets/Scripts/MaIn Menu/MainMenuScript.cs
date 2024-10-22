@@ -15,6 +15,8 @@ public class MainMenuScript : MonoBehaviour
     GameObject CustomSettingsPanel;
     [SerializeField] 
     GameObject SettingsPanel;
+    [SerializeField] 
+    GameObject HelpPanel;
     [SerializeField]
     TMP_InputField seedInputField;
     [SerializeField]
@@ -35,12 +37,14 @@ public class MainMenuScript : MonoBehaviour
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(false);
         SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
     }
     public void PlayGame(){
         MainMenuPanel.SetActive(false);
         PlayGamePanel.SetActive(true);
         CustomSettingsPanel.SetActive(false);
         SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
     }
 
     public void CustomSettings(){
@@ -48,6 +52,7 @@ public class MainMenuScript : MonoBehaviour
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(true);
         SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
     }
 
     public void Settings(){
@@ -55,13 +60,21 @@ public class MainMenuScript : MonoBehaviour
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(false);
         SettingsPanel.SetActive(true);
+        HelpPanel.SetActive(false);
+    }
+    public void Help(){
+        MainMenuPanel.SetActive(false);
+        PlayGamePanel.SetActive(false);
+        CustomSettingsPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(true);
     }
 
     // store items in general settings
 
     public void EasyButton(){
         if (GeneralSettings.Instance != null){
-            
+
             GeneralSettings.Instance.sensX = 5;
             GeneralSettings.Instance.sensY = 5;
             GeneralSettings.Instance.Seed = 0;
@@ -93,6 +106,13 @@ public class MainMenuScript : MonoBehaviour
             GeneralSettings.Instance.EnemyRoomCount = 20;
             GeneralSettings.Instance.ItemRoomCount = 20;
 
+        }
+    }
+
+    public void DefaultSensitivityVal(){
+        if (GeneralSettings.Instance != null){
+            GeneralSettings.Instance.sensX = 5;
+            GeneralSettings.Instance.sensY = 5;
         }
     }
 

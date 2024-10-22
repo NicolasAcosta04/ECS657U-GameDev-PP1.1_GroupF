@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         lastPos = transform.position;
-        staminaBar.value = 10;
+        staminaBar.value = 20;
     }
 
     // Update is called once per frame
