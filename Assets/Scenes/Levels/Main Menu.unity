@@ -3292,18 +3292,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1301987775}
-        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: DefaultSensitivityVal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1301987774}
         m_TargetAssemblyTypeName: SceneManage, Assembly-CSharp
         m_MethodName: PlayGame
@@ -7018,8 +7006,8 @@ MonoBehaviour:
   RoomCount: 0
   EnemyRoomCount: 0
   ItemRoomCount: 0
-  sensX: 0
-  sensY: 0
+  sensX: 5
+  sensY: 5
 --- !u!4 &1607780657
 Transform:
   m_ObjectHideFlags: 0
