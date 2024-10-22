@@ -6,18 +6,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
-    private float moveSpeed;
-    public float walkSpeed;
-    public float jogSpeed;
+    [Header("Speed")]
+    public TextMeshProUGUI speed;
+    public float depletedSpeed;
+    public float crouchingSpeed;
+    public float walkingSpeed;
     public float sprintSpeed;
-
     public float groundDrag;
 
-    public TextMeshProUGUI speed;
+    private float moveSpeed;
 
     [Header("Keybinds")]
-    public KeyCode jogkey = KeyCode.LeftControl;
+    public KeyCode crouchingKey = KeyCode.LeftControl;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
@@ -25,23 +25,39 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    public Transform orientation;
+    [Header("The Sprinting State")]
+    public UnityEngine.UI.Slider staminaBar;
+    public int sprintConsumptionTime = 1;
+    private float sprintTimer = 0;
+    private int staminaPoint = 1;
 
+    [Header("The Depleted State")]
+    public int depletedTimeframe = 8;
+    private float depletedTimer = 0;
+
+    [Header("Dehydrated")]
+    public UnityEngine.UI.Slider thirstBar;
+    public bool stopStaminaRegeneration = false;
+
+    [Header("Stamina Regeneration")]
+    public int staminaDelay = 2;
+    private float staminaTimer = 0;
+
+    [Header("Transform Orientation")]
+    public Transform orientation;
     float horizontalInput;
     float verticalInput;
-
     Vector3 moveDirection;
-
     private Vector3 lastPos;
-
     Rigidbody rb;
 
+    [Header("Movement States")]
     public MovementState state;
-
     public enum MovementState
     {
+        Depleted,
+        Crouching,
         Walking,
-        Jogging,
         Sprinting
     }
 
@@ -51,10 +67,11 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         lastPos = transform.position;
+        staminaBar.value = 10;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
@@ -62,26 +79,10 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
-
-        // handle drag
-
-        if (grounded)
-            rb.drag = groundDrag;
-        else
-            rb.drag = 0;
-    }
-
-    private void FixedUpdate()
-    {
         MovePlayer();
-        var currentPos = transform.position;
-        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
-        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
-
-        lastPos = currentPos;
     }
 
-    private void MyInput() 
+    private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
@@ -89,28 +90,81 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler()
     {
-        // Mode - jogging
-        if (Input.GetKey(jogkey))
+        // Mode - Crouching
+        if (Input.GetKey(crouchingKey) && staminaBar.value != 0)
         {
-            state = MovementState.Jogging;
-            moveSpeed = jogSpeed;
+            state = MovementState.Crouching;
+            moveSpeed = crouchingSpeed;
         }
-        // Mode - sprinting
-        else if (Input.GetKey(sprintKey))
+
+        // Mode - Sprinting
+        else if (Input.GetKey(sprintKey) && staminaBar.value != 0)
         {
             state = MovementState.Sprinting;
             moveSpeed = sprintSpeed;
+            sprintTimer += Time.deltaTime;
+
+            if (sprintTimer >= sprintConsumptionTime)
+            {
+                DecreaseStaminaValue();
+                sprintTimer = 0;
+            }
         }
-        // Mode - walking
+
+        // Mode - Depleted
+        else if (staminaBar.value == 0)
+        {
+            state = MovementState.Depleted;
+            moveSpeed = depletedSpeed;
+            depletedTimer += Time.deltaTime;
+
+            if (depletedTimer >= depletedTimeframe)
+            {
+                IncreaseStaminaValue();
+                depletedTimer = 0;
+            }
+        }
+
+        // Mode - Walking
         else
         {
             state = MovementState.Walking;
-            moveSpeed = walkSpeed;
+            moveSpeed = walkingSpeed;
+        }
+
+        // Dehydrated
+        if (thirstBar.value == 0)
+        {
+            stopStaminaRegeneration = true;
+        }
+
+        // Out of Dehydration
+        if (thirstBar.value > 0)
+        {
+            stopStaminaRegeneration = false;
+        }
+
+        // Stamina Regeneration
+        if (state != MovementState.Sprinting && state != MovementState.Depleted && stopStaminaRegeneration == false)
+        {
+            StaminaRegeneration();
+        }
+    }
+
+    private void StaminaRegeneration()
+    {
+        staminaTimer += Time.deltaTime;
+
+        // Stamina Regeneration Delay
+        if (staminaTimer >= staminaDelay)
+        {
+            IncreaseStaminaValue();
+            staminaTimer = 0;
         }
     }
 
     private void MovePlayer()
-    { 
+    {
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
@@ -123,9 +177,30 @@ public class PlayerMovement : MonoBehaviour
 
         // limit velocity if needed
         if (flatVel.magnitude > moveSpeed)
-        { 
+        {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+
+        // Handle Drag
+        if (grounded)
+            rb.drag = groundDrag;
+        else
+            rb.drag = 0;
+
+        // Speed Variable User Interface
+        var currentPos = transform.position;
+        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
+        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
+        lastPos = currentPos;
+    }
+    private void IncreaseStaminaValue()
+    {
+        staminaBar.value += staminaPoint;
+    }
+
+    private void DecreaseStaminaValue()
+    {
+        staminaBar.value -= staminaPoint;
     }
 }

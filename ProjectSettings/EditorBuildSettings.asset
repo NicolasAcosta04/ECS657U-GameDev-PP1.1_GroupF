@@ -8,14 +8,23 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Nicolas' Changes.unity
     guid: b4374279c5a6b6c44957b64cac024cef
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Procedural2D.unity
     guid: 609358786acd93740a0b29e4c03288c2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Main Menu.unity
+    guid: 0a7f5b9e91c76324982eb916184aba36
   - enabled: 1
     path: Assets/Scenes/Levels/Level 1.unity
     guid: 0e38d34e9a1f26544ac262c87a47be2b
   - enabled: 1
     path: Assets/Scenes/Levels/Level 2.unity
     guid: 5066c444b68a63b41a2ccccaa54c95e7
+  - enabled: 1
+    path: Assets/Scenes/Levels/Victory Screen.unity
+    guid: 39979a2723208478c89845babe33b205
+  - enabled: 1
+    path: Assets/Scenes/Levels/Game Over.unity
+    guid: c2fc74fd18f4eba47900e58f2736d088
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

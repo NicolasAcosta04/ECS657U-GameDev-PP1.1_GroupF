@@ -15,6 +15,11 @@ public class PlayerCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GeneralSettings.Instance != null){
+            sensX = GeneralSettings.Instance.sensX;
+            sensY = GeneralSettings.Instance.sensY;
+        }
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

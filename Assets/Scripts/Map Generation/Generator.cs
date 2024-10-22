@@ -29,6 +29,10 @@ public class Generator : MonoBehaviour
     [SerializeField]
     int seed;
     [SerializeField]
+    GameObject FoodPrefab;
+    [SerializeField]
+    GameObject WaterPrefab;
+    [SerializeField]
     GameObject PlayerPrefab;
     [SerializeField]
     GameObject EnemyPrefab;
@@ -68,11 +72,23 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GeneralSettings.Instance != null){
+
+            Debug.Log($"Seed: {GeneralSettings.Instance.Seed}");
+            Debug.Log($"Room Count: {GeneralSettings.Instance.RoomCount}");
+            Debug.Log($"Enemy Room Count: {GeneralSettings.Instance.EnemyRoomCount}");
+            Debug.Log($"Item Room Count: {GeneralSettings.Instance.ItemRoomCount}");
+
+            seed = GeneralSettings.Instance.Seed;
+            roomCount = GeneralSettings.Instance.RoomCount;
+            EnemyRoomCount = GeneralSettings.Instance.EnemyRoomCount;
+            ItemRoomCount = GeneralSettings.Instance.ItemRoomCount;
+        }
+
         var spawnInfo = Generate();
         // Bake NavMeshSurface after level is generated
         GenerateMesh();
         InstantiateCharacters(spawnInfo.Item1, spawnInfo.Item2);
-
     }
 
     void GenerateMesh() {
@@ -240,6 +256,11 @@ public class Generator : MonoBehaviour
             if (add) {
                 rooms.Add(ItemRoom);
                 PlaceRoom(ItemRoom.bounds.position, ItemRoom.bounds.size, ItemRoomPrefab);
+
+                GameObject[] prefabs = { FoodPrefab, WaterPrefab };
+                GameObject randomPrefab = prefabs[UnityEngine.Random.Range(0, prefabs.Length)];
+                Instantiate(randomPrefab, new Vector3(location.x + roomSize.x / 2 + 0.5f, 0.5f, location.y + roomSize.y / 2 + 0.5f), Quaternion.identity);
+
 
                 foreach (var pos in ItemRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
