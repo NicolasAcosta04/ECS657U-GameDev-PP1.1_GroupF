@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1338668367}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 10
+  m_MaxValue: 11
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -3022,7 +3022,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1083121589}
   m_Direction: 0
   m_MinValue: 1
-  m_MaxValue: 10
+  m_MaxValue: 11
   m_WholeNumbers: 1
   m_Value: 1
   m_OnValueChanged:
@@ -5706,7 +5706,7 @@ MonoBehaviour:
   roomCountInputField: {fileID: 2020714193}
   enemyRoomCountInputField: {fileID: 1147729917}
   itemRoomCountInputField: {fileID: 392431937}
-  mouseXSlider: {fileID: 0}
+  mouseXSlider: {fileID: 466210683}
   mouseYSlider: {fileID: 686388383}
 --- !u!1 &1318599815
 GameObject:

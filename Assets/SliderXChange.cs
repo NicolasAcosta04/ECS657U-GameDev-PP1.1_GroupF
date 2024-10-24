@@ -12,7 +12,9 @@ public class SliderXChange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (GeneralSettings.Instance != null){
+            slider.value = GeneralSettings.Instance.sensX;
+        }
     }
 
     // Update is called once per frame
