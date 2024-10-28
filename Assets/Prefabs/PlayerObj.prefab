@@ -2171,16 +2171,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: {fileID: 7672788402162987358}
   depletedSpeed: 0.75
-  crouchingSpeed: 0.8
   walkingSpeed: 1.35
   sprintSpeed: 2.5
   groundDrag: 2
-  crouchingKey: 306
+  crouchSpeed: 0.8
+  crouchYScale: 0.15
+  crouchKey: 306
   sprintKey: 304
-  playerHeight: 2
+  playerHeight: 0.3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
   staminaBar: {fileID: 214789370723916115}
   sprintConsumptionTime: 1
   depletedTimeframe: 8

@@ -9,15 +9,22 @@ public class PlayerMovement : MonoBehaviour
     [Header("Speed")]
     public TextMeshProUGUI speed;
     public float depletedSpeed;
-    public float crouchingSpeed;
     public float walkingSpeed;
     public float sprintSpeed;
     public float groundDrag;
 
+    [Header("Crouching")]
+    public float crouchSpeed;
+    public float crouchYScale;
+    private float startYScale;
+
+    private bool isCrouching = false;
+    private float crouchTransitionSpeed = 10f;
+
     private float moveSpeed;
 
     [Header("Keybinds")]
-    public KeyCode crouchingKey = KeyCode.LeftControl;
+    public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
     [Header("Ground Check")]
@@ -68,17 +75,30 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
         lastPos = transform.position;
         staminaBar.value = 20;
+        startYScale = transform.localScale.y;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+
+        MyInput();
+    }
+
+    private void FixedUpdate()
+    {
+
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+        // Speed Variable User Interface
+        var currentPos = transform.position;
+        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
+        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
+        lastPos = currentPos;
+
         StateHandler();
+        SpeedControl();
         MovePlayer();
     }
 
@@ -86,15 +106,57 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        // Start crouch
+        if (Input.GetKeyDown(crouchKey))
+        {
+            isCrouching = true;
+            rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+        }
+
+        // Stop crouch
+        if (Input.GetKeyUp(crouchKey))
+        {
+            isCrouching = false;
+        }
+
+        // Smoothly transition the player's scale
+        if (isCrouching)
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z), Time.fixedDeltaTime * crouchTransitionSpeed);
+        }
+        else
+        {
+            transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(transform.localScale.x, startYScale, transform.localScale.z), Time.fixedDeltaTime * crouchTransitionSpeed);
+        }
     }
+
+    //private void MyInput()
+    //{
+    //    horizontalInput = Input.GetAxisRaw("Horizontal");
+    //    verticalInput = Input.GetAxisRaw("Vertical");
+
+    //    // Start crouch
+    //    if (Input.GetKeyDown(crouchKey))
+    //    {
+    //        transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
+    //        rb.AddForce(Vector3.down * 5f, ForceMode.Impulse);
+    //    }
+
+    //    // Stop crouch
+    //    if (Input.GetKeyUp(crouchKey))
+    //    {
+    //        transform.localScale = new Vector3(transform.localScale.x, startYScale, transform.localScale.z);
+    //    }
+    //}
 
     private void StateHandler()
     {
         // Mode - Crouching
-        if (Input.GetKey(crouchingKey) && staminaBar.value != 0)
+        if (Input.GetKey(crouchKey) && staminaBar.value != 0 && isCrouching)
         {
             state = MovementState.Crouching;
-            moveSpeed = crouchingSpeed;
+            moveSpeed = crouchSpeed;
         }
 
         // Mode - Sprinting
@@ -188,11 +250,6 @@ public class PlayerMovement : MonoBehaviour
         else
             rb.drag = 0;
 
-        // Speed Variable User Interface
-        var currentPos = transform.position;
-        var velocity = (currentPos - lastPos) / Time.fixedDeltaTime;
-        speed.text = "Speed: " + velocity.magnitude.ToString("0.00");
-        lastPos = currentPos;
     }
     private void IncreaseStaminaValue()
     {
