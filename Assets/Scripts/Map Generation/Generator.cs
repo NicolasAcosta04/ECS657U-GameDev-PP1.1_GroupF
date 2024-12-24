@@ -26,40 +26,23 @@ public class Generator : MonoBehaviour
     private Dictionary<Vector2Int, GameObject> structureInstances = new Dictionary<Vector2Int, GameObject>();
     private bool IsWinRoomPlaced = false;
     
-    [SerializeField]
-    int seed;
-    [SerializeField]
-    GameObject FoodPrefab;
-    [SerializeField]
-    GameObject WaterPrefab;
-    [SerializeField]
-    GameObject PlayerPrefab;
-    [SerializeField]
-    GameObject EnemyPrefab;
-    [SerializeField]
-    GameObject StarterRoomPrefab;
-    [SerializeField]
-    GameObject ItemRoomPrefab;
-    [SerializeField]
-    GameObject EnemySpawnRoomPrefab;
-    [SerializeField]
-    GameObject WinRoomPrefab;
-    [SerializeField]
-    GameObject RoomPrefab;
-    [SerializeField]
-    GameObject HallwayPrefab;
-    [SerializeField]
-    Vector2Int size;
-    [SerializeField]
-    int roomCount;
-    [SerializeField]
-    int EnemyRoomCount;
-    [SerializeField]
-    int ItemRoomCount;
-    [SerializeField]
-    Vector2Int roomMaxSize;
-    [SerializeField]
-    NavMeshSurface surface;
+    [SerializeField] int seed;
+    [SerializeField] GameObject FoodPrefab;
+    [SerializeField] GameObject WaterPrefab;
+    [SerializeField] GameObject PlayerPrefab;
+    [SerializeField] GameObject EnemyPrefab;
+    [SerializeField] GameObject StarterRoomPrefab;
+    [SerializeField] GameObject ItemRoomPrefab;
+    [SerializeField] GameObject EnemySpawnRoomPrefab;
+    [SerializeField] GameObject WinRoomPrefab;
+    [SerializeField] GameObject RoomPrefab;
+    [SerializeField] GameObject HallwayPrefab;
+    [SerializeField] Vector2Int size;
+    [SerializeField] int roomCount;
+    [SerializeField] int EnemyRoomCount;
+    [SerializeField] int ItemRoomCount;
+    [SerializeField] Vector2Int roomMaxSize;
+    [SerializeField] NavMeshSurface surface;
 
 
     Random random;
