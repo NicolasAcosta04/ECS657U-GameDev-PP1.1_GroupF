@@ -5,14 +5,24 @@ public class DupePlayerStats : MonoBehaviour
     [Header("Player Health")]
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private float currentHealth;
+    [SerializeField] private float healthHungerDepletionRate; // Health depletion rate when hunger is empty
+    [SerializeField] private float healthHungerRegenRate; // Health regeneration rate when hunger is full
+
 
     [Header("Player Hunger")]
     [SerializeField] private float maxHunger = 100;
     [SerializeField] private float currentHunger;
+    [SerializeField] private float hungerDepletionRate; // Hunger depletion per second
+    [SerializeField] private float hungerDepletionDelay; // Time before hunger starts depleting
+    private float hungerDepletionTimer = 0f;
+
+
 
     [Header("Player Thirst")]
     [SerializeField] private float maxThirst = 100;
     [SerializeField] private float currentThirst;
+    [SerializeField] private float thirstDepletionRate; // Thirst depletion per second
+
 
     [Header("Player Stamina")]
     [SerializeField] private float maxStamina = 100;
@@ -24,8 +34,12 @@ public class DupePlayerStats : MonoBehaviour
     private float staminaRegenTimer;
 
     [Header("Player Sanity")]
-    [SerializeField] private int maxSanity = 100;
-    [SerializeField] private int currentSanity;
+    [SerializeField] private float maxSanity = 100;
+    [SerializeField] private float currentSanity;
+    [SerializeField] private float hungerSanityDepletion; // Sanity loss modifier
+    [SerializeField] private float hungerMinPsycheThreshold; // Threshold for faster sanity loss
+
+
 
     private bool isSprinting = false;
 
@@ -42,7 +56,14 @@ public class DupePlayerStats : MonoBehaviour
     private void Update()
     {
         HandleStamina();
+        HandleHunger();
+        HandleThirst();
     }
+
+
+
+
+// stamina handling -- all stamina handling under this comment
 
     public void SetSprinting(bool sprinting)
     {
@@ -61,6 +82,11 @@ public class DupePlayerStats : MonoBehaviour
     public void ApplyJumpPenalty()
     {
         currentStamina = Mathf.Max(0, currentStamina - staminaJumpPenalty);
+    }
+
+    public bool CanSprint()
+    {
+        return currentStamina > 0;
     }
 
     private void HandleStamina()
@@ -82,14 +108,86 @@ public class DupePlayerStats : MonoBehaviour
         
     }
 
+// END stamnia handling -- end all stamina handling here 
 
 
 
 
+// hunger handling -- all hunger handling under this comment
 
-    // Prevent sprinting if out of stamina
-    public bool CanSprint()
+    private void HandleHunger()
     {
-        return currentStamina > 0;
+        // If hunger is full, regenerate health
+        if (currentHunger == maxHunger)
+        {
+            currentHealth = Mathf.Min(maxHealth, currentHealth + healthHungerRegenRate * Time.deltaTime);
+        }
+
+        // Decrement the depletion timer if it's above zero
+        if (hungerDepletionTimer > 0)
+        {
+            hungerDepletionTimer -= Time.deltaTime;
+        }
+        else if (currentHunger > 0)
+        {
+            // Deplete hunger when the delay timer reaches zero
+            currentHunger -= hungerDepletionRate * Time.deltaTime;
+            currentHunger = Mathf.Max(0, currentHunger); // Clamp to 0
+        }
+
+        // Apply penalties when hunger is empty
+        if (currentHunger == 0)
+        {
+            currentHealth -= healthHungerDepletionRate * Time.deltaTime;
+            currentHealth = Mathf.Max(0, currentHealth); // Clamp to 0
+        }
+
+        // Apply sanity depletion modifier if hunger is below the threshold
+        if (currentHunger < hungerMinPsycheThreshold)
+        {
+            currentSanity -= hungerSanityDepletion * Time.deltaTime;
+            currentSanity = Mathf.Max(0, currentSanity); // Clamp to 0
+        }
     }
+
+    private void BeginHungerDepletion()
+    {
+
+    }
+
+    private void ApplyHungerPenalty()
+    {
+        // Example: Reduce health due to starvation
+        currentHealth = Mathf.Max(0, currentHealth - hungerDepletionRate * Time.deltaTime);
+    }
+
+// END hunger handling -- end all hunger handling here 
+
+
+
+
+
+// thirst handling -- all thirst handling under this comment
+
+    private void HandleThirst()
+    {
+        if (currentThirst > 0)
+        {
+            currentThirst -= thirstDepletionRate * Time.deltaTime;
+            currentThirst = Mathf.Max(0, currentThirst); // Clamp to prevent negative values
+        }
+        else
+        {
+            // Thirst effects (e.g., stamina reduction)
+            ApplyThirstPenalty();
+        }
+    }
+
+    private void ApplyThirstPenalty()
+    {
+        // Example: Reduce stamina due to dehydration
+        currentStamina = Mathf.Max(0, currentStamina - thirstDepletionRate * Time.deltaTime);
+    }
+
+// END thirst handling -- end all thirst handling here 
 }

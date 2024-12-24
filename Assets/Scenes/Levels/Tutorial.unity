@@ -5022,6 +5022,7 @@ MonoBehaviour:
   staminaRegenRate: 20
   staminaDepletionRate: 10
   staminaRegenDelay: 1
+  staminaJumpPenalty: 20
   maxSanity: 100
   currentSanity: 0
 --- !u!1 &1332302188
