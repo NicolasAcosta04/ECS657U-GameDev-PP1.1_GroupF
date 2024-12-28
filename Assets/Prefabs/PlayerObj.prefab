@@ -2205,7 +2205,6 @@ MonoBehaviour:
   thirstBar: {fileID: 7758619362132307304}
   hungerBar: {fileID: 7424018660400521413}
   healthBar: {fileID: 4101974474686239561}
-  incrementAmount: 1
   state: 0
   eatKey: 49
   drinkKey: 50
@@ -2214,24 +2213,15 @@ MonoBehaviour:
   foodItemValue: 2
   foodQuantity: 3
   hungerDelay: 0.1
-  firstInstanceHunger: 1
-  hungerTimer: 0
   drinkingCD: {fileID: 7794648622302328520}
   waterItem: {fileID: 3828716955668276217}
   waterItemValue: 5
   waterQuantity: 5
   thirstDelay: 0.1
-  firstInstanceThirst: 1
-  thirstTimer: 0
   healthDelay: 3
-  firstInstanceHealth: 1
-  healthTimer: 0
   starvingConsumptionTime: 15
-  starvingTimer: 0
   thirstingConsumptionTime: 13
-  thirstingTimer: 0
   hungryConsumptionTime: 4
-  hungryTimer: 0
 --- !u!54 &5213864076814690762
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject HelpPanel;
     [SerializeField] private GameObject SettingsPanel;
     [SerializeField] private GameObject MainMenuConfirmationPanel;
+    [SerializeField] private GameObject PlayerUI; // Reference to the player UI
+
 
     private bool isPaused = false;
 
@@ -27,6 +29,8 @@ public class PauseMenu : MonoBehaviour
         HelpPanel.SetActive(false);
         SettingsPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
+        PlayerUI.SetActive(true); // Re-enable player UI
+        
 
         Time.timeScale = 1f; // Unpause the game
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the game
@@ -40,6 +44,8 @@ public class PauseMenu : MonoBehaviour
         HelpPanel.SetActive(false);
         SettingsPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
+        PlayerUI.SetActive(false); // Disable player UI
+
 
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;

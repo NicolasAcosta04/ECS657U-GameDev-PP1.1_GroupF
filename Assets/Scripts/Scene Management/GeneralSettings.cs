@@ -12,6 +12,8 @@ public class GeneralSettings : MonoBehaviour
     public int ItemRoomCount;
     public float sensX;
     public float sensY;
+    public DupePlayerStats PlayerStats;
+
 
 
 // only one of these settings files are allowed to exist at any given time
