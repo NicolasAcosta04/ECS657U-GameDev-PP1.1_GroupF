@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 5162101896347991307}
   - component: {fileID: 7787696568079742385}
   - component: {fileID: 5197294971273237762}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ceiling
   m_TagString: Ceiling
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 7420310672465558057}
   - component: {fileID: 724037886342426574}
   - component: {fileID: 4471879470781797152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NZWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 6056791921589694404}
   - component: {fileID: 591235831167063295}
   - component: {fileID: 2994850419406738233}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: XWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 5216951552891388552}
   - component: {fileID: 2435146213178180532}
   - component: {fileID: 6691122007138929287}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ZWall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 2898231257533941494}
   - component: {fileID: 2379520367765529074}
   - component: {fileID: 3347746530363101152}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: NXWall
   m_TagString: Wall
   m_Icon: {fileID: 0}

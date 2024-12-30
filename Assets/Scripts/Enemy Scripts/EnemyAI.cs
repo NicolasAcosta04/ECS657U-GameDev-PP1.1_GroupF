@@ -11,18 +11,20 @@ public class EnemyAI : MonoBehaviour
 
     public Transform player;
 
-    public LayerMask whatIsGround, whatIsPlayer;
+    public LayerMask whatIsGround, whatIsPlayer, Wall;
 
     //Patrolling
     public Vector3 destination;
     bool destinationSet;
+    public float patrolRange;
+    private Vector3 startPosition;
 
     //Attacking
     public float timeBetweenAttacks;
     bool alreadyAttacked;
 
     //States
-    public float sightRange, attackRange;
+    public float sightRange, attackRange, FOVAngle;
     public bool playerInSightRange, playerInAttackRange;
 
     // Initialisation
@@ -30,11 +32,17 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        startPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(FOVRoutine());
     }
 
     private void Patrolling()
     {
-        if (!destinationSet) SearchDestination();
+        while (!destinationSet) SearchDestination();
 
         if (destinationSet)
         {
@@ -52,18 +60,25 @@ public class EnemyAI : MonoBehaviour
 
     private void SearchDestination()
     {
-        GameObject[] rooms = GameObject.FindGameObjectsWithTag("Room");
-        Transform randomRoom = rooms[Random.Range(0,rooms.Length)].transform;
-        destination = new Vector3(randomRoom.position.x, transform.position.y, randomRoom.position.z);
+        float randomX = Random.Range(startPosition.x + patrolRange, startPosition.x - patrolRange);
+        float randomZ = Random.Range(startPosition.z + patrolRange, startPosition.z - patrolRange);
+        destination = new Vector3(randomX, transform.position.y, randomZ);
         
-        if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround))
+        if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround) && !(Physics.Raycast(destination, -transform.up, 2f, Wall)))
         {
+            Debug.Log(destination);
             destinationSet = true;
+        } 
+        else
+        {
+            Debug.Log(destinationSet);
+            destinationSet = false;
         }
     }
 
     private void Chasing()
     {
+        transform.LookAt(player);
         agent.SetDestination(player.position);
     }
 
@@ -88,11 +103,65 @@ public class EnemyAI : MonoBehaviour
         alreadyAttacked = false;
     }
 
+    //Helps performance slightly by checking sight range 5 times a second rather than every frame
+    private IEnumerator FOVRoutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(0.2f);
+
+        while (true)
+        {
+            yield return wait;
+            FOVCheck();
+        }
+    }
+
+    private void FOVCheck()
+    {
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
+
+        if (rangeChecks.Length > 0)
+        {
+            Debug.Log(rangeChecks);
+            Transform target = rangeChecks[0].transform;
+            Vector3 directionToTarget = (target.position - transform.position).normalized;
+
+            if (Vector3.Angle(transform.forward, directionToTarget) < FOVAngle / 2)
+            {
+                float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, Wall))
+                {
+                    playerInSightRange = true;
+                }
+                else
+                {
+                    playerInSightRange = false;
+                }
+            }
+            else
+            {
+                playerInSightRange = false;
+            }
+        }
+        else if (playerInSightRange)
+        {
+            playerInSightRange = false;
+        }
+    }
+
+    //displays sight and attack range
+    /* private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere (transform.position, sightRange);
+    } */
+
     // Update is called once per frame
     void Update()
     {
         //Check for sight and attack range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         if (!playerInSightRange && !playerInAttackRange) Patrolling();

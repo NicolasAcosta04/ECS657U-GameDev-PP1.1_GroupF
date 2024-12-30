@@ -179,9 +179,15 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
+  Wall:
+    serializedVersion: 2
+    m_Bits: 1024
   destination: {x: 0, y: 0, z: 0}
+  patrolRange: 20
+  startPosition: {x: 0, y: 0, z: 0}
   timeBetweenAttacks: 0
   sightRange: 5
   attackRange: 0.1
+  FOVAngle: 90
   playerInSightRange: 0
   playerInAttackRange: 0
