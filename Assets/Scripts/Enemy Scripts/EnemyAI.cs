@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 /// adapted from https://youtu.be/UjkSFoLxesw
 public class EnemyAI : MonoBehaviour
@@ -9,9 +11,19 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     public NavMeshAgent agent;
 
+    public Enum enemyType;
+
     public Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer, Wall;
+
+    private InPlayerCamera InPlayerCamera;
+
+    public Boolean seen;
+
+    public Boolean chasing;
+
+    MeshRenderer renderer;
 
     //Patrolling
     public Vector3 destination;
@@ -27,26 +39,57 @@ public class EnemyAI : MonoBehaviour
     public float sightRange, attackRange, FOVAngle;
     public bool playerInSightRange, playerInAttackRange;
 
+    //Enemy Type Specific
+    public bool freeze;
+
     // Initialisation
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        renderer = GetComponent<MeshRenderer>();
         startPosition = transform.position;
+        InPlayerCamera = GetComponent<InPlayerCamera>();
+        chasing = false;
     }
 
     private void Start()
     {
+        ChangeType(EnemyTypes.Freezers);
         StartCoroutine(FOVRoutine());
+    }
+
+    public void ChangeType(Enum type)
+    {
+        switch (type)
+        {
+            case EnemyTypes.Chasers:
+                enemyType = EnemyTypes.Chasers;
+                agent.speed = 2;
+                break;
+
+            case EnemyTypes.Freezers:
+                enemyType = EnemyTypes.Freezers;
+                agent.speed = 3;
+                break;
+
+            default:
+                enemyType=EnemyTypes.Chasers;
+                agent.speed = 2;
+                break;
+        }
     }
 
     private void Patrolling()
     {
-        while (!destinationSet) SearchDestination();
-
-        if (destinationSet)
+        if (!chasing)
         {
-            agent.SetDestination(destination);
+            while (!destinationSet) SearchDestination();
+
+            if (destinationSet)
+            {
+                agent.SetDestination(destination);
+            }
         }
 
         Vector3 distanceToDestination = transform.position - destination;
@@ -55,6 +98,7 @@ public class EnemyAI : MonoBehaviour
         if (distanceToDestination.magnitude < 1f)
         {
             destinationSet = false;
+            chasing = false;
         }
     }
 
@@ -78,8 +122,11 @@ public class EnemyAI : MonoBehaviour
 
     private void Chasing()
     {
+        destination = player.position;
+        destinationSet = true;
+        chasing = true;
         transform.LookAt(player);
-        agent.SetDestination(player.position);
+        agent.SetDestination(destination);
     }
 
     private void Attacking()
@@ -121,7 +168,6 @@ public class EnemyAI : MonoBehaviour
 
         if (rangeChecks.Length > 0)
         {
-            Debug.Log(rangeChecks);
             Transform target = rangeChecks[0].transform;
             Vector3 directionToTarget = (target.position - transform.position).normalized;
 
@@ -161,11 +207,45 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemyType.Equals(EnemyTypes.Freezers) && seen)
+        {
+            if (!freeze)
+            {
+                transform.LookAt(player);
+            }
+            freeze = true;
+            agent.speed = 0;
+            agent.angularSpeed = 0;
+            agent.acceleration = 0;
+            agent.velocity = new Vector3(0,0,0);
+        }
+        else
+        {
+            freeze = false;
+            agent.speed = 3;
+            agent.angularSpeed = 120;
+            agent.acceleration = 2;
+            print(agent.velocity);
+        }
         //Check for sight and attack range
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange) Patrolling();
-        if (playerInSightRange && !playerInAttackRange) Chasing();
+        //Sets General Enemy States
+        if (!freeze)
+        {
+            if (!playerInSightRange && !playerInAttackRange) Patrolling();
+            if (playerInSightRange && !playerInAttackRange) Chasing();
+        }
         if (playerInSightRange && playerInAttackRange) Attacking();
+
+
+        //Updates variable to match InPlayerCamera
+        seen = InPlayerCamera.inCamera;
     }
+}
+
+public enum EnemyTypes
+{
+    Chasers,
+    Freezers
 }
