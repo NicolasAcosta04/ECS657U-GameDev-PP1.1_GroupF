@@ -8,11 +8,14 @@ TagManager:
   - Wall
   - Ceiling
   - Room
+  - BorderUI
+  - PlayerUI
+  - UIManager
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PickUp
   - Water
   - UI
   - whatIsGround
@@ -20,8 +23,6 @@ TagManager:
   - whatIsPlayer
   - Ceiling
   - Wall
-  - 
-  - 
   - 
   - 
   - 

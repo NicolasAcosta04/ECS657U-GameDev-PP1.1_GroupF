@@ -12,17 +12,38 @@ public class PlayerUIController : MonoBehaviour
 
     private void Start()
     {
-        playerStats = GeneralSettings.Instance.PlayerStats;
+        TryInitializePlayerStats();
     }
 
     private void Update()
     {
         if (playerStats != null)
         {
-            healthSlider.value = playerStats.currentHealth / playerStats.maxHealth;
-            hungerSlider.value = playerStats.currentHunger / playerStats.maxHunger;
-            thirstSlider.value = playerStats.currentThirst / playerStats.maxThirst;
-            staminaSlider.value = playerStats.currentStamina / playerStats.maxStamina;
+            UpdateSliders();
         }
+    }
+
+    private void TryInitializePlayerStats()
+    {
+        playerStats = StatsStorage.Instance?.PlayerStats;
+
+        if (playerStats == null)
+        {
+            Debug.LogWarning("PlayerStats not yet available. Retrying...");
+            Invoke(nameof(TryInitializePlayerStats), 0.5f); // Retry initialization
+        }
+        else
+        {
+            Debug.Log("PlayerStats successfully linked to PlayerUIController.");
+            UpdateSliders();
+        }
+    }
+
+    private void UpdateSliders()
+    {
+        healthSlider.value = playerStats.currentHealth / playerStats.maxHealth;
+        hungerSlider.value = playerStats.currentHunger / playerStats.maxHunger;
+        thirstSlider.value = playerStats.currentThirst / playerStats.maxThirst;
+        staminaSlider.value = playerStats.currentStamina / playerStats.maxStamina;
     }
 }

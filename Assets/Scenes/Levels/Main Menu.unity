@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571363, b: 0.30692217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5580,7 +5580,7 @@ GameObject:
   - component: {fileID: 1301987774}
   - component: {fileID: 1301987775}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7024,8 +7024,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1607780657}
   - component: {fileID: 1607780656}
+  - component: {fileID: 1607780658}
+  - component: {fileID: 1607780659}
   m_Layer: 0
-  m_Name: MapSettingsStorage
+  m_Name: SettingsStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7064,6 +7066,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1607780658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607780655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75064396c52b44123b77e5dc6fea068e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PersistentSlots:
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+  - ItemID: 0
+    StackCount: 0
+    ItemName: 
+--- !u!114 &1607780659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607780655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a1ffb8a0c5764ed6afcd99eae92a3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
 --- !u!1 &1639142193
 GameObject:
   m_ObjectHideFlags: 0
@@ -9825,8 +9871,8 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1607780657}
+  - {fileID: 1301987773}
   - {fileID: 884558499}
   - {fileID: 1714908932}
-  - {fileID: 1301987773}
   - {fileID: 9705910}
-  - {fileID: 1607780657}

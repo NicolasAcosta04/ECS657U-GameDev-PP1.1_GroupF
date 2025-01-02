@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class DupePlayerStats : MonoBehaviour
 {
@@ -63,9 +64,10 @@ public class DupePlayerStats : MonoBehaviour
     private bool isSprinting = false;
     private void Start()
     {
-        if (GeneralSettings.Instance != null)
+        if (StatsStorage.Instance != null)
         {
-            GeneralSettings.Instance.PlayerStats = this;
+            StatsStorage.Instance.PlayerStats = this;
+            Debug.Log("PlayerStats assigned to StatsStorage.");
         }
         
         // Initialize stats to maximum
@@ -200,6 +202,24 @@ public class DupePlayerStats : MonoBehaviour
             currentHunger = Mathf.Max(0, currentHunger);
         }
     }
+
+    public void RestoreHunger(float amount, float duration)
+    {
+        StartCoroutine(RestoreHungerOverTime(amount, duration));
+    }
+
+    private IEnumerator RestoreHungerOverTime(float amount, float duration)
+    {
+        float rate = amount / duration;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            currentHunger = Mathf.Min(maxHunger, currentHunger + rate * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 // END hunger handling -- end all hunger handling here 
 
 
@@ -217,7 +237,23 @@ public class DupePlayerStats : MonoBehaviour
         }
     }
 
+    public void RestoreThirst(float amount, float duration)
+    {
+        StartCoroutine(RestoreThirstOverTime(amount, duration));
+    }
 
+    private IEnumerator RestoreThirstOverTime(float amount, float duration)
+    {
+        float rate = amount / duration;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            currentThirst = Mathf.Min(maxThirst, currentThirst + rate * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 
 // END thirst handling -- end all thirst handling here 
 
