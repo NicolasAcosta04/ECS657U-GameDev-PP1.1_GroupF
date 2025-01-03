@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
         public int ItemID;
         public int StackCount;
         public string ItemName; // Display in inspector
+        public Sprite ItemSprite; // New field for the item's sprite
     }
 
     public List<ItemSlot> Slots = new List<ItemSlot>(6);
@@ -105,7 +106,7 @@ public class Inventory : MonoBehaviour
             var item = collider.GetComponent<PickupItem>();
             if (item != null)
             {
-                AddItem(item.ItemID, item.ItemName);
+                AddItem(item.ItemID, item.ItemName, item.ItemSprite);
                 Destroy(collider.gameObject); // Remove item from the world
                 return;
             }
@@ -114,7 +115,7 @@ public class Inventory : MonoBehaviour
         Debug.Log("No item to pick up in range!");
     }
 
-    public void AddItem(int itemID, string itemName)
+    public void AddItem(int itemID, string itemName, Sprite itemSprite)
     {
         foreach (var slot in Slots)
         {
@@ -132,6 +133,7 @@ public class Inventory : MonoBehaviour
             {
                 slot.ItemID = itemID;
                 slot.ItemName = itemName; // Set the Item Name
+                slot.ItemSprite = itemSprite; // Assign the sprite
                 slot.StackCount = 1;
                 UpdateUI();
                 return;
@@ -140,6 +142,7 @@ public class Inventory : MonoBehaviour
 
         Debug.Log("Inventory full!");
     }
+
 
     public void UseItem(int slotIndex)
     {
