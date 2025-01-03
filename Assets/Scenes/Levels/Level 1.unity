@@ -6667,8 +6667,8 @@ MonoBehaviour:
   WaterPrefab: {fileID: 80098111525992768, guid: 559e9279d608c47128588e42c3b226d5, type: 3}
   PlayerPrefab: {fileID: 4637868838165244246, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
   EnemyPrefab: {fileID: 7700570454702964828, guid: 0759bf6af94a3d74287a6b77853aef87, type: 3}
-  StarterRoomPrefab: {fileID: 633586025913214188, guid: a3899211ca4af49babce61a73d3e6536, type: 3}
-  StarterRoomPrefab2: {fileID: 640803488887535979, guid: daf78e4c49ff44c9fa24fb9aee93a959, type: 3}
+  StarterRoomPrefab: {fileID: 4659985313502779928, guid: 0f3a1c51c72cf4caaadfb633badbc417, type: 3}
+  StarterRoomPrefab2: {fileID: 7384372520922848874, guid: 307bbe3e9483b4eb498dd0f05ed7825d, type: 3}
   ItemRoomPrefab: {fileID: 5421283168400382243, guid: 473e1c53c62ba4f5985b6b02a6cb7884, type: 3}
   ItemRoomPrefab2: {fileID: 1420822699129055187, guid: 977fc82e06b3b4706a841d73712a11af, type: 3}
   EnemySpawnRoomPrefab: {fileID: 1798954966950097994, guid: 163c76bedd3a18c449fd6817bb8e7f52, type: 3}

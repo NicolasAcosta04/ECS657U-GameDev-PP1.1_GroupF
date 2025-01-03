@@ -519,6 +519,14 @@ public class Generator : MonoBehaviour
         bool switchRoomFlag = true;
         bool switchRoomAdjustmentFlag = true;
         int switchRoomCounter = 0;
+
+        if (RoomPrefab == null || RoomPrefab2 == null)
+        {
+            Debug.LogError("RoomPrefab or RoomPrefab2 is null. Assign valid prefabs in the Inspector.");
+            return;
+        }
+
+
         for (int i = 0; i < size.x; i++)
         {
             for (int j = 0; j < size.y; j++)
