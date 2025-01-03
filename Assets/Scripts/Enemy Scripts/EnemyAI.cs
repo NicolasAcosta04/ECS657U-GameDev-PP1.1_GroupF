@@ -32,6 +32,9 @@ public class EnemyAI : MonoBehaviour
     bool destinationSet;
     public float patrolRange;
     private Vector3 startPosition;
+    public Boolean lostPlayer = false;
+    public Boolean waiting = false;
+    public float waitTime = 2.0f;
 
     //Attacking
     public float timeBetweenAttacks;
@@ -85,6 +88,9 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    //chooses a destination and moves to that location before picking another one
+    //if moving to this state from chase (meaning the player has been lost)
+    //move to the last assigned destination and wait before picking a new one
     private void Patrolling()
     {
         if (!chasing)
@@ -97,18 +103,35 @@ public class EnemyAI : MonoBehaviour
                 agent.SetDestination(destination);
             }
         }
-        if (chasing) print("Lost Player");
+        else
+        {
+            print("Lost Player");
+            lostPlayer = true;
+        }
 
         Vector3 distanceToDestination = transform.position - destination;
 
         //Destination reached
         if (distanceToDestination.magnitude < 1f)
         {
+            //if enemy reaches last known location of player, wait for a period then start to patrol again
+            if (lostPlayer)
+            {
+                lostPlayer = false;
+                waiting = true;
+                Invoke(nameof(Waiting), waitTime);
+            }
             destinationSet = false;
             chasing = false;
         }
     }
 
+    private void Waiting()
+    {
+        waiting = false;
+    }
+
+    //searches for a random destination on the map that is within the patrol range
     private void SearchDestination()
     {
         print("Searching for Destination");
@@ -126,6 +149,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    //chasing state
     private void Chasing()
     {
         print("Chasing");
@@ -133,11 +157,16 @@ public class EnemyAI : MonoBehaviour
         destinationSet = true;
         chasing = true;
         agent.SetDestination(destination);
-        agent.speed = 5;
+        if (enemyType.Equals(EnemyTypes.Freezers))
+        {
+            agent.speed = 6;
+        }
+        
         transform.LookAt(player);
         
     }
 
+    //attacking state
     private void Attacking()
     {
         print("Attacking");
@@ -173,6 +202,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    //Checks if player is in sight range and returns false if a wall is in the way
     private void FOVCheck()
     {
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, sightRange, whatIsPlayer);
@@ -206,19 +236,20 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    //displays sight and attack range
-    /* private void OnDrawGizmosSelected()
+    //displays sight and attack range for debugging
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere (transform.position, sightRange);
-    } */
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (enemyType.Equals(EnemyTypes.Freezers) && seen)
+        //freezes the freezer enemy in place if its seen
+        if ((enemyType.Equals(EnemyTypes.Freezers) && seen) || waiting)
         {
             print("Freezing");
             if (!freeze)
@@ -235,6 +266,7 @@ public class EnemyAI : MonoBehaviour
             rb.angularDrag = 9999;
             print("should be 0 ->" + agent.velocity);
         }
+        //resumes movement if not
         else
         {
             freeze = false;
