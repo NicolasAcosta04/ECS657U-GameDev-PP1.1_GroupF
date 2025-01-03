@@ -33,27 +33,23 @@ public class InventoryUIManager : MonoBehaviour
                 continue;
             }
 
-            // Ensure the first slot is always visible
-            if (i == 0)
+            // Ensure all slots are always visible
+            slotUI.SetActive(true);
+
+            // Update the `ItemImage` sprite and visibility
+            if (i < slots.Count && slots[i].ItemSprite != null)
             {
-                slotUI.SetActive(true);
+                itemImage.sprite = slots[i].ItemSprite;
+                itemImage.enabled = true;
             }
             else
             {
-                // Make slot visible if it has items, otherwise hide it
-                slotUI.SetActive(slots[i].StackCount > 0);
+                itemImage.sprite = null;
+                itemImage.enabled = false; // Disable the image if no item
             }
 
-            if (slotUI.activeSelf)
-            {
-                // Update the `ItemImage` sprite
-                itemImage.sprite = slots[i].ItemSprite;
-                itemImage.enabled = slots[i].ItemSprite != null;
-
-                // Highlight the selected slot
-                border.color = i == selectedSlotIndex ? Color.yellow : Color.white;
-            }
+            // Highlight the selected slot
+            border.color = i == selectedSlotIndex ? Color.yellow : Color.white;
         }
     }
-
 }

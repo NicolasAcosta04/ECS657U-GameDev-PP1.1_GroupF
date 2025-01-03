@@ -29,6 +29,9 @@ public class Inventory : MonoBehaviour
 
     private int selectedSlotIndex = -1; // No slot selected by default
 
+    public Transform displayItem; // Parent object for the held item (attach to camera in inspector)
+    private GameObject HeldItem; // Currently displayed 3D model
+
     private void Start()
     {
         LoadInventoryFromStorage();
@@ -78,7 +81,15 @@ public class Inventory : MonoBehaviour
         {
             if (Input.GetKeyDown(inventoryKeys[i]))
             {
-                if (Slots[i].StackCount > 0) // Only select slots with items
+                // If the key corresponds to the already selected slot, deselect it
+                if (selectedSlotIndex == i)
+                {
+                    DeselectSlot(); // Deselect the current slot
+                    return;
+                }
+
+                // Only select the slot if it has items
+                if (Slots[i].StackCount > 0)
                 {
                     SelectSlot(i);
                 }
@@ -90,30 +101,117 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void DisplayHeldItem(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= Slots.Count || Slots[slotIndex].StackCount <= 0)
+        {
+            ClearHeldItem(); // No valid item in slot, clear the held item
+            return;
+        }
+
+        // Get the item name to load its 3D model
+        string addressableKey = $"Assets/Prefabs/Tutorial Prefabs/{Slots[slotIndex].ItemName}.prefab";
+
+        Addressables.LoadAssetAsync<GameObject>(addressableKey).Completed += handle =>
+        {
+            if (handle.Status == UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationStatus.Succeeded)
+            {
+                ClearHeldItem(); // Remove the previous model
+                GameObject itemModel = handle.Result;
+
+                // Instantiate the model and parent it to the displayItem
+                HeldItem = Instantiate(itemModel, displayItem);
+                HeldItem.transform.localPosition = Vector3.zero; // Adjust for desired position
+                HeldItem.transform.localRotation = Quaternion.identity; // Adjust for desired rotation
+                HeldItem.transform.localScale = Vector3.one * 0.2f; // Adjust scale to fit
+                HeldItem.tag = "HeldItem";
+            }
+            else
+            {
+                Debug.LogError($"Failed to load item model: {addressableKey}");
+            }
+        };
+    }
+
+    private void ClearHeldItem()
+    {
+        if (HeldItem != null)
+        {
+            Destroy(HeldItem);
+            HeldItem = null;
+        }
+    }
+
     private void SelectSlot(int index)
     {
         selectedSlotIndex = index;
         Debug.Log($"Selected Slot: {index + 1}, Item: {Slots[index].ItemName}, Stack: {Slots[index].StackCount}");
         UpdateUI(); // Update UI to reflect the current selection
+        DisplayHeldItem(selectedSlotIndex); // Show the held item model
+    }
+
+    private void DeselectSlot()
+    {
+        Debug.Log($"Deselected Slot: {selectedSlotIndex + 1}");
+        selectedSlotIndex = -1; // No slot is selected
+        UpdateUI(); // Update UI to reflect the deselection
+        ClearHeldItem(); // Remove the held item model
+    }
+
+    private void ClearSlot(int slotIndex)
+    {
+        Slots[slotIndex].ItemID = 0;
+        Slots[slotIndex].ItemName = "";
+        Slots[slotIndex].ItemSprite = null;
+        if (selectedSlotIndex == slotIndex)
+        {
+            ClearHeldItem(); // Clear the held item if it corresponds to the emptied slot
+        }
     }
 
     private void TryPickupItem()
     {
+        // Get all colliders in pickup range
         Collider[] colliders = Physics.OverlapSphere(transform.position, pickupRange, pickupLayer);
 
         foreach (var collider in colliders)
         {
             var item = collider.GetComponent<PickupItem>();
+            
+            // Skip if this is the currently held item
+            if (item != null && item.gameObject.CompareTag("HeldItem"))
+            {
+                continue;
+            }
+
             if (item != null)
             {
                 AddItem(item.ItemID, item.ItemName, item.ItemSprite);
                 Destroy(collider.gameObject); // Remove item from the world
-                return;
+                return; // Exit after picking up one item
             }
         }
 
         Debug.Log("No item to pick up in range!");
     }
+
+
+    public void EquipItem(GameObject itemPrefab)
+    {
+        if (HeldItem != null)
+        {
+            Destroy(HeldItem); // Remove the previously held item
+        }
+
+        HeldItem = Instantiate(itemPrefab, displayItem); // Instantiate the new held item
+        HeldItem.transform.localPosition = Vector3.zero;
+        HeldItem.transform.localRotation = Quaternion.identity;
+
+        // Mark the item as being held
+        HeldItem.tag = "HeldItem";
+    }
+
+
 
     public void AddItem(int itemID, string itemName, Sprite itemSprite)
     {
@@ -132,8 +230,8 @@ public class Inventory : MonoBehaviour
             if (slot.StackCount == 0)
             {
                 slot.ItemID = itemID;
-                slot.ItemName = itemName; // Set the Item Name
-                slot.ItemSprite = itemSprite; // Assign the sprite
+                slot.ItemName = itemName;
+                slot.ItemSprite = itemSprite;
                 slot.StackCount = 1;
                 UpdateUI();
                 return;
@@ -173,9 +271,15 @@ public class Inventory : MonoBehaviour
                 Slots[slotIndex].StackCount--;
                 if (Slots[slotIndex].StackCount == 0)
                 {
-                    Slots[slotIndex].ItemID = 0;
-                    Slots[slotIndex].ItemName = "";
+                    ClearSlot(slotIndex); // Clear the slot if empty
+
+                    // Deselect the slot if it was the selected slot
+                    if (selectedSlotIndex == slotIndex)
+                    {
+                        DeselectSlot();
+                    }
                 }
+
                 UpdateUI();
             }
             else
@@ -184,6 +288,7 @@ public class Inventory : MonoBehaviour
             }
         };
     }
+
 
     public void DropItem(int slotIndex)
     {
@@ -195,12 +300,19 @@ public class Inventory : MonoBehaviour
             Slots[slotIndex].StackCount--;
             if (Slots[slotIndex].StackCount == 0)
             {
-                Slots[slotIndex].ItemID = 0;
-                Slots[slotIndex].ItemName = ""; // Clear the Item Name
+                ClearSlot(slotIndex); // Clear the slot if empty
+
+                // Deselect the slot if it was the selected slot
+                if (selectedSlotIndex == slotIndex)
+                {
+                    DeselectSlot();
+                }
             }
+
             UpdateUI();
         }
     }
+
 
     private void OnItemDropped(AsyncOperationHandle<GameObject> obj)
     {
