@@ -9,34 +9,37 @@ using UnityEngine.AI;
 
 public class Generator : MonoBehaviour
 {
-    enum CellType {None, Room, Hallway}
+    enum CellType { None, Room, Hallway }
 
-    class Room {
+    class Room
+    {
         public RectInt bounds;
 
-        public Room(Vector2Int location, Vector2Int size){
+        public Room(Vector2Int location, Vector2Int size)
+        {
             bounds = new RectInt(location, size);
         }
 
-        public static bool Intersect(Room a, Room b) {
+        public static bool Intersect(Room a, Room b)
+        {
             return !((a.bounds.position.x >= (b.bounds.position.x + b.bounds.size.x)) || ((a.bounds.position.x + a.bounds.size.x) <= b.bounds.position.x)
                 || (a.bounds.position.y >= (b.bounds.position.y + b.bounds.size.y)) || ((a.bounds.position.y + a.bounds.size.y) <= b.bounds.position.y));
         }
     }
     private Dictionary<Vector2Int, GameObject> structureInstances = new Dictionary<Vector2Int, GameObject>();
     private bool IsWinRoomPlaced = false;
-    
+
     [SerializeField] int seed;
     [SerializeField] GameObject FoodPrefab;
     [SerializeField] GameObject WaterPrefab;
     [SerializeField] GameObject PlayerPrefab;
     [SerializeField] GameObject EnemyPrefab;
-    [SerializeField] GameObject StarterRoomPrefab;
-    [SerializeField] GameObject ItemRoomPrefab;
-    [SerializeField] GameObject EnemySpawnRoomPrefab;
-    [SerializeField] GameObject WinRoomPrefab;
-    [SerializeField] GameObject RoomPrefab;
-    [SerializeField] GameObject HallwayPrefab;
+    [SerializeField] GameObject StarterRoomPrefab, StarterRoomPrefab2;
+    [SerializeField] GameObject ItemRoomPrefab, ItemRoomPrefab2;
+    [SerializeField] GameObject EnemySpawnRoomPrefab, EnemySpawnRoomPrefab2;
+    [SerializeField] GameObject WinRoomPrefab, WinRoomPrefab2;
+    [SerializeField] GameObject RoomPrefab, RoomPrefab2;
+    [SerializeField] GameObject HallwayPrefab, HallwayPrefab2;
     [SerializeField] Vector2Int size;
     [SerializeField] int roomCount;
     [SerializeField] int EnemyRoomCount;
@@ -55,7 +58,8 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GeneralSettings.Instance != null){
+        if (GeneralSettings.Instance != null)
+        {
 
             Debug.Log($"Seed: {GeneralSettings.Instance.Seed}");
             Debug.Log($"Room Count: {GeneralSettings.Instance.RoomCount}");
@@ -74,14 +78,17 @@ public class Generator : MonoBehaviour
         InstantiateCharacters(spawnInfo.Item1, spawnInfo.Item2);
     }
 
-    void GenerateMesh() {
+    void GenerateMesh()
+    {
         surface = GetComponent<NavMeshSurface>();
         surface.BuildNavMesh();
     }
 
-    ((Vector2Int, Vector2Int), (Vector2Int, Vector2Int)[]) Generate(){
-        if (seed == 0) {
-        seed = System.DateTime.Now.Millisecond;
+    ((Vector2Int, Vector2Int), (Vector2Int, Vector2Int)[]) Generate()
+    {
+        if (seed == 0)
+        {
+            seed = System.DateTime.Now.Millisecond;
         }
         random = new Random(seed);
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
@@ -114,27 +121,31 @@ public class Generator : MonoBehaviour
     }
 
     //returns location and roomSize info to spawn the player after the NavMesh is generated
-    (Vector2Int, Vector2Int) PlaceStarterRoom(){
+    (Vector2Int, Vector2Int) PlaceStarterRoom()
+    {
         Vector2Int location = new Vector2Int(
-        size.x / 2 - roomMaxSize.x / 2, 
+        size.x / 2 - roomMaxSize.x / 2,
         size.y / 2 - roomMaxSize.y / 2
         );
 
-        Vector2Int roomSize = new Vector2Int(6,6);
+        Vector2Int roomSize = new Vector2Int(6, 6);
 
         Room startingRoom = new Room(location, roomSize);
         rooms.Add(startingRoom);
-        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab);
+        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab, StarterRoomPrefab2);
 
-        foreach (var pos in startingRoom.bounds.allPositionsWithin) {
+        foreach (var pos in startingRoom.bounds.allPositionsWithin)
+        {
             grid[pos] = CellType.Room;
         }
 
         return (location, roomSize);
     }
 
-    void PlaceRooms() {
-        for (int i = 0; i < roomCount; i++) {
+    void PlaceRooms()
+    {
+        for (int i = 0; i < roomCount; i++)
+        {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
@@ -149,165 +160,195 @@ public class Generator : MonoBehaviour
             Room newRoom = new Room(location, roomSize);
             Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
-            foreach (var room in rooms) {
-                if (Room.Intersect(room, buffer)) {
+            foreach (var room in rooms)
+            {
+                if (Room.Intersect(room, buffer))
+                {
                     add = false;
                     break;
                 }
             }
 
             if (newRoom.bounds.xMin < 0 || newRoom.bounds.xMax >= size.x
-                || newRoom.bounds.yMin < 0 || newRoom.bounds.yMax >= size.y) {
+                || newRoom.bounds.yMin < 0 || newRoom.bounds.yMax >= size.y)
+            {
                 add = false;
             }
 
-            if (add) {
+            if (add)
+            {
                 rooms.Add(newRoom);
-                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, RoomPrefab);
+                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, RoomPrefab, RoomPrefab2);
 
-                foreach (var pos in newRoom.bounds.allPositionsWithin) {
+                foreach (var pos in newRoom.bounds.allPositionsWithin)
+                {
                     grid[pos] = CellType.Room;
                 }
             }
         }
     }
-// The Win Room should only be placed once in a generation
-// Same Logic to PlaceRooms except for IsWinRoomPlaced Bool
-    void PlaceWinRoom(){
-        while (IsWinRoomPlaced == false) {
+    // The Win Room should only be placed once in a generation
+    // Same Logic to PlaceRooms except for IsWinRoomPlaced Bool
+    void PlaceWinRoom()
+    {
+        while (IsWinRoomPlaced == false)
+        {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
             );
 
-            Vector2Int roomSize = new Vector2Int(6,6);
+            Vector2Int roomSize = new Vector2Int(6, 6);
 
             bool add = true;
             Room WinRoom = new Room(location, roomSize);
             Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
-            foreach (var room in rooms) {
-                if (Room.Intersect(room, buffer)) {
+            foreach (var room in rooms)
+            {
+                if (Room.Intersect(room, buffer))
+                {
                     add = false;
                     break;
                 }
             }
 
             if (WinRoom.bounds.xMin < 0 || WinRoom.bounds.xMax >= size.x
-                || WinRoom.bounds.yMin < 0 || WinRoom.bounds.yMax >= size.y) {
+                || WinRoom.bounds.yMin < 0 || WinRoom.bounds.yMax >= size.y)
+            {
                 add = false;
             }
 
-            if (add) {
+            if (add)
+            {
                 rooms.Add(WinRoom);
-                PlaceRoom(WinRoom.bounds.position, WinRoom.bounds.size, WinRoomPrefab);
+                PlaceRoom(WinRoom.bounds.position, WinRoom.bounds.size, WinRoomPrefab, WinRoomPrefab2);
 
-                foreach (var pos in WinRoom.bounds.allPositionsWithin) {
+                foreach (var pos in WinRoom.bounds.allPositionsWithin)
+                {
                     grid[pos] = CellType.Room;
                 }
                 IsWinRoomPlaced = true;
             }
         }
     }
-//Uses user input to determine how many rooms
-    void PlaceItemRoom(){
+    //Uses user input to determine how many rooms
+    void PlaceItemRoom()
+    {
         int LoopCounter = 0;
-        while (LoopCounter < ItemRoomCount) {
+        while (LoopCounter < ItemRoomCount)
+        {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
             );
 
-            Vector2Int roomSize = new Vector2Int(4,4);
+            Vector2Int roomSize = new Vector2Int(4, 4);
 
             bool add = true;
             Room ItemRoom = new Room(location, roomSize);
             Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
-            foreach (var room in rooms) {
-                if (Room.Intersect(room, buffer)) {
+            foreach (var room in rooms)
+            {
+                if (Room.Intersect(room, buffer))
+                {
                     add = false;
                     break;
                 }
             }
 
             if (ItemRoom.bounds.xMin < 0 || ItemRoom.bounds.xMax >= size.x
-                || ItemRoom.bounds.yMin < 0 || ItemRoom.bounds.yMax >= size.y) {
+                || ItemRoom.bounds.yMin < 0 || ItemRoom.bounds.yMax >= size.y)
+            {
                 add = false;
             }
 
-            if (add) {
+            if (add)
+            {
                 rooms.Add(ItemRoom);
-                PlaceRoom(ItemRoom.bounds.position, ItemRoom.bounds.size, ItemRoomPrefab);
+                PlaceRoom(ItemRoom.bounds.position, ItemRoom.bounds.size, ItemRoomPrefab, ItemRoomPrefab2);
 
                 GameObject[] prefabs = { FoodPrefab, WaterPrefab };
                 GameObject randomPrefab = prefabs[UnityEngine.Random.Range(0, prefabs.Length)];
                 Instantiate(randomPrefab, new Vector3(location.x + roomSize.x / 2 + 0.5f, 0.5f, location.y + roomSize.y / 2 + 0.5f), Quaternion.identity);
 
 
-                foreach (var pos in ItemRoom.bounds.allPositionsWithin) {
+                foreach (var pos in ItemRoom.bounds.allPositionsWithin)
+                {
                     grid[pos] = CellType.Room;
                 }
-                LoopCounter ++;
+                LoopCounter++;
             }
         }
     }
 
     //returns location and roomSize info to spawn the enemies after the NavMesh is generated
-    (Vector2Int, Vector2Int)[] PlaceEnemyRoom(){
+    (Vector2Int, Vector2Int)[] PlaceEnemyRoom()
+    {
         int LoopCounter = 0;
         (Vector2Int, Vector2Int)[] spawnInfo = new (Vector2Int, Vector2Int)[EnemyRoomCount];
-        while (LoopCounter < EnemyRoomCount) {
+        while (LoopCounter < EnemyRoomCount)
+        {
             Vector2Int location = new Vector2Int(
                 random.Next(0, size.x),
                 random.Next(0, size.y)
             );
 
-            Vector2Int roomSize = new Vector2Int(1,1);
+            Vector2Int roomSize = new Vector2Int(1, 1);
 
             bool add = true;
             Room EnemySpawnRoom = new Room(location, roomSize);
             Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
-            foreach (var room in rooms) {
-                if (Room.Intersect(room, buffer)) {
+            foreach (var room in rooms)
+            {
+                if (Room.Intersect(room, buffer))
+                {
                     add = false;
                     break;
                 }
             }
 
             if (EnemySpawnRoom.bounds.xMin < 0 || EnemySpawnRoom.bounds.xMax >= size.x
-                || EnemySpawnRoom.bounds.yMin < 0 || EnemySpawnRoom.bounds.yMax >= size.y) {
+                || EnemySpawnRoom.bounds.yMin < 0 || EnemySpawnRoom.bounds.yMax >= size.y)
+            {
                 add = false;
             }
 
-            if (add) {
+            if (add)
+            {
                 rooms.Add(EnemySpawnRoom);
-                PlaceRoom(EnemySpawnRoom.bounds.position, EnemySpawnRoom.bounds.size, EnemySpawnRoomPrefab);
-                foreach (var pos in EnemySpawnRoom.bounds.allPositionsWithin) {
+                PlaceRoom(EnemySpawnRoom.bounds.position, EnemySpawnRoom.bounds.size, EnemySpawnRoomPrefab, EnemySpawnRoomPrefab2);
+                foreach (var pos in EnemySpawnRoom.bounds.allPositionsWithin)
+                {
                     grid[pos] = CellType.Room;
                 }
                 spawnInfo[LoopCounter] = (location, roomSize);
-                LoopCounter ++;
+                LoopCounter++;
             }
         }
         return spawnInfo;
-    }   
+    }
 
-    void Triangulate() {
+    void Triangulate()
+    {
         List<Vertex> vertices = new List<Vertex>();
 
-        foreach (var room in rooms) {
+        foreach (var room in rooms)
+        {
             vertices.Add(new Vertex<Room>((Vector2)room.bounds.position + ((Vector2)room.bounds.size) / 2, room));
         }
 
         delaunay = Delaunay2D.Triangulate(vertices);
     }
 
-    void CreateHallways() {
+    void CreateHallways()
+    {
         List<Prim.Edge> edges = new List<Prim.Edge>();
 
-        foreach (var edge in delaunay.Edges) {
+        foreach (var edge in delaunay.Edges)
+        {
             edges.Add(new Prim.Edge(edge.U, edge.V));
         }
 
@@ -317,17 +358,21 @@ public class Generator : MonoBehaviour
         var remainingEdges = new HashSet<Prim.Edge>(edges);
         remainingEdges.ExceptWith(selectedEdges);
 
-        foreach (var edge in remainingEdges) {
-            if (random.NextDouble() < 0.125) {
+        foreach (var edge in remainingEdges)
+        {
+            if (random.NextDouble() < 0.125)
+            {
                 selectedEdges.Add(edge);
             }
         }
     }
 
-    void PathfindHallways() {
+    void PathfindHallways()
+    {
         DungeonPathfinder2D aStar = new DungeonPathfinder2D(size);
 
-        foreach (var edge in selectedEdges) {
+        foreach (var edge in selectedEdges)
+        {
             var startRoom = (edge.U as Vertex<Room>).Item;
             var endRoom = (edge.V as Vertex<Room>).Item;
 
@@ -336,16 +381,22 @@ public class Generator : MonoBehaviour
             var startPos = new Vector2Int((int)startPosf.x, (int)startPosf.y);
             var endPos = new Vector2Int((int)endPosf.x, (int)endPosf.y);
 
-            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder2D.Node a, DungeonPathfinder2D.Node b) => {
+            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder2D.Node a, DungeonPathfinder2D.Node b) =>
+            {
                 var pathCost = new DungeonPathfinder2D.PathCost();
-                
+
                 pathCost.cost = Vector2Int.Distance(b.Position, endPos);    //heuristic
 
-                if (grid[b.Position] == CellType.Room) {
+                if (grid[b.Position] == CellType.Room)
+                {
                     pathCost.cost += 10;
-                } else if (grid[b.Position] == CellType.None) {
+                }
+                else if (grid[b.Position] == CellType.None)
+                {
                     pathCost.cost += 5;
-                } else if (grid[b.Position] == CellType.Hallway) {
+                }
+                else if (grid[b.Position] == CellType.Hallway)
+                {
                     pathCost.cost += 1;
                 }
 
@@ -354,33 +405,52 @@ public class Generator : MonoBehaviour
                 return pathCost;
             });
 
-            if (path != null) {
-                for (int i = 0; i < path.Count; i++) {
+            if (path != null)
+            {
+                for (int i = 0; i < path.Count; i++)
+                {
                     var current = path[i];
 
-                    if (grid[current] == CellType.None) {
+                    if (grid[current] == CellType.None)
+                    {
                         grid[current] = CellType.Hallway;
                     }
 
-                    if (i > 0) {
+                    if (i > 0)
+                    {
                         var prev = path[i - 1];
 
                         var delta = current - prev;
                     }
                 }
 
+                int switchHallwayCounter = 0;
                 //Fixed walls appearing at hallway crossroads and hallway/room intersections here
-                foreach (var pos in path) {
-                    if (grid[pos] == CellType.Hallway && !structureInstances.ContainsKey(pos)) {
-                        PlaceHallway(pos);
+                foreach (var pos in path)
+                {
+
+                    if (grid[pos] == CellType.Hallway && !structureInstances.ContainsKey(pos))
+                    {
+                        if (switchHallwayCounter == 2)
+                        {
+                            PlaceHallway2(pos);
+                            switchHallwayCounter = 0;
+                        }
+                        else
+                        {
+                            PlaceHallway(pos);
+                            switchHallwayCounter += 1;
+                        }
+
                     }
                 }
             }
         }
     }
 
-// Removes walls of structures that are adjacent to each other 
-    void RemoveAdjacentWalls(){
+    // Removes walls of structures that are adjacent to each other 
+    void RemoveAdjacentWalls()
+    {
         Vector2Int[] directions = {
             new Vector2Int(1, 0),
             new Vector2Int(-1, 0),
@@ -388,15 +458,18 @@ public class Generator : MonoBehaviour
             new Vector2Int(0, -1)
         };
 
-        foreach (var structure in structureInstances) {
+        foreach (var structure in structureInstances)
+        {
             Vector2Int location = (Vector2Int)structure.Key;
             GameObject structureInstance = structure.Value;
 
-            foreach (var direction in directions) {
+            foreach (var direction in directions)
+            {
                 Vector2Int neighborPos = location + direction;
-                
+
                 //This is the part that removes the walls, and the walls of any neighboring cells, if you have issues, check RemoveWall()
-                if (structureInstances.ContainsKey(neighborPos)) {
+                if (structureInstances.ContainsKey(neighborPos))
+                {
                     GameObject neighborStructure = structureInstances[neighborPos];
                     RemoveWall(structureInstance, direction);
 
@@ -407,7 +480,8 @@ public class Generator : MonoBehaviour
         }
     }
 
-    void RemoveWall(GameObject structureInstance, Vector2Int direction) {
+    void RemoveWall(GameObject structureInstance, Vector2Int direction)
+    {
         // XWall refers to the Positive X direction, NWall is the Negative X direction, same logic applies to Z di - use this naming convention plz
         string wallName = direction == new Vector2Int(1, 0) ? "XWall" :
                         direction == new Vector2Int(-1, 0) ? "NXWall" :
@@ -416,31 +490,73 @@ public class Generator : MonoBehaviour
                         null;
         // Important that the walls are tagged "Walls", if not the code wont find em' and you'll have walls
         // If there are walls where you don't want em', go into the editor click on the prefab, check the inspection panel for the tags and tag the walls 
-        if (wallName != null) {
+        if (wallName != null)
+        {
             Transform wallsTransform = structureInstance.transform.Find("Walls");
-            if (wallsTransform != null) {
+            if (wallsTransform != null)
+            {
                 Transform wallTransform = wallsTransform.Find(wallName);
-                if (wallTransform != null) {
+                if (wallTransform != null)
+                {
                     wallTransform.gameObject.SetActive(false);
-                } 
-                else {
+                }
+                else
+                {
                     Debug.LogWarning($"Wall {wallName} not found in {structureInstance.name}"); //hail mary
                 }
-            } 
-            else {
+            }
+            else
+            {
                 Debug.LogWarning($"Walls container not found in {structureInstance.name}"); //Phantom Walls beware
             }
         }
     }
 
-// This is what makes the rooms modular, if not for this, the rooms would be stretched and distorted prefabs, this makes it so that one prefab is used over and over to populate the space of the room based on the original user input
-// If rooms are not working correctly, 50/50 chance this here is the culprit, the other 50% is somewhere in PlaceRooms()
-    void PlaceRoom(Vector2Int location, Vector2Int size, GameObject RoomPrefab) {
-        for (int i = 0; i < size.x; i++) {
-            for (int j = 0; j < size.y; j++) {
+    // This is what makes the rooms modular, if not for this, the rooms would be stretched and distorted prefabs, this makes it so that one prefab is used over and over to populate the space of the room based on the original user input
+    // If rooms are not working correctly, 50/50 chance this here is the culprit, the other 50% is somewhere in PlaceRooms()
+    void PlaceRoom(Vector2Int location, Vector2Int size, GameObject RoomPrefab, GameObject RoomPrefab2)
+    {
+        bool switchRoomFlag = true;
+        bool switchRoomAdjustmentFlag = true;
+        int switchRoomCounter = 0;
+        for (int i = 0; i < size.x; i++)
+        {
+            for (int j = 0; j < size.y; j++)
+            {
                 Vector2Int offset = new Vector2Int(i, j);
                 Vector2Int prefabPosition = location + offset;
-                GameObject roomInstance = Instantiate(RoomPrefab, new Vector3(prefabPosition.x, 0, prefabPosition.y), Quaternion.identity);
+                GameObject roomInstance;
+                if (switchRoomFlag == true)
+                {
+                    roomInstance = Instantiate(RoomPrefab, new Vector3(prefabPosition.x, 0, prefabPosition.y), Quaternion.identity);
+                    switchRoomCounter += 1;
+                }
+                else
+                {
+                    roomInstance = Instantiate(RoomPrefab2, new Vector3(prefabPosition.x, 0, prefabPosition.y), Quaternion.identity);
+                    switchRoomFlag = true;
+                    switchRoomCounter = 0;
+                }
+
+                if (switchRoomAdjustmentFlag == true)
+                {
+                    if (switchRoomCounter == 2)
+                    {
+                        switchRoomFlag = false;
+                        switchRoomAdjustmentFlag = false;
+                    }
+                }
+
+
+                if (switchRoomAdjustmentFlag == false)
+                {
+                    if (switchRoomCounter == 5)
+                    {
+                        switchRoomFlag = false;
+                        switchRoomAdjustmentFlag = true;
+                    }
+                }
+
                 structureInstances[prefabPosition] = roomInstance;
                 // If walls are populating the room, check RemoveAdjacentWall()
                 RemoveAdjacentWalls();
@@ -448,8 +564,15 @@ public class Generator : MonoBehaviour
         }
     }
 
-    void PlaceHallway(Vector2Int location) {
+    void PlaceHallway(Vector2Int location)
+    {
         GameObject hallwayInstance = Instantiate(HallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
+        structureInstances[location] = hallwayInstance;
+        RemoveAdjacentWalls();
+    }
+    void PlaceHallway2(Vector2Int location)
+    {
+        GameObject hallwayInstance = Instantiate(HallwayPrefab2, new Vector3(location.x, 0, location.y), Quaternion.identity);
         structureInstances[location] = hallwayInstance;
         RemoveAdjacentWalls();
     }

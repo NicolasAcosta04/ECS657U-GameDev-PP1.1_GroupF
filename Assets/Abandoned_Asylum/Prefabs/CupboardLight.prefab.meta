@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 285481860f04d3648a939f684d9f5ff5
+timeCreated: 1512933324
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/CupboardLight.prefab
+  uploadId: 380667

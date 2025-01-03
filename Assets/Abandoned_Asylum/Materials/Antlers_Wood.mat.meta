@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3e034cd96d9015a419c7b314fcd80914
+timeCreated: 1507554910
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/Antlers_Wood.mat
+  uploadId: 380667

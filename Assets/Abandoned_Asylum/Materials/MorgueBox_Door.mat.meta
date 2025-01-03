@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0912939713195f34782ccb4777820c6f
+timeCreated: 1512135035
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/MorgueBox_Door.mat
+  uploadId: 380667

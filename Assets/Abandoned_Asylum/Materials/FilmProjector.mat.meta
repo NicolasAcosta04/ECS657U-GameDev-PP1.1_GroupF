@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f9bd0c30cf58b474d80109ac95c91774
+timeCreated: 1511891904
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/FilmProjector.mat
+  uploadId: 380667

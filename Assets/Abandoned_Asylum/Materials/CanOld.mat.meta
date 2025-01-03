@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6cb52e3471c68924a83d5518fd6caf27
+timeCreated: 1512051955
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/CanOld.mat
+  uploadId: 380667

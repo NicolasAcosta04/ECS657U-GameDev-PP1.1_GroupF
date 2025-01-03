@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 6a166fb671afe1046976d33f2e64e26e
+timeCreated: 1512933327
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/Cupboard.prefab
+  uploadId: 380667

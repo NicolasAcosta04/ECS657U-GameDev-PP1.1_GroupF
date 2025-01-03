@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c22e8b7fd82b2eb42a708bf08155dfc7
+timeCreated: 1510924028
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/Plate.mat
+  uploadId: 380667

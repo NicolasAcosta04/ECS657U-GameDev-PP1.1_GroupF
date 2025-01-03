@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 60d42c98dca73094682c88a1c6a87d5a
+timeCreated: 1505916614
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/SheetRack.mat
+  uploadId: 380667
