@@ -3375,6 +3375,7 @@ MonoBehaviour:
   HelpPanel: {fileID: 944295843}
   SettingsPanel: {fileID: 2098489015}
   MainMenuConfirmationPanel: {fileID: 1408875784}
+  PlayerUI: {fileID: 0}
 --- !u!114 &1471375052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6340,7 +6341,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -6351,7 +6352,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.05
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 92d0141e2df156e47909f133ada7f8bb, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

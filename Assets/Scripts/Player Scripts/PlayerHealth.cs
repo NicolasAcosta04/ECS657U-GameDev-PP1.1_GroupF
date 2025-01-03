@@ -139,12 +139,14 @@ public class PlayerHealth : MonoBehaviour
         }
 
         // Dead - Game over when the health bar is at 0
+        /*
         if (healthBar.value == 0)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             SceneManager.LoadScene("Game Over");
         }
+        */
     }
 
     private void HungerRestore()

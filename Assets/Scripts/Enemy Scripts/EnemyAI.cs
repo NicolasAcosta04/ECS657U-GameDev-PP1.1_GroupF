@@ -11,6 +11,8 @@ public class EnemyAI : MonoBehaviour
     [SerializeField]
     public NavMeshAgent agent;
 
+    public Rigidbody rb;
+
     public Enum enemyType;
 
     public Transform player;
@@ -47,6 +49,7 @@ public class EnemyAI : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        rb = agent.GetComponent<Rigidbody>();
         renderer = GetComponent<MeshRenderer>();
         startPosition = transform.position;
         InPlayerCamera = GetComponent<InPlayerCamera>();
@@ -71,6 +74,8 @@ public class EnemyAI : MonoBehaviour
             case EnemyTypes.Freezers:
                 enemyType = EnemyTypes.Freezers;
                 agent.speed = 3;
+                sightRange = 80;
+                FOVAngle = 270;
                 break;
 
             default:
@@ -84,6 +89,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!chasing)
         {
+            print("Patrolling");
             while (!destinationSet) SearchDestination();
 
             if (destinationSet)
@@ -91,6 +97,7 @@ public class EnemyAI : MonoBehaviour
                 agent.SetDestination(destination);
             }
         }
+        if (chasing) print("Lost Player");
 
         Vector3 distanceToDestination = transform.position - destination;
 
@@ -104,34 +111,38 @@ public class EnemyAI : MonoBehaviour
 
     private void SearchDestination()
     {
+        print("Searching for Destination");
         float randomX = Random.Range(startPosition.x + patrolRange, startPosition.x - patrolRange);
         float randomZ = Random.Range(startPosition.z + patrolRange, startPosition.z - patrolRange);
         destination = new Vector3(randomX, transform.position.y, randomZ);
         
         if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround) && !(Physics.Raycast(destination, -transform.up, 2f, Wall)))
         {
-            Debug.Log(destination);
             destinationSet = true;
         } 
         else
         {
-            Debug.Log(destinationSet);
             destinationSet = false;
         }
     }
 
     private void Chasing()
     {
+        print("Chasing");
         destination = player.position;
         destinationSet = true;
         chasing = true;
-        transform.LookAt(player);
         agent.SetDestination(destination);
+        agent.speed = 5;
+        transform.LookAt(player);
+        
     }
 
     private void Attacking()
     {
+        print("Attacking");
         agent.SetDestination(transform.position);
+        agent.speed = 0;
 
         transform.LookAt(player);
 
@@ -209,6 +220,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (enemyType.Equals(EnemyTypes.Freezers) && seen)
         {
+            print("Freezing");
             if (!freeze)
             {
                 transform.LookAt(player);
@@ -218,6 +230,10 @@ public class EnemyAI : MonoBehaviour
             agent.angularSpeed = 0;
             agent.acceleration = 0;
             agent.velocity = new Vector3(0,0,0);
+            agent.isStopped = true;
+            rb.drag = 9999;
+            rb.angularDrag = 9999;
+            print("should be 0 ->" + agent.velocity);
         }
         else
         {
@@ -225,7 +241,10 @@ public class EnemyAI : MonoBehaviour
             agent.speed = 3;
             agent.angularSpeed = 120;
             agent.acceleration = 2;
-            print(agent.velocity);
+            agent.isStopped = false;
+            rb.drag = 0;
+            rb.angularDrag = 0.5f;
+
         }
         //Check for sight and attack range
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
