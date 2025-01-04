@@ -74,14 +74,6 @@ public class PauseMenuScript : MonoBehaviour
         Canvas.ForceUpdateCanvases(); // Recalculate UI
         isPaused = true;
     }
-
-    public void PauseMenu()
-    {
-        PauseMenuPanel.SetActive(true);
-
-        SettingsPanel.SetActive(false);
-        HelpPanel.SetActive(false);
-
     public void PauseMenu()
     {
         PauseMenuPanel.SetActive(true);
@@ -119,12 +111,6 @@ public class PauseMenuScript : MonoBehaviour
     {
         Time.timeScale = 1f; // Reset time before changing scene
         SceneManager.LoadScene("Main Menu");
-    }
-
-    public void CancelReturnToMainMenu()
-    {
-        MainPanel.SetActive(true);
-        MainMenuConfirmationPanel.SetActive(false);
     }
 
     public void SaveSettings()
