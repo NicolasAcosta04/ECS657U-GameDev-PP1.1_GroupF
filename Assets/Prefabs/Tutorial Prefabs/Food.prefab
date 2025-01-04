@@ -121,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: 1
   ItemName: Food
+  ItemSprite: {fileID: 2133860732, guid: 6934c6a26ed33854daa3f77e55a0dc8e, type: 3}
 --- !u!114 &6326965439989475358
 MonoBehaviour:
   m_ObjectHideFlags: 0

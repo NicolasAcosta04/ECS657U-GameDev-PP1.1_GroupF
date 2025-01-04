@@ -9,15 +9,11 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField]
     private GameObject PauseMenuPanel;
 
-
     [SerializeField]
     private GameObject SettingsPanel;
 
-    [SerializeField]
-    Slider mouseXSlider;
-
-    [SerializeField]
-    Slider mouseYSlider;
+    [SerializeField] private Slider sensXSlider; // Slider for sensitivity X
+    [SerializeField] private Slider sensYSlider; // Slider for sensitivity Y
 
 
     [SerializeField]
@@ -26,6 +22,8 @@ public class PauseMenuScript : MonoBehaviour
     private GameObject MainMenuConfirmationPanel;
     [SerializeField]
     private GameObject PlayerUI; // Reference to the player UI
+
+
 
 
     private bool isPaused = false;
@@ -52,6 +50,13 @@ public class PauseMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the game
         Cursor.visible = false; // Hide the cursor
         isPaused = false;
+
+        // Notify PlayerCam
+        PlayerCam playerCam = Object.FindFirstObjectByType<PlayerCam>();
+        if (playerCam != null)
+        {
+            playerCam.isPaused = false;
+        }
     }
 
     public void Pause()
@@ -61,7 +66,6 @@ public class PauseMenuScript : MonoBehaviour
         SettingsPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
         PlayerUI.SetActive(false); // Disable player UI
-
 
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
@@ -78,6 +82,12 @@ public class PauseMenuScript : MonoBehaviour
         SettingsPanel.SetActive(false);
         HelpPanel.SetActive(false);
 
+    public void PauseMenu()
+    {
+        PauseMenuPanel.SetActive(true);
+
+        SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
     }
 
@@ -87,15 +97,6 @@ public class PauseMenuScript : MonoBehaviour
         HelpPanel.SetActive(false);
         SettingsPanel.SetActive(true);
         MainMenuConfirmationPanel.SetActive(false);
-    }
-
-    public void StoreGeneralSettings()
-    {
-        if (GeneralSettings.Instance != null)
-        {
-            GeneralSettings.Instance.sensX = mouseXSlider.value;
-            GeneralSettings.Instance.sensY = mouseYSlider.value;
-        }
     }
 
     public void Help()
@@ -119,4 +120,33 @@ public class PauseMenuScript : MonoBehaviour
         Time.timeScale = 1f; // Reset time before changing scene
         SceneManager.LoadScene("Main Menu");
     }
+
+    public void CancelReturnToMainMenu()
+    {
+        MainPanel.SetActive(true);
+        MainMenuConfirmationPanel.SetActive(false);
+    }
+
+    public void SaveSettings()
+    {
+        if (GeneralSettings.Instance != null)
+        {
+            GeneralSettings.Instance.sensX = sensXSlider.value;
+            GeneralSettings.Instance.sensY = sensYSlider.value;
+
+            Debug.Log($"Saved Sensitivity - X: {sensXSlider.value}, Y: {sensYSlider.value}");
+
+            // Notify PlayerCam of the updated settings
+            PlayerCam playerCam = Object.FindFirstObjectByType<PlayerCam>(); // Updated to use the new method
+            if (playerCam != null)
+            {
+                playerCam.UpdateSensitivity(GeneralSettings.Instance.sensX, GeneralSettings.Instance.sensY);
+            }
+            else
+            {
+                Debug.LogWarning("PlayerCam not found!");
+            }
+        }
+    }
+
 }

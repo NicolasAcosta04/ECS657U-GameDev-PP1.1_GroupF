@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7775405211550223856}
   - component: {fileID: 4746181605177535216}
   - component: {fileID: 7681577864987148373}
+  - component: {fileID: 2133594049237987659}
   m_Layer: 0
   m_Name: EnemyObj
   m_TagString: Untagged
@@ -182,12 +183,28 @@ MonoBehaviour:
   Wall:
     serializedVersion: 2
     m_Bits: 1024
+  chasing: 0
   destination: {x: 0, y: 0, z: 0}
   patrolRange: 20
-  startPosition: {x: 0, y: 0, z: 0}
   timeBetweenAttacks: 0
   sightRange: 5
   attackRange: 0.1
   FOVAngle: 90
   playerInSightRange: 0
   playerInAttackRange: 0
+--- !u!114 &2133594049237987659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7700570454702964828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51324aa6133d5ae4ab4fd9725d56b221, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inCamera: 0
+  Wall:
+    serializedVersion: 2
+    m_Bits: 1024
