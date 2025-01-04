@@ -8,44 +8,48 @@ using Random = UnityEngine.Random;
 /// adapted from https://youtu.be/UjkSFoLxesw
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField]
-    public NavMeshAgent agent;
+    // Declare fields
+    private NavMeshAgent agent;
+    private Rigidbody rb;
+    private Transform player;
+    private LayerMask whatIsGround, whatIsPlayer, Wall;
 
-    public Rigidbody rb;
+    // Enemy Type
+    public EnemyTypes enemyType;
 
-    public Enum enemyType;
-
-    public Transform player;
-
-    public LayerMask whatIsGround, whatIsPlayer, Wall;
-
+    // Freezer Attributes
+    [Header("Freezer Attributes")]
     private InPlayerCamera InPlayerCamera;
-
-    public Boolean seen;
-
-    public Boolean chasing;
-
-    MeshRenderer renderer;
+    private bool seen;
+    private bool chasing;
+    private bool freeze;
 
     //Patrolling
-    public Vector3 destination;
-    bool destinationSet;
-    public float patrolRange;
+    [Header("Patrol Attributes")]
+    [SerializeField]  private Vector3 destination;
+    [SerializeField] private float patrolRange;
+    [SerializeField] private float waitTime = 2.0f;
+    private bool destinationSet;
     private Vector3 startPosition;
-    public Boolean lostPlayer = false;
-    public Boolean waiting = false;
-    public float waitTime = 2.0f;
+    private bool lostPlayer = false;
+    private bool waiting = false;
+    
 
     //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    [Header("Attack attributes")]
+    [SerializeField] private float timeBetweenAttacks;
+    [SerializeField] private float attackDamage;
+    private bool alreadyAttacked;
 
-    //States
-    public float sightRange, attackRange, FOVAngle;
-    public bool playerInSightRange, playerInAttackRange;
+    //State Attributes
+    [Header("State Attributes")]
+    [SerializeField] private float sightRange;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float FOVAngle;
+    private bool playerInSightRange, playerInAttackRange;
 
     //Enemy Type Specific
-    public bool freeze;
+    
 
     // Initialisation
     private void Awake()
@@ -53,7 +57,6 @@ public class EnemyAI : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         rb = agent.GetComponent<Rigidbody>();
-        renderer = GetComponent<MeshRenderer>();
         startPosition = transform.position;
         InPlayerCamera = GetComponent<InPlayerCamera>();
         chasing = false;
@@ -61,7 +64,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        ChangeType(EnemyTypes.Freezers);
+        ChangeType(EnemyTypes.Chasers);
         StartCoroutine(FOVRoutine());
     }
 
@@ -95,7 +98,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (!chasing)
         {
-            print("Patrolling");
+            //print("Patrolling");
             while (!destinationSet) SearchDestination();
 
             if (destinationSet)
@@ -105,7 +108,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            print("Lost Player");
+            //print("Lost Player");
             lostPlayer = true;
         }
 
@@ -131,12 +134,12 @@ public class EnemyAI : MonoBehaviour
         waiting = false;
     }
 
-    //searches for a random destination on the map that is within the patrol range
+    //searches for a random destination on the map that is within the patrol range of the player
     private void SearchDestination()
     {
-        print("Searching for Destination");
-        float randomX = Random.Range(startPosition.x + patrolRange, startPosition.x - patrolRange);
-        float randomZ = Random.Range(startPosition.z + patrolRange, startPosition.z - patrolRange);
+        //print("Searching for Destination");
+        float randomX = Random.Range(player.position.x + patrolRange, player.position.x - patrolRange);
+        float randomZ = Random.Range(player.position.z + patrolRange, player.position.z - patrolRange);
         destination = new Vector3(randomX, transform.position.y, randomZ);
         
         if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround) && !(Physics.Raycast(destination, -transform.up, 2f, Wall)))
@@ -152,7 +155,7 @@ public class EnemyAI : MonoBehaviour
     //chasing state
     private void Chasing()
     {
-        print("Chasing");
+        //print("Chasing");
         destination = player.position;
         destinationSet = true;
         chasing = true;
@@ -169,7 +172,7 @@ public class EnemyAI : MonoBehaviour
     //attacking state
     private void Attacking()
     {
-        print("Attacking");
+        //print("Attacking");
         agent.SetDestination(transform.position);
         agent.speed = 0;
 
@@ -251,7 +254,7 @@ public class EnemyAI : MonoBehaviour
         //freezes the freezer enemy in place if its seen
         if ((enemyType.Equals(EnemyTypes.Freezers) && seen) || waiting)
         {
-            print("Freezing");
+            //print("Freezing");
             if (!freeze)
             {
                 transform.LookAt(player);
@@ -264,7 +267,7 @@ public class EnemyAI : MonoBehaviour
             agent.isStopped = true;
             rb.drag = 9999;
             rb.angularDrag = 9999;
-            print("should be 0 ->" + agent.velocity);
+            //print("should be 0 ->" + agent.velocity);
         }
         //resumes movement if not
         else
