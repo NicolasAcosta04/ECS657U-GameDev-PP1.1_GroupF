@@ -7,15 +7,26 @@ using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
-    [SerializeField] 
+    [SerializeField]
     GameObject MainMenuPanel;
-    [SerializeField] 
+    [SerializeField]
     GameObject PlayGamePanel;
-    [SerializeField] 
+    [SerializeField]
     GameObject CustomSettingsPanel;
-    [SerializeField] 
+    [SerializeField]
+
+
     GameObject SettingsPanel;
-    [SerializeField] 
+
+    [SerializeField]
+    Slider mouseXSlider;
+
+    [SerializeField]
+    Slider mouseYSlider;
+
+
+
+    [SerializeField]
     GameObject HelpPanel;
     [SerializeField]
     TMP_InputField seedInputField;
@@ -25,21 +36,22 @@ public class MainMenuScript : MonoBehaviour
     TMP_InputField enemyRoomCountInputField;
     [SerializeField]
     TMP_InputField itemRoomCountInputField;
-    [SerializeField]
-    Slider mouseXSlider;
 
-    [SerializeField]
-    Slider mouseYSlider;
+
 
     //navigate menuee
-    public void MainMenu(){
+    public void MainMenu()
+    {
         MainMenuPanel.SetActive(true);
+
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(false);
+
         SettingsPanel.SetActive(false);
         HelpPanel.SetActive(false);
     }
-    public void PlayGame(){
+    public void PlayGame()
+    {
         MainMenuPanel.SetActive(false);
         PlayGamePanel.SetActive(true);
         CustomSettingsPanel.SetActive(false);
@@ -47,7 +59,8 @@ public class MainMenuScript : MonoBehaviour
         HelpPanel.SetActive(false);
     }
 
-    public void CustomSettings(){
+    public void CustomSettings()
+    {
         MainMenuPanel.SetActive(false);
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(true);
@@ -55,14 +68,16 @@ public class MainMenuScript : MonoBehaviour
         HelpPanel.SetActive(false);
     }
 
-    public void Settings(){
+    public void Settings()
+    {
         MainMenuPanel.SetActive(false);
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(false);
         SettingsPanel.SetActive(true);
         HelpPanel.SetActive(false);
     }
-    public void Help(){
+    public void Help()
+    {
         MainMenuPanel.SetActive(false);
         PlayGamePanel.SetActive(false);
         CustomSettingsPanel.SetActive(false);
@@ -72,8 +87,10 @@ public class MainMenuScript : MonoBehaviour
 
     // store items in general settings
 
-    public void EasyButton(){
-        if (GeneralSettings.Instance != null){
+    public void EasyButton()
+    {
+        if (GeneralSettings.Instance != null)
+        {
 
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 75;
@@ -82,8 +99,10 @@ public class MainMenuScript : MonoBehaviour
 
         }
     }
-    public void MediumButton(){
-        if (GeneralSettings.Instance != null){
+    public void MediumButton()
+    {
+        if (GeneralSettings.Instance != null)
+        {
 
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 150;
@@ -92,8 +111,10 @@ public class MainMenuScript : MonoBehaviour
 
         }
     }
-    public void HardButton(){
-        if (GeneralSettings.Instance != null){
+    public void HardButton()
+    {
+        if (GeneralSettings.Instance != null)
+        {
 
             GeneralSettings.Instance.Seed = 0;
             GeneralSettings.Instance.RoomCount = 300;
@@ -103,20 +124,24 @@ public class MainMenuScript : MonoBehaviour
         }
     }
 
-    public void StoreGeneralSettings(){
-        if (GeneralSettings.Instance != null){
+    public void StoreGeneralSettings()
+    {
+        if (GeneralSettings.Instance != null)
+        {
             GeneralSettings.Instance.sensX = mouseXSlider.value;
             GeneralSettings.Instance.sensY = mouseYSlider.value;
         }
     }
 
-    public void StoreCustomSettings(){
-        if (GeneralSettings.Instance != null){
+    public void StoreCustomSettings()
+    {
+        if (GeneralSettings.Instance != null)
+        {
 
-        GeneralSettings.Instance.Seed = int.Parse(seedInputField.text);
-        GeneralSettings.Instance.RoomCount = int.Parse(roomCountInputField.text);
-        GeneralSettings.Instance.EnemyRoomCount = int.Parse(enemyRoomCountInputField.text);
-        GeneralSettings.Instance.ItemRoomCount = int.Parse(itemRoomCountInputField.text);
+            GeneralSettings.Instance.Seed = int.Parse(seedInputField.text);
+            GeneralSettings.Instance.RoomCount = int.Parse(roomCountInputField.text);
+            GeneralSettings.Instance.EnemyRoomCount = int.Parse(enemyRoomCountInputField.text);
+            GeneralSettings.Instance.ItemRoomCount = int.Parse(itemRoomCountInputField.text);
 
         }
     }
