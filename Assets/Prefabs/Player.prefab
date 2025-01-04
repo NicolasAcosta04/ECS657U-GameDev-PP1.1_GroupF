@@ -219,7 +219,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!136 &2584418184593445378
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4637868838165244246}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0148c6e5dc731084f8f3c6b773df7d43, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -596,3 +596,4 @@ MonoBehaviour:
   sensX: 5
   sensY: 5
   orientation: {fileID: 2491000842632311064}
+  isPaused: 0
