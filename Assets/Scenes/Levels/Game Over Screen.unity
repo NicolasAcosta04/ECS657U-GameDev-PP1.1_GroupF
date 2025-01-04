@@ -225,8 +225,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
-  m_SizeDelta: {x: 160, y: 60}
+  m_AnchoredPosition: {x: 0.000030517578, y: 30}
+  m_SizeDelta: {x: 160, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &78528123
 Animator:
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 18ae5549e8788446a8059ce41715e44e, type: 3}
+  m_Texture: {fileID: 2800000, guid: 0a738e383032946209c3d8824d7e2117, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 1301987770}
   - component: {fileID: 1301987774}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Game Over Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1209,7 +1209,7 @@ GameObject:
   - component: {fileID: 2074154021}
   - component: {fileID: 2074154020}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Game Over Menu Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
