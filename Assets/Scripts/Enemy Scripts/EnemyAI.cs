@@ -27,14 +27,14 @@ public class EnemyAI : MonoBehaviour
 
     //Patrolling
     [Header("Patrol Attributes")]
-    [SerializeField]  private Vector3 destination;
+    [SerializeField] private Vector3 destination;
     [SerializeField] private float patrolRange;
     [SerializeField] private float waitTime = 2.0f;
     private bool destinationSet;
     private Vector3 startPosition;
     private bool lostPlayer = false;
     private bool waiting = false;
-    
+
 
     //Attacking
     [Header("Attack attributes")]
@@ -53,7 +53,7 @@ public class EnemyAI : MonoBehaviour
     private bool playerInSightRange, playerInAttackRange;
 
     //Enemy Type Specific
-    
+
 
     // Initialisation
     private void Awake()
@@ -100,7 +100,7 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             default:
-                enemyType=EnemyTypes.Chasers;
+                enemyType = EnemyTypes.Chasers;
                 agent.speed = 2;
                 break;
         }
@@ -156,11 +156,11 @@ public class EnemyAI : MonoBehaviour
         float randomX = Random.Range(player.position.x + patrolRange, player.position.x - patrolRange);
         float randomZ = Random.Range(player.position.z + patrolRange, player.position.z - patrolRange);
         destination = new Vector3(randomX, transform.position.y, randomZ);
-        
+
         if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround) && !(Physics.Raycast(destination, -transform.up, 2f, Wall)))
         {
             destinationSet = true;
-        } 
+        }
         else
         {
             destinationSet = false;
@@ -179,9 +179,9 @@ public class EnemyAI : MonoBehaviour
         {
             agent.speed = 6;
         }
-        
+
         transform.LookAt(player);
-        
+
     }
 
     //attacking state
@@ -259,7 +259,7 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere (transform.position, sightRange);
+        Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
     // Update is called once per frame
@@ -277,7 +277,7 @@ public class EnemyAI : MonoBehaviour
             agent.speed = 0;
             agent.angularSpeed = 0;
             agent.acceleration = 0;
-            agent.velocity = new Vector3(0,0,0);
+            agent.velocity = new Vector3(0, 0, 0);
             agent.isStopped = true;
             rb.drag = 9999;
             rb.angularDrag = 9999;

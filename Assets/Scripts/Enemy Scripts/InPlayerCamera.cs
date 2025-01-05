@@ -61,8 +61,9 @@ public class InPlayerCamera : MonoBehaviour
         if (inCameraRange)
         {
             WallCheck();
-            
-        } else
+
+        }
+        else
         {
             inCamera = false;
         }

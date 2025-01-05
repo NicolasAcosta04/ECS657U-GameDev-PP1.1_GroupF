@@ -5,30 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class SceneManage : MonoBehaviour
 {
-    public void PlayGame(){
+    public void PlayGame()
+    {
         SceneManager.LoadScene("Level 1");
     }
 
-    public void Restart(){
+    public void PlayTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
+    public void Restart()
+    {
         SceneManager.LoadScene("Level 1");
     }
 
-    public void MainMenu(){
+    public void MainMenu()
+    {
         SceneManager.LoadScene("Main Menu");
     }
 
-    private void OnTriggerEnter(Collider other){
+    private void OnTriggerEnter(Collider other)
+    {
 
-        if (other.CompareTag("Player")){
+        if (other.CompareTag("Player"))
+        {
 
-            if (SceneManager.GetActiveScene().name == "Level 1"){
-            SceneManager.LoadScene("Level 2");
+            if (SceneManager.GetActiveScene().name == "Level 1")
+            {
+                SceneManager.LoadScene("Level 2");
             }
 
-            else if (SceneManager.GetActiveScene().name == "Level 2"){
-            SceneManager.LoadScene("Victory Screen");
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            else if (SceneManager.GetActiveScene().name == "Level 2")
+            {
+                SceneManager.LoadScene("Victory Screen");
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
 
         }
