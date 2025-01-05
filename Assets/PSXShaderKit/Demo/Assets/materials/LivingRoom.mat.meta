@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b4b2c3295b745e6419f063f5393aa207
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/LivingRoom.mat
+  uploadId: 585336

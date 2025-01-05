@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e4e916f728b0f664fb5cb8ad6a7d4064
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/white.mat
+  uploadId: 585336

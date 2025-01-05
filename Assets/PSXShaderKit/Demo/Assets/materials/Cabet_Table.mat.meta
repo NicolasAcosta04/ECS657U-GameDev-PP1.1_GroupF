@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 72ead2ca03f46af4d83514f47d77d871
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/Cabet_Table.mat
+  uploadId: 585336

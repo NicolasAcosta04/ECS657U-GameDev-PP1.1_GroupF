@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7703a50c21887c04b8bfc78b4f5378c3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/Black.mat
+  uploadId: 585336

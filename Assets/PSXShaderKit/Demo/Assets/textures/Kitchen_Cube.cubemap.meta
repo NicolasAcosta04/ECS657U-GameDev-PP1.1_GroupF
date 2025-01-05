@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e7a4a5418fd9e9846a72b048f023f7f9
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/textures/Kitchen_Cube.cubemap
+  uploadId: 585336

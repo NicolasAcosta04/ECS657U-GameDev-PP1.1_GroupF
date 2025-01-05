@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 56e88173fb5087f49afceeb024b96138
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/HouseModel.prefab
+  uploadId: 585336

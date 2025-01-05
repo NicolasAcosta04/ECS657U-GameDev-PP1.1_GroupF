@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d022ab63f2290b8489c9c29980037f3e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/LivingRoomLamp.mat
+  uploadId: 585336

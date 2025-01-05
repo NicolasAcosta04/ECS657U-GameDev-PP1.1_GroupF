@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aea193f4198b51a4dbc93fad41254882
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/Table Stuff.mat
+  uploadId: 585336

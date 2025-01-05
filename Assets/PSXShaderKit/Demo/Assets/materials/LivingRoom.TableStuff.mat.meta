@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c90b327075ede4a4fbe2bcf0af71ce64
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/LivingRoom.TableStuff.mat
+  uploadId: 585336
