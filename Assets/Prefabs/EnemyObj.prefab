@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8119674128217162079}
   - component: {fileID: 7775405211550223856}
   - component: {fileID: 4746181605177535216}
+  - component: {fileID: 1788224373719854083}
   - component: {fileID: 7681577864987148373}
   - component: {fileID: 2133594049237987659}
   m_Layer: 0
@@ -107,7 +108,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -149,7 +150,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 2
-  m_Acceleration: 2
+  m_Acceleration: 1
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -160,6 +161,20 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1788224373719854083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7700570454702964828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51549be96834baf4297de2908f1aea0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 3
+  damageDuration: 0
 --- !u!114 &7681577864987148373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
+  rb: {fileID: 0}
   player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
@@ -183,15 +199,20 @@ MonoBehaviour:
   Wall:
     serializedVersion: 2
     m_Bits: 1024
+  seen: 0
   chasing: 0
   destination: {x: 0, y: 0, z: 0}
   patrolRange: 20
+  lostPlayer: 0
+  waiting: 0
+  waitTime: 2
   timeBetweenAttacks: 0
   sightRange: 5
   attackRange: 0.1
   FOVAngle: 90
   playerInSightRange: 0
   playerInAttackRange: 0
+  freeze: 0
 --- !u!114 &2133594049237987659
 MonoBehaviour:
   m_ObjectHideFlags: 0

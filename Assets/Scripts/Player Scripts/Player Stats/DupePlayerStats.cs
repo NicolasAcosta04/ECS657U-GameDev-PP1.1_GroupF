@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DupePlayerStats : MonoBehaviour
 {
@@ -112,6 +113,52 @@ public class DupePlayerStats : MonoBehaviour
         {
             currentHealth -= finalHealthDepletionRate * Time.deltaTime;
             currentHealth = Mathf.Max(0, currentHealth); // Ensure health doesn't go below 0
+        }
+
+        if (currentHunger >= maxHunger)
+        {
+            currentHealth += healthHungerRegenRate * Time.deltaTime;
+            currentHealth = Mathf.Min(maxHealth, currentHealth); // Ensure health doesn't exceed maximum
+        }
+
+        if (currentHealth <= 0)
+        {
+            HandleDeath();
+        }
+    }
+
+    private void HandleDeath()
+    {
+        Debug.Log("Player has died!");
+        SceneManager.LoadScene("Game Over");
+    }
+
+        public void TakeDamage(float damageAmount, float duration)
+    {
+        if (duration <= 0)
+        {
+            // Instant damage
+            currentHealth = Mathf.Max(0, currentHealth - damageAmount);
+            Debug.Log($"Took {damageAmount} instant damage. Current health: {currentHealth}");
+        }
+        else
+        {
+            // Damage over time
+            StartCoroutine(ApplyDamageOverTime(damageAmount, duration));
+        }
+    }
+
+    private IEnumerator ApplyDamageOverTime(float damageAmount, float duration)
+    {
+        float elapsedTime = 0f;
+        float damageRate = damageAmount / duration;
+
+        while (elapsedTime < duration)
+        {
+            currentHealth = Mathf.Max(0, currentHealth - damageRate * Time.deltaTime);
+            Debug.Log($"Took {damageRate * Time.deltaTime} damage. Current health: {currentHealth}");
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
     }
 
