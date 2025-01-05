@@ -334,5 +334,32 @@ public class DupePlayerStats : MonoBehaviour
             currentSanity = Mathf.Max(0, currentSanity); // Ensure sanity doesn't drop below 0
         }
     }
+
+    public void TakeSanityDamage(float amount, float duration)
+    {
+        if (duration <= 0)
+        {
+            // Apply sanity damage instantly
+            currentSanity = Mathf.Max(0, currentSanity - amount);
+        }
+        else
+        {
+            // Apply sanity damage over time
+            StartCoroutine(ApplySanityDamageOverTime(amount, duration));
+        }
+    }
+
+    private IEnumerator ApplySanityDamageOverTime(float amount, float duration)
+    {
+        float rate = amount / duration; // Damage per second
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            currentSanity = Mathf.Max(0, currentSanity - rate * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+    }
 // END sanity handling
 }
