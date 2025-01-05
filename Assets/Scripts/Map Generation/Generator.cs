@@ -5,6 +5,7 @@ using Random = System.Random;
 using Graphs;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 //using static UnityEditor.FilePathAttribute;
 
 public class Generator : MonoBehaviour
@@ -109,16 +110,7 @@ public class Generator : MonoBehaviour
             // Spawns enemies in the enemy spawn room
             Vector3 spawnPosition = new Vector3(item.Item1.x + item.Item2.x / 2 + 0.5f, 0.1f, item.Item1.y + item.Item2.y / 2 + 0.5f);
             NavMesh.SamplePosition(spawnPosition, out NavMeshHit hit, 10f, 1);
-            var enemyObject = Instantiate(EnemyPrefab, hit.position, Quaternion.identity);
-            var enemy = enemyObject.GetComponent<EnemyAI>();
-            var randomType = UnityEngine.Random.Range(0, 100);
-            if (randomType <= 30)
-            {
-                enemy.enemyType = EnemyTypes.Chasers;
-            } else
-            {
-                enemy.enemyType = EnemyTypes.Freezers;
-            }
+            Instantiate(EnemyPrefab, hit.position, Quaternion.identity);
             
         }
     }
