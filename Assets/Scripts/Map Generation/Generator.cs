@@ -38,12 +38,20 @@ public class Generator : MonoBehaviour
     [SerializeField] GameObject RoomPrefab;
     [SerializeField] GameObject HallwayPrefab;
     [SerializeField] Vector2Int size;
+    [SerializeField] private List<RoomPrefabEntry> PremadeRoomPrefabs = new List<RoomPrefabEntry>();
     [SerializeField] int roomCount;
     [SerializeField] int EnemyRoomCount;
     [SerializeField] int ItemRoomCount;
     [SerializeField] Vector2Int roomMaxSize;
     [SerializeField] NavMeshSurface surface;
 
+    [System.Serializable] public class RoomPrefabEntry
+    {
+        public Vector2Int RoomSize; // The size of the room (key)
+        public GameObject Prefab;  // The prefab to use for this size (value)
+    }
+
+    private Dictionary<Vector2Int, GameObject> premadeRoomPrefabsLookup;
 
     Random random;
     Grid2D<CellType> grid;
@@ -68,10 +76,28 @@ public class Generator : MonoBehaviour
             ItemRoomCount = GeneralSettings.Instance.ItemRoomCount;
         }
 
+        InitializeRoomPrefabs();
         var spawnInfo = Generate();
         // Bake NavMeshSurface after level is generated
         GenerateMesh();
         InstantiateCharacters(spawnInfo.Item1, spawnInfo.Item2);
+    }
+
+    private void InitializeRoomPrefabs()
+    {
+        premadeRoomPrefabsLookup = new Dictionary<Vector2Int, GameObject>();
+
+        foreach (var entry in PremadeRoomPrefabs)
+        {
+            if (!premadeRoomPrefabsLookup.ContainsKey(entry.RoomSize))
+            {
+                premadeRoomPrefabsLookup.Add(entry.RoomSize, entry.Prefab);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate entry for room size {entry.RoomSize} in PremadeRoomPrefabs.");
+            }
+        }
     }
 
     void GenerateMesh() {
@@ -417,46 +443,71 @@ public class Generator : MonoBehaviour
         }
     }
 
-    void RemoveWall(GameObject structureInstance, Vector2Int direction) {
-        // XWall refers to the Positive X direction, NWall is the Negative X direction, same logic applies to Z di - use this naming convention plz
+    void RemoveWall(GameObject structureInstance, Vector2Int direction)
+    {
         string wallName = direction == new Vector2Int(1, 0) ? "XWall" :
                         direction == new Vector2Int(-1, 0) ? "NXWall" :
                         direction == new Vector2Int(0, 1) ? "ZWall" :
-                        direction == new Vector2Int(0, -1) ? "NZWall" :
-                        null;
-        // Important that the walls are tagged "Walls", if not the code wont find em' and you'll have walls
-        // If there are walls where you don't want em', go into the editor click on the prefab, check the inspection panel for the tags and tag the walls 
-        if (wallName != null) {
-            Transform wallsTransform = structureInstance.transform.Find("Walls");
-            if (wallsTransform != null) {
-                Transform wallTransform = wallsTransform.Find(wallName);
-                if (wallTransform != null) {
-                    wallTransform.gameObject.SetActive(false);
-                } 
-                else {
-                    Debug.LogWarning($"Wall {wallName} not found in {structureInstance.name}"); //hail mary
+                        direction == new Vector2Int(0, -1) ? "NZWall" : null;
+
+        if (wallName != null)
+        {
+            // Search for all "Walls" containers in the prefab
+            Transform[] allWallsContainers = structureInstance.GetComponentsInChildren<Transform>();
+            foreach (var wallsTransform in allWallsContainers)
+            {
+                if (wallsTransform.name == "Walls")
+                {
+                    // Look for the specific wall in this container
+                    Transform wallTransform = wallsTransform.Find(wallName);
+                    if (wallTransform != null)
+                    {
+                        wallTransform.gameObject.SetActive(false); // Disable the wall
+                        break; // Exit once the wall is found and disabled
+                    }
                 }
-            } 
-            else {
-                Debug.LogWarning($"Walls container not found in {structureInstance.name}"); //Phantom Walls beware
             }
         }
     }
 
+
 // This is what makes the rooms modular, if not for this, the rooms would be stretched and distorted prefabs, this makes it so that one prefab is used over and over to populate the space of the room based on the original user input
 // If rooms are not working correctly, 50/50 chance this here is the culprit, the other 50% is somewhere in PlaceRooms()
-    void PlaceRoom(Vector2Int location, Vector2Int size, GameObject RoomPrefab) {
-        for (int i = 0; i < size.x; i++) {
-            for (int j = 0; j < size.y; j++) {
-                Vector2Int offset = new Vector2Int(i, j);
-                Vector2Int prefabPosition = location + offset;
-                GameObject roomInstance = Instantiate(RoomPrefab, new Vector3(prefabPosition.x, 0, prefabPosition.y), Quaternion.identity);
-                structureInstances[prefabPosition] = roomInstance;
-                // If walls are populating the room, check RemoveAdjacentWall()
-                RemoveAdjacentWalls();
+    void PlaceRoom(Vector2Int location, Vector2Int size, GameObject defaultRoomPrefab)
+    {
+        // Check if there is a premade prefab for the given size
+        if (premadeRoomPrefabsLookup.TryGetValue(size, out GameObject premadePrefab))
+        {
+            // Use the premade prefab
+            GameObject roomInstance = Instantiate(premadePrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
+
+            // Mark every cell occupied by the prefab in structureInstances
+            foreach (var pos in new RectInt(location, size).allPositionsWithin)
+            {
+                structureInstances[pos] = roomInstance;
+                grid[pos] = CellType.Room;
             }
         }
+        else
+        {
+            // Default modular generation
+            for (int i = 0; i < size.x; i++)
+            {
+                for (int j = 0; j < size.y; j++)
+                {
+                    Vector2Int offset = new Vector2Int(i, j);
+                    Vector2Int prefabPosition = location + offset;
+                    GameObject roomInstance = Instantiate(defaultRoomPrefab, new Vector3(prefabPosition.x, 0, prefabPosition.y), Quaternion.identity);
+                    structureInstances[prefabPosition] = roomInstance;
+                    grid[prefabPosition] = CellType.Room;
+                }
+            }
+
+            // Remove walls for modular room
+            RemoveAdjacentWalls();
+        }
     }
+
 
     void PlaceHallway(Vector2Int location) {
         GameObject hallwayInstance = Instantiate(HallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
