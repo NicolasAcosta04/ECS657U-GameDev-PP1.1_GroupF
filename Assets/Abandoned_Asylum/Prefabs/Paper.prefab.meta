@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 0b7451c289c0d9547a21ba7eb3340776
+timeCreated: 1512933050
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/Paper.prefab
+  uploadId: 380667

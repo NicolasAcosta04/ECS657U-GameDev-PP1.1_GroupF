@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2f603782a54272140bd490519349fd88
+timeCreated: 1512933046
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/PC_Monitor.prefab
+  uploadId: 380667

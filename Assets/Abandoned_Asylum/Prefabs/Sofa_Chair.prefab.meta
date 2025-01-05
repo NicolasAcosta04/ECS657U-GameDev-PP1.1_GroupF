@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5fd35642a8c9c7e49a95d59470b9c855
+timeCreated: 1512932986
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/Sofa_Chair.prefab
+  uploadId: 380667
