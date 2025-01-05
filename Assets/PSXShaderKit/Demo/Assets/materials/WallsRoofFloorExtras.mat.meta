@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fd59fa8f238112c49b75f811fddc4e32
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 183591
+  packageName: PSX Shader Kit
+  packageVersion: 1.93
+  assetPath: Assets/PSXShaderKit/Demo/Assets/materials/WallsRoofFloorExtras.mat
+  uploadId: 585336

@@ -5862,7 +5862,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e963b3d9b99854041a2ce082ab44b1df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9630,6 +9630,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1735714467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9210579646935493363, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
+  m_PrefabInstance: {fileID: 4709278280808275078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1735714472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735714467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433faa8b758afed4f9295b193c697276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PixelationFactor: 0.253
+  _ColorEmulationMode: 3
+  _FullscreenColorDepth: {x: 256, y: 256, z: 256}
+  _FullscreenDitherDepth: {x: 32, y: 32, z: 32}
+  _DitheringMatrixSize: 2
+  _DitheringScale: 1
+  _InterlacingSize: 1
+  _PostProcessShader: {fileID: 4800000, guid: 56d52fd5b7c6911468179e5a7359ce0e, type: 3}
+  _PostProcessShaderAccurate: {fileID: 4800000, guid: 2ebed186567d3c244a87538744a62920, type: 3}
+  _PixelationShader: {fileID: 4800000, guid: f2da0e2a14a532548b5db043244b3df1, type: 3}
+  _InterlacingShader: {fileID: 4800000, guid: 03ebd34214b41ef459d7ee6753b062be, type: 3}
 --- !u!1 &1740842737
 GameObject:
   m_ObjectHideFlags: 0
@@ -9983,7 +10011,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: deb4b9db0fd25e84fad5cf52809940c7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -12167,6 +12195,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5888615290868619764, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
+      propertyPath: _PixelationFactor
+      value: 0.089
+      objectReference: {fileID: 0}
     - target: {fileID: 5891282095622897992, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12210,7 +12242,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9210579646935493363, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1735714472}
   m_SourcePrefab: {fileID: 100100000, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
 --- !u!1001 &7841719778324096451
 PrefabInstance:
