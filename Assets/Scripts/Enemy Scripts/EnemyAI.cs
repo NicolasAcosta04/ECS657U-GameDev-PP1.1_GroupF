@@ -59,9 +59,6 @@ public class EnemyAI : MonoBehaviour
         rb = agent.GetComponent<Rigidbody>();
         startPosition = transform.position;
         InPlayerCamera = GetComponent<InPlayerCamera>();
-        whatIsGround = LayerMask.GetMask("whatIsGround");
-        whatIsPlayer = LayerMask.GetMask("whatIsPlayer");
-        Wall = LayerMask.GetMask("Wall");
         chasing = false;
     }
 
