@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour
     // Declare fields
     private NavMeshAgent agent;
     private Rigidbody rb;
+    private GameObject playerObject;
     private Transform player;
     private LayerMask whatIsGround, whatIsPlayer, Wall;
 
@@ -26,58 +27,66 @@ public class EnemyAI : MonoBehaviour
 
     //Patrolling
     [Header("Patrol Attributes")]
-    [SerializeField]  private Vector3 destination;
+    [SerializeField] private Vector3 destination;
     [SerializeField] private float patrolRange;
     [SerializeField] private float waitTime = 2.0f;
     private bool destinationSet;
     private Vector3 startPosition;
     private bool lostPlayer = false;
     private bool waiting = false;
-    
+
 
     //Attacking
     [Header("Attack attributes")]
     [SerializeField] private float timeBetweenAttacks;
     [SerializeField] private float attackDamage;
+    [SerializeField] private float damageDuration;
+    private bool attacking = false;
+    private DamageEffect damageScript;
     private bool alreadyAttacked;
 
     //State Attributes
     [Header("State Attributes")]
     [SerializeField] private float sightRange;
-    [SerializeField] private float attackRange;
+    [SerializeField] private float attackRange = 0.2f;
     [SerializeField] private float FOVAngle;
     private bool playerInSightRange, playerInAttackRange;
 
     //Enemy Type Specific
-    
+
 
     // Initialisation
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player").transform;
+        playerObject = GameObject.FindWithTag("Player");
+        player = playerObject.transform;
         agent = GetComponent<NavMeshAgent>();
         rb = agent.GetComponent<Rigidbody>();
-        startPosition = transform.position;
         InPlayerCamera = GetComponent<InPlayerCamera>();
+        damageScript = GetComponent<DamageEffect>();
         whatIsGround = LayerMask.GetMask("whatIsGround");
         whatIsPlayer = LayerMask.GetMask("whatIsPlayer");
         Wall = LayerMask.GetMask("Wall");
+        startPosition = transform.position;
         chasing = false;
     }
 
     private void Start()
     {
-        ChangeType(EnemyTypes.Chasers);
+        ChangeType(enemyType);
         StartCoroutine(FOVRoutine());
     }
 
-    public void ChangeType(Enum type)
+    public void ChangeType(EnemyTypes type)
     {
         switch (type)
         {
             case EnemyTypes.Chasers:
                 enemyType = EnemyTypes.Chasers;
-                agent.speed = 2;
+                agent.speed = 1;
+                attackDamage = 3;
+                timeBetweenAttacks = 2;
+                damageDuration = 0;
                 break;
 
             case EnemyTypes.Freezers:
@@ -85,10 +94,13 @@ public class EnemyAI : MonoBehaviour
                 agent.speed = 3;
                 sightRange = 80;
                 FOVAngle = 270;
+                attackDamage = 15;
+                timeBetweenAttacks = 3;
+                damageDuration = 5;
                 break;
 
             default:
-                enemyType=EnemyTypes.Chasers;
+                enemyType = EnemyTypes.Chasers;
                 agent.speed = 2;
                 break;
         }
@@ -144,11 +156,11 @@ public class EnemyAI : MonoBehaviour
         float randomX = Random.Range(player.position.x + patrolRange, player.position.x - patrolRange);
         float randomZ = Random.Range(player.position.z + patrolRange, player.position.z - patrolRange);
         destination = new Vector3(randomX, transform.position.y, randomZ);
-        
+
         if (Physics.Raycast(destination, -transform.up, 2f, whatIsGround) && !(Physics.Raycast(destination, -transform.up, 2f, Wall)))
         {
             destinationSet = true;
-        } 
+        }
         else
         {
             destinationSet = false;
@@ -167,25 +179,24 @@ public class EnemyAI : MonoBehaviour
         {
             agent.speed = 6;
         }
-        
+
         transform.LookAt(player);
-        
+
     }
 
     //attacking state
     private void Attacking()
     {
-        //print("Attacking");
+        attacking = true;
         agent.SetDestination(transform.position);
-        agent.speed = 0;
 
         transform.LookAt(player);
 
         if (!alreadyAttacked)
         {
-            //Add attack here
-
-            //
+            damageScript.damageAmount = attackDamage;
+            damageScript.damageDuration = damageDuration;
+            damageScript.ApplyEffect(playerObject);
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
@@ -248,14 +259,14 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere (transform.position, sightRange);
+        Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 
     // Update is called once per frame
     void Update()
     {
         //freezes the freezer enemy in place if its seen
-        if ((enemyType.Equals(EnemyTypes.Freezers) && seen) || waiting)
+        if ((enemyType.Equals(EnemyTypes.Freezers) && seen) || waiting || attacking)
         {
             //print("Freezing");
             if (!freeze)
@@ -266,7 +277,7 @@ public class EnemyAI : MonoBehaviour
             agent.speed = 0;
             agent.angularSpeed = 0;
             agent.acceleration = 0;
-            agent.velocity = new Vector3(0,0,0);
+            agent.velocity = new Vector3(0, 0, 0);
             agent.isStopped = true;
             rb.drag = 9999;
             rb.angularDrag = 9999;
@@ -288,6 +299,7 @@ public class EnemyAI : MonoBehaviour
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
         //Sets General Enemy States
+        attacking = false;
         if (!freeze)
         {
             if (!playerInSightRange && !playerInAttackRange) Patrolling();

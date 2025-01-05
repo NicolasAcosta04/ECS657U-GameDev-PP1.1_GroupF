@@ -4,17 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class PauseMenuScript : MonoBehaviour
 {
-    [SerializeField] private GameObject MainPanel;
-    [SerializeField] private GameObject HelpPanel;
-    [SerializeField] private GameObject SettingsPanel;
-    [SerializeField] private GameObject MainMenuConfirmationPanel;
-    [SerializeField] private GameObject PlayerUI; // Reference to the player UI
+    [SerializeField] private GameObject PauseMenuPanel;
 
+    [SerializeField] private GameObject SettingsPanel;
     [SerializeField] private Slider sensXSlider; // Slider for sensitivity X
     [SerializeField] private Slider sensYSlider; // Slider for sensitivity Y
 
+    [SerializeField] private GameObject HelpPanel;
+    [SerializeField] private GameObject MainMenuConfirmationPanel;
+    [SerializeField] private GameObject PlayerUI; // Reference to the player UI
 
     private bool isPaused = false;
 
@@ -29,9 +29,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        MainPanel.SetActive(false);
-        HelpPanel.SetActive(false);
+        PauseMenuPanel.SetActive(false);
         SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
         PlayerUI.SetActive(true); // Re-enable player UI
 
@@ -50,9 +50,9 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        MainPanel.SetActive(true);
-        HelpPanel.SetActive(false);
+        PauseMenuPanel.SetActive(true);
         SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
         PlayerUI.SetActive(false); // Disable player UI
 
@@ -71,47 +71,47 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Back()
+    public void PauseMenu()
     {
-        MainPanel.SetActive(true);
+        PauseMenuPanel.SetActive(true);
+        SettingsPanel.SetActive(false);
         HelpPanel.SetActive(false);
-        SettingsPanel.SetActive(false);
-        MainMenuConfirmationPanel.SetActive(false);
-    }
-
-    public void Help()
-    {
-        MainPanel.SetActive(false);
-        HelpPanel.SetActive(true);
-        SettingsPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
     }
 
     public void Settings()
     {
-        MainPanel.SetActive(false);
-        HelpPanel.SetActive(false);
+        PauseMenuPanel.SetActive(false);
         SettingsPanel.SetActive(true);
+        HelpPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(false);
     }
 
-    public void ReturnToMainMenuConfirmation()
+    public void Help()
     {
-        MainPanel.SetActive(false);
-        HelpPanel.SetActive(false);
+        PauseMenuPanel.SetActive(false);
+        HelpPanel.SetActive(true);
         SettingsPanel.SetActive(false);
+        MainMenuConfirmationPanel.SetActive(false);
+    }
+
+    public void ToMainMenuConfirmation()
+    {
+        PauseMenuPanel.SetActive(false);
+        SettingsPanel.SetActive(false);
+        HelpPanel.SetActive(false);
         MainMenuConfirmationPanel.SetActive(true);
     }
 
-    public void ConfirmReturnToMainMenu()
+    public void ToMainMenuYes()
     {
         Time.timeScale = 1f; // Reset time before changing scene
         SceneManager.LoadScene("Main Menu");
     }
 
-    public void CancelReturnToMainMenu()
+    public void ToMainMenuNo()
     {
-        MainPanel.SetActive(true);
+        PauseMenuPanel.SetActive(true);
         MainMenuConfirmationPanel.SetActive(false);
     }
 

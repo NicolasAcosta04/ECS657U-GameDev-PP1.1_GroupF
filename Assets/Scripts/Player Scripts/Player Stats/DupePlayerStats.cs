@@ -70,7 +70,7 @@ public class DupePlayerStats : MonoBehaviour
             StatsStorage.Instance.PlayerStats = this;
             Debug.Log("PlayerStats assigned to StatsStorage.");
         }
-        
+
         // Initialize stats to maximum
         currentHealth = maxHealth;
         currentHunger = maxHunger;
@@ -90,7 +90,7 @@ public class DupePlayerStats : MonoBehaviour
 
 
 
-// Health handling -- all health handling under this comment
+    // Health handling -- all health handling under this comment
 
     private void HandleHealth()
     {
@@ -130,10 +130,10 @@ public class DupePlayerStats : MonoBehaviour
     private void HandleDeath()
     {
         Debug.Log("Player has died!");
-        SceneManager.LoadScene("Game Over");
+        SceneManager.LoadScene("Game Over Screen");
     }
 
-        public void TakeDamage(float damageAmount, float duration)
+    public void TakeDamage(float damageAmount, float duration)
     {
         if (duration <= 0)
         {
@@ -162,10 +162,10 @@ public class DupePlayerStats : MonoBehaviour
         }
     }
 
-// End health Handling
+    // End health Handling
 
 
-// stamina handling -- all stamina handling under this comment
+    // stamina handling -- all stamina handling under this comment
 
     public void SetSprinting(bool sprinting)
     {
@@ -214,12 +214,12 @@ public class DupePlayerStats : MonoBehaviour
         }
     }
 
-// END stamnia handling -- end all stamina handling here 
+    // END stamnia handling -- end all stamina handling here 
 
 
 
 
-// hunger handling -- all hunger handling under this comment
+    // hunger handling -- all hunger handling under this comment
     private void HandleHunger()
     {
         if (currentHunger >= maxHunger)
@@ -241,7 +241,7 @@ public class DupePlayerStats : MonoBehaviour
             // Reset depletion timer when hunger is not at maximum
             hungerDepletionTimer = hungerDepletionDelay;
         }
-        
+
         if (currentHunger < maxHunger)
         {
             // Start decrementing hunger after the delay
@@ -267,13 +267,13 @@ public class DupePlayerStats : MonoBehaviour
             yield return null;
         }
     }
-// END hunger handling -- end all hunger handling here 
+    // END hunger handling -- end all hunger handling here 
 
 
 
 
 
-// thirst handling -- all thirst handling under this comment
+    // thirst handling -- all thirst handling under this comment
 
     private void HandleThirst()
     {
@@ -302,9 +302,9 @@ public class DupePlayerStats : MonoBehaviour
         }
     }
 
-// END thirst handling -- end all thirst handling here 
+    // END thirst handling -- end all thirst handling here 
 
-// sanity handling -- all sanity handling under this comment
+    // sanity handling -- all sanity handling under this comment
 
 
     private void HandleSanity()
@@ -332,5 +332,5 @@ public class DupePlayerStats : MonoBehaviour
             currentSanity = Mathf.Max(0, currentSanity); // Ensure sanity doesn't drop below 0
         }
     }
-// END sanity handling
+    // END sanity handling
 }
