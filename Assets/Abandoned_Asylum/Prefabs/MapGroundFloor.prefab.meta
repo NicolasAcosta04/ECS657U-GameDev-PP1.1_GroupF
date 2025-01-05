@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 280cfbd2f2e781b4bb04c24223abe03e
+timeCreated: 1510850085
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/MapGroundFloor.prefab
+  uploadId: 380667

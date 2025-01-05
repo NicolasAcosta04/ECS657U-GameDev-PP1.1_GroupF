@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5bd49eca421c5fa4e972029595ba616d
+timeCreated: 1507804299
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/CupboardLight.mat
+  uploadId: 380667

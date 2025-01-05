@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: 2
   ItemName: Water
-  ItemSprite: {fileID: 2133860732, guid: 6934c6a26ed33854daa3f77e55a0dc8e, type: 3}
+  ItemSprite: {fileID: 21300000, guid: 10876d86c0d0c7948ab7c3f219be6325, type: 3}
 --- !u!114 &872494805008507383
 MonoBehaviour:
   m_ObjectHideFlags: 0

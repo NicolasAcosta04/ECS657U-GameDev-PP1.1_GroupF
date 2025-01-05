@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 5353753ba1ce1724c9a9e59d0297d607
+timeCreated: 1507987964
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/LampWall.mat
+  uploadId: 380667

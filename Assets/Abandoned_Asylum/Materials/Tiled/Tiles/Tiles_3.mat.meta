@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 71d53c85cd69f0f4582c68719ec6ccca
+timeCreated: 1518013164
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/Tiled/Tiles/Tiles_3.mat
+  uploadId: 380667

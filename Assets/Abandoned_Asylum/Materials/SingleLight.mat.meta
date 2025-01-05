@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 15a023bdfe70c244c8bb39f4e52d154a
+timeCreated: 1512572494
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/SingleLight.mat
+  uploadId: 380667

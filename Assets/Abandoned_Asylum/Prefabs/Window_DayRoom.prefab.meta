@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d7d796f2a9e41944c89ffdd5c4119286
+timeCreated: 1512932811
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Prefabs/Window_DayRoom.prefab
+  uploadId: 380667

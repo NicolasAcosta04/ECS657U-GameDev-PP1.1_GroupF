@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: ac95f34f4c161524b9e9046e4680920b
+timeCreated: 1505397363
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 49137
+  packageName: Abandoned Asylum
+  packageVersion: 1.4
+  assetPath: Assets/Abandoned_Asylum/Materials/Toilet.mat
+  uploadId: 380667
