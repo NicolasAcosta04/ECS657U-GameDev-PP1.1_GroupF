@@ -4906,7 +4906,7 @@ MonoBehaviour:
   HelpPanel: {fileID: 164514584}
   SettingsPanel: {fileID: 87512309}
   MainMenuConfirmationPanel: {fileID: 253515226}
-  PlayerUI: {fileID: 0}
+  PlayerUI: {fileID: 1505682209}
   sensXSlider: {fileID: 1557762718}
   sensYSlider: {fileID: 896667724}
 --- !u!114 &1032746169
