@@ -686,7 +686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TextureWarpingFactor: 0.593
   _TextureWarpingMode: 1
-  _VertexGridResolution: 10
+  _VertexGridResolution: 30
   _VertexWobbleMode: 0
   _UseRetroVertexLighting: 1
   _RetroLightingNormalFactor: 0
