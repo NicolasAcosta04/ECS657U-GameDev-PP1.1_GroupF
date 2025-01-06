@@ -5,24 +5,20 @@ using Random = System.Random;
 using Graphs;
 using Unity.AI.Navigation;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 //using static UnityEditor.FilePathAttribute;
 
 public class Generator : MonoBehaviour
 {
-    enum CellType { None, Room, Hallway }
+    enum CellType {None, Room, Hallway}
 
-    class Room
-    {
+    class Room {
         public RectInt bounds;
 
-        public Room(Vector2Int location, Vector2Int size)
-        {
+        public Room(Vector2Int location, Vector2Int size){
             bounds = new RectInt(location, size);
         }
 
-        public static bool Intersect(Room a, Room b)
-        {
+        public static bool Intersect(Room a, Room b) {
             return !((a.bounds.position.x >= (b.bounds.position.x + b.bounds.size.x)) || ((a.bounds.position.x + a.bounds.size.x) <= b.bounds.position.x)
                 || (a.bounds.position.y >= (b.bounds.position.y + b.bounds.size.y)) || ((a.bounds.position.y + a.bounds.size.y) <= b.bounds.position.y));
         }
@@ -88,8 +84,7 @@ public class Generator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (GeneralSettings.Instance != null)
-        {
+        if (GeneralSettings.Instance != null){
 
             Debug.Log($"Seed: {GeneralSettings.Instance.Seed}");
             Debug.Log($"Room Count: {GeneralSettings.Instance.RoomCount}");
@@ -131,11 +126,9 @@ public class Generator : MonoBehaviour
         surface.BuildNavMesh();
     }
 
-    ((Vector2Int, Vector2Int), (Vector2Int, Vector2Int)[]) Generate()
-    {
-        if (seed == 0)
-        {
-            seed = System.DateTime.Now.Millisecond;
+    ((Vector2Int, Vector2Int), (Vector2Int, Vector2Int)[]) Generate(){
+        if (seed == 0) {
+        seed = System.DateTime.Now.Millisecond;
         }
         random = new Random(seed);
         grid = new Grid2D<CellType>(size, Vector2Int.zero);
@@ -163,7 +156,17 @@ public class Generator : MonoBehaviour
             // Spawns enemies in the enemy spawn room
             Vector3 spawnPosition = new Vector3(item.Item1.x + item.Item2.x / 2 + 0.5f, 0.1f, item.Item1.y + item.Item2.y / 2 + 0.5f);
             NavMesh.SamplePosition(spawnPosition, out NavMeshHit hit, 10f, 1);
-            Instantiate(EnemyPrefab, hit.position, Quaternion.identity);
+            var enemyObject = Instantiate(EnemyPrefab, hit.position, Quaternion.identity);
+            var enemy = enemyObject.GetComponent<EnemyAI>();
+            var randomType = UnityEngine.Random.Range(0, 100);
+            if (randomType <= 30)
+            {
+                enemy.enemyType = EnemyTypes.Chasers;
+            } else
+            {
+                enemy.enemyType = EnemyTypes.Freezers;
+            }
+            
         }
     }
 
@@ -177,7 +180,7 @@ public class Generator : MonoBehaviour
 
         Room startingRoom = new Room(location, StarterRoomSize);
         rooms.Add(startingRoom);
-        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab, StarterRoomPrefab2);
+        PlaceRoom(startingRoom.bounds.position, startingRoom.bounds.size, StarterRoomPrefab);
 
         foreach (var pos in startingRoom.bounds.allPositionsWithin)
         {
@@ -204,28 +207,23 @@ public class Generator : MonoBehaviour
             Room newRoom = new Room(location, roomSize);
             Room buffer = new Room(location + new Vector2Int(-1, -1), roomSize + new Vector2Int(2, 2));
 
-            foreach (var room in rooms)
-            {
-                if (Room.Intersect(room, buffer))
-                {
+            foreach (var room in rooms) {
+                if (Room.Intersect(room, buffer)) {
                     add = false;
                     break;
                 }
             }
 
             if (newRoom.bounds.xMin < 0 || newRoom.bounds.xMax >= size.x
-                || newRoom.bounds.yMin < 0 || newRoom.bounds.yMax >= size.y)
-            {
+                || newRoom.bounds.yMin < 0 || newRoom.bounds.yMax >= size.y) {
                 add = false;
             }
 
-            if (add)
-            {
+            if (add) {
                 rooms.Add(newRoom);
-                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, RoomPrefab, RoomPrefab2);
+                PlaceRoom(newRoom.bounds.position, newRoom.bounds.size, RoomPrefab);
 
-                foreach (var pos in newRoom.bounds.allPositionsWithin)
-                {
+                foreach (var pos in newRoom.bounds.allPositionsWithin) {
                     grid[pos] = CellType.Room;
                 }
             }
@@ -369,24 +367,20 @@ public class Generator : MonoBehaviour
         return spawnInfo;
     } 
 
-    void Triangulate()
-    {
+    void Triangulate() {
         List<Vertex> vertices = new List<Vertex>();
 
-        foreach (var room in rooms)
-        {
+        foreach (var room in rooms) {
             vertices.Add(new Vertex<Room>((Vector2)room.bounds.position + ((Vector2)room.bounds.size) / 2, room));
         }
 
         delaunay = Delaunay2D.Triangulate(vertices);
     }
 
-    void CreateHallways()
-    {
+    void CreateHallways() {
         List<Prim.Edge> edges = new List<Prim.Edge>();
 
-        foreach (var edge in delaunay.Edges)
-        {
+        foreach (var edge in delaunay.Edges) {
             edges.Add(new Prim.Edge(edge.U, edge.V));
         }
 
@@ -396,21 +390,17 @@ public class Generator : MonoBehaviour
         var remainingEdges = new HashSet<Prim.Edge>(edges);
         remainingEdges.ExceptWith(selectedEdges);
 
-        foreach (var edge in remainingEdges)
-        {
-            if (random.NextDouble() < 0.125)
-            {
+        foreach (var edge in remainingEdges) {
+            if (random.NextDouble() < 0.125) {
                 selectedEdges.Add(edge);
             }
         }
     }
 
-    void PathfindHallways()
-    {
+    void PathfindHallways() {
         DungeonPathfinder2D aStar = new DungeonPathfinder2D(size);
 
-        foreach (var edge in selectedEdges)
-        {
+        foreach (var edge in selectedEdges) {
             var startRoom = (edge.U as Vertex<Room>).Item;
             var endRoom = (edge.V as Vertex<Room>).Item;
 
@@ -419,22 +409,16 @@ public class Generator : MonoBehaviour
             var startPos = new Vector2Int((int)startPosf.x, (int)startPosf.y);
             var endPos = new Vector2Int((int)endPosf.x, (int)endPosf.y);
 
-            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder2D.Node a, DungeonPathfinder2D.Node b) =>
-            {
+            var path = aStar.FindPath(startPos, endPos, (DungeonPathfinder2D.Node a, DungeonPathfinder2D.Node b) => {
                 var pathCost = new DungeonPathfinder2D.PathCost();
-
+                
                 pathCost.cost = Vector2Int.Distance(b.Position, endPos);    //heuristic
 
-                if (grid[b.Position] == CellType.Room)
-                {
+                if (grid[b.Position] == CellType.Room) {
                     pathCost.cost += 10;
-                }
-                else if (grid[b.Position] == CellType.None)
-                {
+                } else if (grid[b.Position] == CellType.None) {
                     pathCost.cost += 5;
-                }
-                else if (grid[b.Position] == CellType.Hallway)
-                {
+                } else if (grid[b.Position] == CellType.Hallway) {
                     pathCost.cost += 1;
                 }
 
@@ -443,52 +427,33 @@ public class Generator : MonoBehaviour
                 return pathCost;
             });
 
-            if (path != null)
-            {
-                for (int i = 0; i < path.Count; i++)
-                {
+            if (path != null) {
+                for (int i = 0; i < path.Count; i++) {
                     var current = path[i];
 
-                    if (grid[current] == CellType.None)
-                    {
+                    if (grid[current] == CellType.None) {
                         grid[current] = CellType.Hallway;
                     }
 
-                    if (i > 0)
-                    {
+                    if (i > 0) {
                         var prev = path[i - 1];
 
                         var delta = current - prev;
                     }
                 }
 
-                int switchHallwayCounter = 0;
                 //Fixed walls appearing at hallway crossroads and hallway/room intersections here
-                foreach (var pos in path)
-                {
-
-                    if (grid[pos] == CellType.Hallway && !structureInstances.ContainsKey(pos))
-                    {
-                        if (switchHallwayCounter == 2)
-                        {
-                            PlaceHallway2(pos);
-                            switchHallwayCounter = 0;
-                        }
-                        else
-                        {
-                            PlaceHallway(pos);
-                            switchHallwayCounter += 1;
-                        }
-
+                foreach (var pos in path) {
+                    if (grid[pos] == CellType.Hallway && !structureInstances.ContainsKey(pos)) {
+                        PlaceHallway(pos);
                     }
                 }
             }
         }
     }
 
-    // Removes walls of structures that are adjacent to each other 
-    void RemoveAdjacentWalls()
-    {
+// Removes walls of structures that are adjacent to each other 
+    void RemoveAdjacentWalls(){
         Vector2Int[] directions = {
             new Vector2Int(1, 0),
             new Vector2Int(-1, 0),
@@ -496,18 +461,15 @@ public class Generator : MonoBehaviour
             new Vector2Int(0, -1)
         };
 
-        foreach (var structure in structureInstances)
-        {
+        foreach (var structure in structureInstances) {
             Vector2Int location = (Vector2Int)structure.Key;
             GameObject structureInstance = structure.Value;
 
-            foreach (var direction in directions)
-            {
+            foreach (var direction in directions) {
                 Vector2Int neighborPos = location + direction;
-
+                
                 //This is the part that removes the walls, and the walls of any neighboring cells, if you have issues, check RemoveWall()
-                if (structureInstances.ContainsKey(neighborPos))
-                {
+                if (structureInstances.ContainsKey(neighborPos)) {
                     GameObject neighborStructure = structureInstances[neighborPos];
                     RemoveWall(structureInstance, direction);
 
@@ -518,8 +480,7 @@ public class Generator : MonoBehaviour
         }
     }
 
-    void RemoveWall(GameObject structureInstance, Vector2Int direction)
-    {
+    void RemoveWall(GameObject structureInstance, Vector2Int direction) {
         // XWall refers to the Positive X direction, NWall is the Negative X direction, same logic applies to Z di - use this naming convention plz
         string wallName = direction == new Vector2Int(1, 0) ? "XWall" :
                         direction == new Vector2Int(-1, 0) ? "NXWall" :
@@ -528,23 +489,18 @@ public class Generator : MonoBehaviour
                         null;
         // Important that the walls are tagged "Walls", if not the code wont find em' and you'll have walls
         // If there are walls where you don't want em', go into the editor click on the prefab, check the inspection panel for the tags and tag the walls 
-        if (wallName != null)
-        {
+        if (wallName != null) {
             Transform wallsTransform = structureInstance.transform.Find("Walls");
-            if (wallsTransform != null)
-            {
+            if (wallsTransform != null) {
                 Transform wallTransform = wallsTransform.Find(wallName);
-                if (wallTransform != null)
-                {
+                if (wallTransform != null) {
                     wallTransform.gameObject.SetActive(false);
-                }
-                else
-                {
+                } 
+                else {
                     Debug.LogWarning($"Wall {wallName} not found in {structureInstance.name}"); //hail mary
                 }
-            }
-            else
-            {
+            } 
+            else {
                 Debug.LogWarning($"Walls container not found in {structureInstance.name}"); //Phantom Walls beware
             }
         }
@@ -604,12 +560,6 @@ public class Generator : MonoBehaviour
 
     void PlaceHallway(Vector2Int location) {
         GameObject hallwayInstance = Instantiate(HallwayPrefab, new Vector3(location.x, 0, location.y), Quaternion.identity);
-        structureInstances[location] = hallwayInstance;
-        RemoveAdjacentWalls();
-    }
-    void PlaceHallway2(Vector2Int location)
-    {
-        GameObject hallwayInstance = Instantiate(HallwayPrefab2, new Vector3(location.x, 0, location.y), Quaternion.identity);
         structureInstances[location] = hallwayInstance;
         RemoveAdjacentWalls();
     }

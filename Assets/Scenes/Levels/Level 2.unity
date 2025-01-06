@@ -9825,28 +9825,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 0
+  size: {x: 100, y: 100}
+  roomCount: 300
+  EnemyRoomCount: 10
+  ItemRoomCount: 30
+  roomMaxSize: {x: 6, y: 6}
+  surface: {fileID: 0}
+  StarterRoomSize: {x: 6, y: 6}
+  WinRoomSize: {x: 6, y: 6}
+  EnemyRoomSize: {x: 1, y: 1}
+  ItemRoomSize: {x: 4, y: 4}
+  StarterRoomPrefab: {fileID: 8093226780969867881, guid: 0743d21a6e3e4474784bcc79f0f30644, type: 3}
+  ItemRoomPrefab: {fileID: 8337678869357500087, guid: 2a1689e3a9b784b49bbce363b8ec1ffe, type: 3}
+  EnemySpawnRoomPrefab: {fileID: 1798954966950097994, guid: d8154c28aedf8a449ab39ad0ea739b37, type: 3}
+  WinRoomPrefab: {fileID: 6456120626507403798, guid: 171640a094dda8e44b1141832237570f, type: 3}
+  RoomPrefab: {fileID: 4907469481428772007, guid: e7f8b1e8e9e810740b497a700dc21cb2, type: 3}
+  HallwayPrefab: {fileID: 4844219089626658800, guid: a57f01341dbcb46488c61deafe200ab7, type: 3}
   FoodPrefab: {fileID: 3535936783860504188, guid: 51402c19493064a96bca70546d0caa0b, type: 3}
   WaterPrefab: {fileID: 80098111525992768, guid: 559e9279d608c47128588e42c3b226d5, type: 3}
   PlayerPrefab: {fileID: 4637868838165244246, guid: 334ae8518513f40d9ad4dd40de59adbe, type: 3}
-  EnemyPrefab: {fileID: 7700570454702964828, guid: 2d2dfb80b96c8bf4b88910fedc15c2f1, type: 3}
-  StarterRoomPrefab: {fileID: 4659985313502779928, guid: 0f3a1c51c72cf4caaadfb633badbc417, type: 3}
-  StarterRoomPrefab2: {fileID: 7384372520922848874, guid: 307bbe3e9483b4eb498dd0f05ed7825d, type: 3}
-  ItemRoomPrefab: {fileID: 5421283168400382243, guid: 473e1c53c62ba4f5985b6b02a6cb7884, type: 3}
-  ItemRoomPrefab2: {fileID: 1420822699129055187, guid: 977fc82e06b3b4706a841d73712a11af, type: 3}
-  EnemySpawnRoomPrefab: {fileID: 1798954966950097994, guid: 163c76bedd3a18c449fd6817bb8e7f52, type: 3}
-  EnemySpawnRoomPrefab2: {fileID: 1798954966950097994, guid: 163c76bedd3a18c449fd6817bb8e7f52, type: 3}
-  WinRoomPrefab: {fileID: 633586025913214188, guid: a3899211ca4af49babce61a73d3e6536, type: 3}
-  WinRoomPrefab2: {fileID: 640803488887535979, guid: daf78e4c49ff44c9fa24fb9aee93a959, type: 3}
-  RoomPrefab: {fileID: 6763406138988314928, guid: e6958af3bd9c14d18b0565a02126e869, type: 3}
-  RoomPrefab2: {fileID: 6376661872623012109, guid: 858c99d52b3f349f29f4ac00c66206e8, type: 3}
-  HallwayPrefab: {fileID: 6003005922045520365, guid: b4829df5974c241f49c3dcf2bd99f691, type: 3}
-  HallwayPrefab2: {fileID: 4727336537346685002, guid: 2f0f620ccbf2b4134b6a422f923d71a8, type: 3}
-  size: {x: 0, y: 0}
-  roomCount: 0
-  EnemyRoomCount: 0
-  ItemRoomCount: 0
-  roomMaxSize: {x: 0, y: 0}
-  surface: {fileID: 0}
+  EnemyPrefab: {fileID: 7700570454702964828, guid: e9e71957fa7743b49922c69c499bd44a, type: 3}
+  PremadeRoomPrefabs: []
 --- !u!4 &2105552404
 Transform:
   m_ObjectHideFlags: 0
