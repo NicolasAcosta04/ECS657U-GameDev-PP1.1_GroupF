@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571336, b: 0.3069219, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 89755023}
   - component: {fileID: 89755022}
   - component: {fileID: 89755021}
+  - component: {fileID: 89755025}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -606,6 +607,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89755019}
   m_CullTransparentMesh: 1
+--- !u!114 &89755025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89755019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &112424230
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +634,7 @@ GameObject:
   - component: {fileID: 112424235}
   - component: {fileID: 112424232}
   - component: {fileID: 112424236}
+  - component: {fileID: 112424237}
   m_Layer: 5
   m_Name: Settings Button
   m_TagString: Untagged
@@ -759,6 +775,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &112424237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112424230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &119895054
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +802,7 @@ GameObject:
   - component: {fileID: 119895058}
   - component: {fileID: 119895057}
   - component: {fileID: 119895056}
+  - component: {fileID: 119895060}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -912,6 +943,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 119895054}
   m_CullTransparentMesh: 1
+--- !u!114 &119895060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119895054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &121721977
 GameObject:
   m_ObjectHideFlags: 0
@@ -3385,6 +3430,7 @@ GameObject:
   - component: {fileID: 703632666}
   - component: {fileID: 703632662}
   - component: {fileID: 703632665}
+  - component: {fileID: 703632667}
   m_Layer: 5
   m_Name: Start Custom Game Button
   m_TagString: Untagged
@@ -3537,6 +3583,65 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &703632667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 703632660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
+--- !u!1 &716866692
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 716866694}
+  - component: {fileID: 716866693}
+  m_Layer: 0
+  m_Name: SoundFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &716866693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716866692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 578303e846985934686731a734c2be06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundFXObject: {fileID: -595533650354504989, guid: f7ea4eb5eb5963b49beab1a3bce9267a, type: 3}
+--- !u!4 &716866694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 716866692}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &747801106
 GameObject:
   m_ObjectHideFlags: 0
@@ -3799,6 +3904,7 @@ GameObject:
   - component: {fileID: 790724389}
   - component: {fileID: 790724388}
   - component: {fileID: 790724387}
+  - component: {fileID: 790724391}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -3939,6 +4045,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 790724385}
   m_CullTransparentMesh: 1
+--- !u!114 &790724391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790724385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &810528616
 GameObject:
   m_ObjectHideFlags: 0
@@ -4387,6 +4507,7 @@ GameObject:
   - component: {fileID: 1036400560}
   - component: {fileID: 1036400557}
   - component: {fileID: 1036400561}
+  - component: {fileID: 1036400562}
   m_Layer: 5
   m_Name: Play Button
   m_TagString: Untagged
@@ -4527,6 +4648,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1036400562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036400555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1055531028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,6 +5806,7 @@ GameObject:
   - component: {fileID: 1165982313}
   - component: {fileID: 1165982312}
   - component: {fileID: 1165982315}
+  - component: {fileID: 1165982316}
   m_Layer: 5
   m_Name: Back Button
   m_TagString: Untagged
@@ -5811,6 +5947,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1165982316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165982310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1215512799
 GameObject:
   m_ObjectHideFlags: 0
@@ -6650,6 +6800,7 @@ GameObject:
   - component: {fileID: 1357627637}
   - component: {fileID: 1357627636}
   - component: {fileID: 1357627639}
+  - component: {fileID: 1357627640}
   m_Layer: 5
   m_Name: Medium
   m_TagString: Untagged
@@ -6802,6 +6953,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1357627640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357627634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1400555475
 GameObject:
   m_ObjectHideFlags: 0
@@ -7526,6 +7691,7 @@ GameObject:
   - component: {fileID: 1551750946}
   - component: {fileID: 1551750942}
   - component: {fileID: 1551750945}
+  - component: {fileID: 1551750947}
   m_Layer: 5
   m_Name: Save Button
   m_TagString: Untagged
@@ -7666,6 +7832,20 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1551750947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551750940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1587393093
 GameObject:
   m_ObjectHideFlags: 0
@@ -8154,6 +8334,7 @@ GameObject:
   - component: {fileID: 1663834068}
   - component: {fileID: 1663834067}
   - component: {fileID: 1663834070}
+  - component: {fileID: 1663834071}
   m_Layer: 5
   m_Name: Custom
   m_TagString: Untagged
@@ -8294,6 +8475,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1663834071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663834065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1705704932
 GameObject:
   m_ObjectHideFlags: 0
@@ -8882,6 +9077,7 @@ GameObject:
   - component: {fileID: 1821285401}
   - component: {fileID: 1821285398}
   - component: {fileID: 1821285402}
+  - component: {fileID: 1821285403}
   m_Layer: 5
   m_Name: Help Button
   m_TagString: Untagged
@@ -9022,6 +9218,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1821285403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821285396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1821727724
 GameObject:
   m_ObjectHideFlags: 0
@@ -9514,6 +9724,7 @@ GameObject:
   - component: {fileID: 1969852081}
   - component: {fileID: 1969852080}
   - component: {fileID: 1969852083}
+  - component: {fileID: 1969852084}
   m_Layer: 5
   m_Name: Hard
   m_TagString: Untagged
@@ -9666,6 +9877,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1969852084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969852078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1998951492
 GameObject:
   m_ObjectHideFlags: 0
@@ -9813,6 +10038,7 @@ GameObject:
   - component: {fileID: 2009825331}
   - component: {fileID: 2009825330}
   - component: {fileID: 2009825329}
+  - component: {fileID: 2009825333}
   m_Layer: 5
   m_Name: Tutorial
   m_TagString: Untagged
@@ -9953,6 +10179,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2009825327}
   m_CullTransparentMesh: 1
+--- !u!114 &2009825333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009825327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &2017774840
 GameObject:
   m_ObjectHideFlags: 0
@@ -10275,6 +10515,7 @@ GameObject:
   - component: {fileID: 2032848205}
   - component: {fileID: 2032848204}
   - component: {fileID: 2032848207}
+  - component: {fileID: 2032848208}
   m_Layer: 5
   m_Name: Easy
   m_TagString: Untagged
@@ -10427,6 +10668,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2032848208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032848202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &2074154018
 GameObject:
   m_ObjectHideFlags: 0
@@ -10807,3 +11062,4 @@ SceneRoots:
   - {fileID: 884558499}
   - {fileID: 1714908932}
   - {fileID: 9705910}
+  - {fileID: 716866694}

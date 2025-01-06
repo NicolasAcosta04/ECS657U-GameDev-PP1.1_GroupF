@@ -42,6 +42,15 @@ public class DupePlayerMovement : MonoBehaviour
     [SerializeField] private DupePlayerStats stats;
     [SerializeField] public Transform orientation;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] jumpStartSFX;
+    [SerializeField] private AudioClip[] jumpLandSFX;
+    [SerializeField] private AudioClip[] footstepSFX;
+    [SerializeField] private AudioClip[] runSFX;
+    private AudioClip[] movementSounds;
+    private AudioSource currentFootstep;
+
+
     float horizontalInput;
     float verticalInput;
     
@@ -49,6 +58,8 @@ public class DupePlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    SoundFXManager soundFXManager;
 
     [SerializeField] public MovementState state;
     public enum MovementState
@@ -70,6 +81,7 @@ public class DupePlayerMovement : MonoBehaviour
         readyToJump = true;
         startYScale = transform.localScale.y;
         stats = GetComponent<DupePlayerStats>();
+        soundFXManager = FindAnyObjectByType<SoundFXManager>();
     }
 
 
@@ -147,12 +159,18 @@ public class DupePlayerMovement : MonoBehaviour
         {
             state = MovementState.sprinting;
             moveSpeed = sprintSpeed;
+            movementSounds = runSFX;
             stats.SetSprinting(true); // Notify stats that sprinting is active
         }
         else if (grounded)
         {
+            if (state == MovementState.air)
+            {
+                soundFXManager.PlayRandomSoundFXClip(jumpLandSFX, transform, 1f);
+            }
             state = MovementState.walking;
             moveSpeed = walkSpeed;
+            movementSounds = footstepSFX;
             stats.SetSprinting(false); // Notify stats that sprinting is inactive
         }
         else
@@ -174,7 +192,8 @@ public class DupePlayerMovement : MonoBehaviour
             rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 50f, ForceMode.Force);
 
             if (rb.velocity.y > 0){
-                rb.AddForce(Vector3.down * 80f, ForceMode.Force);}
+                rb.AddForce(Vector3.down * 80f, ForceMode.Force);
+            }
 
             float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
             rb.drag = Mathf.Lerp(groundDrag, 5f, slopeAngle / maxSlopeAngle);
@@ -182,7 +201,15 @@ public class DupePlayerMovement : MonoBehaviour
 
         else if(grounded){
             rb.drag = groundDrag;
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);}
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            if (moveDirection != Vector3.zero)
+            {
+                if (currentFootstep == null)
+                {
+                    currentFootstep = soundFXManager.PlayRandomSoundFXClip(movementSounds, transform, 1f);
+                }
+            }
+        }
 
         else if(!grounded){
             rb.drag = 0f;
@@ -220,6 +247,7 @@ public class DupePlayerMovement : MonoBehaviour
         exitingSlope = true;
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        soundFXManager.PlayRandomSoundFXClip(jumpStartSFX, transform, 1f);
     }
 
 

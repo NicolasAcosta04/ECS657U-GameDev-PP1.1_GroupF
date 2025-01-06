@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour
     private GameObject playerObject;
     private Transform player;
     private LayerMask whatIsGround, whatIsPlayer, Wall;
+    private SoundFXManager soundFXManager;
 
     // Enemy Type
     public EnemyTypes enemyType;
@@ -52,6 +53,11 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float FOVAngle;
     private bool playerInSightRange, playerInAttackRange;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip[] detectionSFX;
+    private AudioSource currentDetection;
+
+
     //Enemy Type Specific
 
 
@@ -67,6 +73,7 @@ public class EnemyAI : MonoBehaviour
         whatIsGround = LayerMask.GetMask("whatIsGround");
         whatIsPlayer = LayerMask.GetMask("whatIsPlayer");
         Wall = LayerMask.GetMask("Wall");
+        soundFXManager = FindAnyObjectByType<SoundFXManager>();
         startPosition = transform.position;
         chasing = false;
     }
@@ -170,7 +177,14 @@ public class EnemyAI : MonoBehaviour
     //chasing state
     private void Chasing()
     {
-        //print("Chasing");
+        if (!chasing)
+        {
+            if (currentDetection == null)
+            {
+                currentDetection = soundFXManager.PlayRandomSoundFXClip(detectionSFX, transform, 0.8f);
+            }
+            
+        }
         destination = player.position;
         destinationSet = true;
         chasing = true;
