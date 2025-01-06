@@ -197,6 +197,10 @@ MonoBehaviour:
   sightRange: 5
   attackRange: 0.2
   FOVAngle: 90
+  detectionSFX:
+  - {fileID: 8300000, guid: 242fed4c63f4d7d4aa1268ac22874e8d, type: 3}
+  - {fileID: 8300000, guid: 90e32404b35ab0c498881d094bcd5c71, type: 3}
+  - {fileID: 8300000, guid: d01dd323661b2ae40a99a9d0601b941d, type: 3}
 --- !u!114 &2133594049237987659
 MonoBehaviour:
   m_ObjectHideFlags: 0

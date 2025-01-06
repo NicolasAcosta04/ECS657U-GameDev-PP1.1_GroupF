@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: b14b471e9c6405547a9599c98fb71419
+AudioImporter:
+  externalObjects: {}
+  serializedVersion: 7
+  defaultSettings:
+    serializedVersion: 2
+    loadType: 0
+    sampleRateSetting: 0
+    sampleRateOverride: 44100
+    compressionFormat: 1
+    quality: 1
+    conversionMode: 0
+    preloadAudioData: 0
+  platformSettingOverrides: {}
+  forceToMono: 0
+  normalize: 1
+  loadInBackground: 0
+  ambisonic: 0
+  3D: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 284895
+  packageName: Smacks & Scuffles Pack 1
+  packageVersion: 1.0
+  assetPath: Assets/Smacks-And-Scuffles_Pack01/Audio/SFX/Wave/2_Body_Hit_SAS_21.wav
+  uploadId: 663655

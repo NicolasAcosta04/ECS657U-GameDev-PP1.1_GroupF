@@ -273,6 +273,41 @@ MonoBehaviour:
   maxSlopeAngle: 40
   stats: {fileID: 2974556693469760385}
   orientation: {fileID: 2491000842632311064}
+  jumpStartSFX:
+  - {fileID: 8300000, guid: 13571ae48317296458edb90ca7287381, type: 3}
+  - {fileID: 8300000, guid: 366d69ff8d556fc4cb055268e4a69ee5, type: 3}
+  - {fileID: 8300000, guid: a2c382ade6a8fae4c902cf08b3680a86, type: 3}
+  - {fileID: 8300000, guid: 80cef2ef457f40e4d81b53895b30ec3d, type: 3}
+  - {fileID: 8300000, guid: fa6aca2311995c04683bec77ff6d5994, type: 3}
+  - {fileID: 8300000, guid: f5c615592ba088f448f0536ddc4fd13c, type: 3}
+  jumpLandSFX:
+  - {fileID: 8300000, guid: cce103cf9042ea749a14b64441954867, type: 3}
+  - {fileID: 8300000, guid: 918bd4d97b56d0d48841a84728215e6c, type: 3}
+  - {fileID: 8300000, guid: 7939145fb047b9843a773c54b9f8f5c6, type: 3}
+  - {fileID: 8300000, guid: cf022a78f54d44f42b6c1ee7aeefbb5d, type: 3}
+  - {fileID: 8300000, guid: 02cf5a5b8b58791489dbaa9c771b070e, type: 3}
+  - {fileID: 8300000, guid: 588142d506cd3804c8a1f15c1ceab8db, type: 3}
+  footstepSFX:
+  - {fileID: 8300000, guid: da9b2fc18c6226b4084e22b9597d4fa0, type: 3}
+  - {fileID: 8300000, guid: 1e011afcc989ac04aab177111a85bd9b, type: 3}
+  - {fileID: 8300000, guid: 834d0254279ae454d95f76334f35189b, type: 3}
+  - {fileID: 8300000, guid: 9d7ea62ab43f50144baa52b224e67df1, type: 3}
+  - {fileID: 8300000, guid: 19428bed552d20f4794abb7734c58ac5, type: 3}
+  - {fileID: 8300000, guid: 2c49eb2460240024abd5d35617d833c4, type: 3}
+  - {fileID: 8300000, guid: c24242a2e4e0ffc4b8546d4c4080149d, type: 3}
+  - {fileID: 8300000, guid: 44f962cef40088741a1d07a2c5a0c188, type: 3}
+  - {fileID: 8300000, guid: 070a3af9481bff34f9d9a39475777c52, type: 3}
+  runSFX:
+  - {fileID: 8300000, guid: c82e673e6d0468e4e94a6b3fefb7a42c, type: 3}
+  - {fileID: 8300000, guid: fd206893c4ee53b4d8b2fc03ebc9fed2, type: 3}
+  - {fileID: 8300000, guid: e4892ac6837dbc8468500ed982ec6b50, type: 3}
+  - {fileID: 8300000, guid: f4f3565fe76255743bbcb1a1cca9291f, type: 3}
+  - {fileID: 8300000, guid: 09fdfc7e36c31d34e9c0eea8b2c200af, type: 3}
+  - {fileID: 8300000, guid: a97b521f9cdaf644ba9fae836f36e8b2, type: 3}
+  - {fileID: 8300000, guid: b5efd77e36aedf845bc0f441e15b8ccc, type: 3}
+  - {fileID: 8300000, guid: 7ea747db5674de844a614d8e67b64b3f, type: 3}
+  - {fileID: 8300000, guid: ccaaa85a1900917478af2c5229ca7c2d, type: 3}
+  - {fileID: 8300000, guid: d2fcb45479d7b0e4cb4155da2b1571ef, type: 3}
   state: 0
 --- !u!114 &2974556693469760385
 MonoBehaviour:
@@ -314,6 +349,21 @@ MonoBehaviour:
   currentSanity: 0
   baseSanityDepletionRate: 1
   finalSanityDepletionRate: 0
+  breathlessSFX: {fileID: 8300000, guid: 62487ecbae7a293438e379dcc50c345d, type: 3}
+  damageSFX:
+  - {fileID: 8300000, guid: 329300d8f8b24be4dabcd59fdf15c34a, type: 3}
+  - {fileID: 8300000, guid: ec5c1c006276bee4eb1bc0fbe8500182, type: 3}
+  - {fileID: 8300000, guid: a48502c606f82a6449c588003fdf79fb, type: 3}
+  - {fileID: 8300000, guid: 39eef01e1f6a30f49b99503cd85eba77, type: 3}
+  - {fileID: 8300000, guid: 0cb23b0fa61f7004f88b189077fb65d2, type: 3}
+  - {fileID: 8300000, guid: 47f164a3b3c57294196ea6d515abb54c, type: 3}
+  lowHealthSFX: {fileID: 8300000, guid: 4363dd9354d1cb043a4afd8aa8087299, type: 3}
+  noiseSFX: {fileID: 8300000, guid: 0bbe9aa58fc7bb346b87b8e81b3f5370, type: 3}
+  ambianceSFX:
+  - {fileID: 8300000, guid: cc4a03693d7a44cf69a6eb2db0f93b3d, type: 3}
+  - {fileID: 8300000, guid: 6c480ca0f60124ef9b0e45a210e1d1d4, type: 3}
+  - {fileID: 8300000, guid: 1e974ca10e85a4f2689ebe7850862f9c, type: 3}
+  - {fileID: 8300000, guid: a2238bdbde1af491da588b50102acc7b, type: 3}
 --- !u!114 &192094669457668577
 MonoBehaviour:
   m_ObjectHideFlags: 0

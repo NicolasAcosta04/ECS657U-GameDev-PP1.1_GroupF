@@ -60,6 +60,19 @@ public class DupePlayerStats : MonoBehaviour
 
 
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip breathlessSFX;
+    [SerializeField] private AudioClip[] damageSFX;
+    [SerializeField] private AudioClip lowHealthSFX;
+    [SerializeField] private AudioClip noiseSFX;
+    [SerializeField] private AudioClip[] ambianceSFX;
+    private AudioSource currentBreathing;
+    private AudioSource currentHeartbeat;
+
+    SoundFXManager soundFXManager;
+
+
+
 
 
     private bool isSprinting = false;
@@ -77,6 +90,9 @@ public class DupePlayerStats : MonoBehaviour
         currentThirst = maxThirst;
         currentStamina = maxStamina;
         currentSanity = maxSanity;
+        soundFXManager = FindAnyObjectByType<SoundFXManager>();
+        soundFXManager.PlaySoundFXClip(noiseSFX, transform, 0.3f, true);
+        soundFXManager.PlayRandomSoundFXClip(ambianceSFX, transform, 0.05f, true);
     }
 
     private void Update()
@@ -123,7 +139,25 @@ public class DupePlayerStats : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            if (currentHeartbeat != null)
+            {
+                soundFXManager.StopAudioClip(currentHeartbeat);
+            }
             HandleDeath();
+        }
+
+        if (currentHealth <= 30)
+        {
+            if (currentHeartbeat == null)
+            {
+                currentHeartbeat = soundFXManager.PlaySoundFXClip(lowHealthSFX, transform, 0.8f, true);
+            }
+        } else
+        {
+            if (currentHeartbeat != null)
+            {
+                soundFXManager.StopAudioClip(currentHeartbeat);
+            }
         }
     }
 
@@ -139,12 +173,14 @@ public class DupePlayerStats : MonoBehaviour
         {
             // Instant damage
             currentHealth = Mathf.Max(0, currentHealth - damageAmount);
+            soundFXManager.PlayRandomSoundFXClip(damageSFX, transform, 0.7f);
             Debug.Log($"Took {damageAmount} instant damage. Current health: {currentHealth}");
         }
         else
         {
             // Damage over time
             StartCoroutine(ApplyDamageOverTime(damageAmount, duration));
+            soundFXManager.PlayRandomSoundFXClip(damageSFX, transform, 0.7f);
         }
     }
 
@@ -189,7 +225,15 @@ public class DupePlayerStats : MonoBehaviour
 
     public bool CanSprint()
     {
-        return currentStamina > 0;
+        bool canSprint = currentStamina > 0;
+        if (isSprinting && !canSprint)
+        {
+            if (currentBreathing == null)
+            {
+                currentBreathing = soundFXManager.PlaySoundFXClip(breathlessSFX, transform, 1f);
+            }
+        }
+        return canSprint;
     }
 
     private void HandleStamina()

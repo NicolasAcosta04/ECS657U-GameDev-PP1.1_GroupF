@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 112424234}
   - component: {fileID: 112424235}
   - component: {fileID: 112424232}
+  - component: {fileID: 112424236}
   m_Layer: 5
   m_Name: Main Menu Button
   m_TagString: Untagged
@@ -318,6 +319,20 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &112424236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112424230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &650816962
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,6 +693,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1012485902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1012485904}
+  - component: {fileID: 1012485903}
+  m_Layer: 0
+  m_Name: SoundFXManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1012485903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012485902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 578303e846985934686731a734c2be06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundFXObject: {fileID: -595533650354504989, guid: f7ea4eb5eb5963b49beab1a3bce9267a, type: 3}
+--- !u!4 &1012485904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012485902}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1036400555
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +750,7 @@ GameObject:
   - component: {fileID: 1036400559}
   - component: {fileID: 1036400560}
   - component: {fileID: 1036400557}
+  - component: {fileID: 1036400561}
   m_Layer: 5
   m_Name: Restart Button
   m_TagString: Untagged
@@ -808,6 +869,20 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1036400561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036400555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3d0fbc85e3c3d40ba04b983b24663d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: c5230b845c1250e4fb641b743c1cbac7, type: 3}
+  pressedSound: {fileID: 8300000, guid: 675dcc7880daea244b6031430db281ec, type: 3}
 --- !u!1 &1301987769
 GameObject:
   m_ObjectHideFlags: 0
@@ -1250,3 +1325,4 @@ SceneRoots:
   - {fileID: 1714908932}
   - {fileID: 1301987773}
   - {fileID: 9705910}
+  - {fileID: 1012485904}
