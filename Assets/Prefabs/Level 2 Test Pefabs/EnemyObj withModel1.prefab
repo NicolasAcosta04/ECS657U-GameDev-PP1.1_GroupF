@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 7681577864987148373}
   - component: {fileID: 2133594049237987659}
   m_Layer: 0
-  m_Name: EnemyObj withModel
+  m_Name: EnemyObj withModel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4373e62dff59d7d4ba5d3f53bc8d8c97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 1
   destination: {x: 0, y: 0, z: 0}
   patrolRange: 20
   waitTime: 2
