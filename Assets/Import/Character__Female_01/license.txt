@@ -1,0 +1,11 @@
+Model Information:
+* title:	Character_ Female_01
+* source:	https://sketchfab.com/3d-models/character--female-01-557aeb7154c64354b27bb67d2417014e
+* author:	Elbolillo (https://sketchfab.com/Elbolilloduro)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Character_ Female_01" (https://sketchfab.com/3d-models/character--female-01-557aeb7154c64354b27bb67d2417014e) by Elbolillo (https://sketchfab.com/Elbolilloduro) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
